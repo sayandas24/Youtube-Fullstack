@@ -1,11 +1,31 @@
-import axiosInstance from "./utils/axiosInstance";
+
 import "./App.css"; 
-import Video from "./components/Video/Video";
+import Home from "./components/Home/Home.jsx";
+import Video from "./components/Video/Video.jsx";
+import { createBrowserRouter, RouterProvider } from "react-router";
+import Layout from "./components/Layout/Layout.jsx";
 
 function App() {
+  const router = createBrowserRouter([
+    {
+      path: "/",
+      element: <Layout />,
+      children: [
+        {
+          path: "",
+          element: <Home />,
+        },
+        {
+          path: "v",
+          element: <Video />,
+        },
+      ],
+    },
+  ]);
+
   return (
     <>
-      <Video/>
+      <RouterProvider router={router}></RouterProvider>
     </>
   );
 }

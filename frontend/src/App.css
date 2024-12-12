@@ -2,3 +2,8 @@
 body {
   background-color: #1e1e1e;
 }
+.react-player{
+  video {
+    object-fit: cover; 
+  }
+}

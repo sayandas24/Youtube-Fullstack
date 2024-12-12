@@ -1,10 +1,23 @@
-import React from "react";
+import React, { useState } from "react";
 import Comments from "./Comments";
 import RelatedVideos from "./RelatedVideos";
 import { RiShareForwardLine } from "react-icons/ri";
 import { LiaDownloadSolid } from "react-icons/lia";
+import { useSelector } from "react-redux";
+import ReactPlayer from "react-player";
 
 function Video() {
+  const [isVideoLoaded, setIsVideoLoaded] = useState(false);
+
+  const videoLink = useSelector((state) => state.videoStore.videoFile);
+  const videoThumbnail = useSelector(
+    (state) => state.videoStore.videoThumbnail
+  );
+
+  const handleVideoReady = () => {
+    setIsVideoLoaded(true);
+  };
+
   return (
     <div className="p-5 py-14">
       <main className="flex gap-5">
@@ -13,11 +26,28 @@ function Video() {
           {/* video player, channel details */}
           <div className="flex flex-col gap-3">
             {/* video player */}
-            <section className="border border-zinc-600 rounded-2xl h-[40rem] w-[75rem]"></section>
+            <section className="border border-zinc-600 rounded-2xl overflow-hidden h-[40rem] w-[75rem] relative">
+              {!isVideoLoaded && (
+                <img
+                  className="object-cover h-full w-full absolute top-0 left-0"
+                  src={videoThumbnail}
+                  alt="Video Thumbnail"
+                />
+              )}
+              <ReactPlayer
+                controls
+                className="react-player object-cover h-full w-full"
+                url={videoLink}
+                width="100%"
+                height="100%"
+                style={{ objectFit: "cover" }}
+                onReady={handleVideoReady}
+              />
+            </section>
             {/* video title */}
             <section className="text-[1.2rem] leading-[1.4rem]">
-              Description is the main content of the video thats how this works
-              in case of any situation you can use this description
+              Description is the main content of the video that s how this
+              works. In case of any situation, you can use this description.
             </section>
             {/* channel details, subs */}
             <section className="flex gap-2 items-center">
@@ -56,7 +86,6 @@ function Video() {
                   </button>
                   <button className="p-[.4rem] px-5 border border-zinc-600 bg-zinc-700 rounded-full text-sm font-semibold">
                     More
-                    
                   </button>
                 </div>
               </div>
@@ -66,8 +95,8 @@ function Video() {
           <div className="flex gap-2 w-full border border-zinc-600 p-2 py-5 rounded-2xl flex-col">
             {/* video description */}
             <div>
-              <h1>video time when post and tags</h1>
-              <p>video description</p>
+              <h1>Video time when posted and tags</h1>
+              <p>Video description</p>
             </div>
 
             {/* channel details, subs */}
