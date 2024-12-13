@@ -1,18 +1,23 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Comments from "./Comments";
 import RelatedVideos from "./RelatedVideos";
 import { RiShareForwardLine } from "react-icons/ri";
-import { LiaDownloadSolid } from "react-icons/lia";
-import { useSelector } from "react-redux";
+import { LiaDownloadSolid } from "react-icons/lia"; 
 import ReactPlayer from "react-player";
+import axiosInstance from "../../utils/axiosInstance";
+import { useParams } from "react-router";
 
 function Video() {
   const [isVideoLoaded, setIsVideoLoaded] = useState(false);
+  const [getVideo, setGetVideo] = useState({})
 
-  const videoLink = useSelector((state) => state.videoStore.videoFile);
-  const videoThumbnail = useSelector(
-    (state) => state.videoStore.videoThumbnail
-  );
+  const { videoId } = useParams();
+
+  useEffect(() => {
+    axiosInstance.get(`/videos/p/${videoId}`).then((res) => {
+      setGetVideo(res.data.message) 
+    });
+  }, [videoId]); 
 
   const handleVideoReady = () => {
     setIsVideoLoaded(true);
@@ -30,14 +35,14 @@ function Video() {
               {!isVideoLoaded && (
                 <img
                   className="object-cover h-full w-full absolute top-0 left-0"
-                  src={videoThumbnail}
+                  src={getVideo.thumbnail}
                   alt="Video Thumbnail"
                 />
               )}
               <ReactPlayer
                 controls
                 className="react-player object-cover h-full w-full"
-                url={videoLink}
+                url={getVideo.videoFile}
                 width="100%"
                 height="100%"
                 style={{ objectFit: "cover" }}

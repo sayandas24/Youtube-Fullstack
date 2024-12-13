@@ -16,7 +16,7 @@ function App() {
           element: <Home />,
         },
         {
-          path: "v",
+          path: "p/:videoId",
           element: <Video />,
         },
       ],

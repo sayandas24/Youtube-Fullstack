@@ -6,7 +6,6 @@ import { uploadOnCloudinary } from "../utils/cloudinary.js";
 import { ApiResponse } from "../utils/ApiResponse.js";
 import jwt from "jsonwebtoken";
 import { v2 as cloudinary } from "cloudinary";
-import mongoose from "mongoose";
 
 // upload video
 const uploadVideo = asyncHandler(async (req, res) => {
@@ -123,11 +122,11 @@ const deleteVideo = asyncHandler(async (req, res) => {
     .status(200)
     .json(new ApiResponse(200, "Video deleted", videoDelete));
 });
+ 
 
 // get the video
 const getVideo = asyncHandler(async (req, res) => {
-  const videoId = req.params.id;
-
+  const videoId = req.params.id; 
   if (!videoId) {
     throw new ApiError(500, "Can't find id");
   }
