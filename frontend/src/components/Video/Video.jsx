@@ -1,28 +1,11 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import Comments from "./Comments";
 import RelatedVideos from "./RelatedVideos";
 import { RiShareForwardLine } from "react-icons/ri";
-import { LiaDownloadSolid } from "react-icons/lia"; 
-import ReactPlayer from "react-player";
-import axiosInstance from "../../utils/axiosInstance";
-import { useParams } from "react-router";
+import { LiaDownloadSolid } from "react-icons/lia";
+import VideoPlayer from "./VideoPlayer";
 
 function Video() {
-  const [isVideoLoaded, setIsVideoLoaded] = useState(false);
-  const [getVideo, setGetVideo] = useState({})
-
-  const { videoId } = useParams();
-
-  useEffect(() => {
-    axiosInstance.get(`/videos/p/${videoId}`).then((res) => {
-      setGetVideo(res.data.message) 
-    });
-  }, [videoId]); 
-
-  const handleVideoReady = () => {
-    setIsVideoLoaded(true);
-  };
-
   return (
     <div className="p-5 py-14">
       <main className="flex gap-5">
@@ -31,24 +14,7 @@ function Video() {
           {/* video player, channel details */}
           <div className="flex flex-col gap-3">
             {/* video player */}
-            <section className="border border-zinc-600 rounded-2xl overflow-hidden h-[40rem] w-[75rem] relative">
-              {!isVideoLoaded && (
-                <img
-                  className="object-cover h-full w-full absolute top-0 left-0"
-                  src={getVideo.thumbnail}
-                  alt="Video Thumbnail"
-                />
-              )}
-              <ReactPlayer
-                controls
-                className="react-player object-cover h-full w-full"
-                url={getVideo.videoFile}
-                width="100%"
-                height="100%"
-                style={{ objectFit: "cover" }}
-                onReady={handleVideoReady}
-              />
-            </section>
+            <VideoPlayer />
             {/* video title */}
             <section className="text-[1.2rem] leading-[1.4rem]">
               Description is the main content of the video that s how this

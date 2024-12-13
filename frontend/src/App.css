@@ -6,4 +6,15 @@ body {
   video {
     object-fit: cover; 
   }
+} 
+.playerTrue{
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease, visibility 0.3s ease; /* Smooth transition */
+  filter: drop-shadow(2px 2px 2px #414141);
 }
+.playerTrue.show{
+  opacity: 1;
+  visibility: visible;
+} 
+
