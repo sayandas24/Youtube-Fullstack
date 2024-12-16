@@ -6,24 +6,18 @@ import { useParams } from "react-router";
 import { ClipLoader } from "react-spinners"; // Example of a spinner component
 import { FaPlay, FaPause } from "react-icons/fa";
 
-function VideoPlayer() {
+function VideoPlayer( {getVideo} ) {
   const [isVideoLoaded, setIsVideoLoaded] = useState(false);
   const [isBuffering, setIsBuffering] = useState(false);
   const [playing, setPlaying] = useState(false); // Track play/pause state
   const [volume, setVolume] = useState(0.8); // Volume state
-  const [getVideo, setGetVideo] = useState({});
+  
   const [showControls, setShowControls] = useState(false); // State to control visibility of play/pause icon
   const playerRef = useRef(null); // Reference to the player
   const [duration, setDuration] = useState(0);
   const [currentTime, setCurrentTime] = useState(0);
 
-  const { videoId } = useParams();
-
-  useEffect(() => {
-    axiosInstance.get(`/videos/p/${videoId}`).then((res) => {
-      setGetVideo(res.data.message);
-    });
-  }, [videoId]);
+  
 
   const handleVideoReady = () => {
     setIsVideoLoaded(true);

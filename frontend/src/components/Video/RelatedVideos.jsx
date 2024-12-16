@@ -7,7 +7,7 @@ function RelatedVideos() {
 
   useEffect(() => {
     axiosInstance
-      .get("videos/")
+      .get("video/")
       .then((res) => {
         setVideos(res.data.message);
       })

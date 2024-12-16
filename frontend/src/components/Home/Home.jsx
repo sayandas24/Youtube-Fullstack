@@ -8,7 +8,7 @@ function Home() {
 
   useEffect(() => {
     axiosInstance
-      .get("/videos")
+      .get("/video")
       .then((res) => {
         setVideos(res.data.message);
       })
@@ -20,7 +20,7 @@ function Home() {
   const formSubmit = (e, videoLink) => {
     e.preventDefault();
     axiosInstance
-      .get(`/videos/p/${videoLink}`)
+      .get(`/video/p/${videoLink}`)
       .then((res) => console.log(res))
       .catch((err) => console.log(err));
   };
