@@ -3,8 +3,7 @@ import { doSignInWithGoogle } from "../../../firebase/auth";
 import axiosInstance from "../../../utils/axiosInstance";
 
 function GoogleLogin() {
-  const [isSigningIn, setIsSigningIn] = useState(false);
-  const [googleData, SetGoogleData] = useState({});
+  const [isSigningIn, setIsSigningIn] = useState(false); 
 
   const onGoogleSignIn = async (e) => {
     if (e) e.preventDefault(); // Only needed if bound to a form event
