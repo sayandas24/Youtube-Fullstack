@@ -14,8 +14,7 @@ function RelatedVideos() {
       .catch((err) => {
         console.log(err);
       });
-  }, []);
-  console.log(videos);
+  }, []); 
 
   return (
     <section className=" w-full rounded-2xl flex text-white flex-col gap-3">

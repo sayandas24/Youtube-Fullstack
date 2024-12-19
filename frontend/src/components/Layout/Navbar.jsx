@@ -1,18 +1,29 @@
-import React from "react";
+import React, { useContext } from "react";
 import { NavLink } from "react-router";
 import { IoMdMenu } from "react-icons/io";
 import metube from "../../assets/metube.svg";
 import { IoIosSearch } from "react-icons/io";
 import NotSignPopupMenu from "../ProfileMenu/NotSignPopupMenu";
 import { IoMdMic } from "react-icons/io";
+import { CollapseContext } from "../../contexts/collapseMenu/CollapseContext";
 
 function Navbar() {
+
+  const {collapse, setCollapse} = useContext(CollapseContext)
+  const {collapse2, setCollapse2} = useContext(CollapseContext)
+  
+
+  const handleMenu = () => {
+    setCollapse(!collapse)
+    setCollapse2(!collapse2)
+  }
+
   return (
-    <nav className="">
-      <ul className="flex text-md text-white  gap-5  p-5 justify-between">
+    <nav className="sticky top-0 left-0 w-full z-50 bg-[#0f0f0f]">
+      <ul className="flex text-md text-white  gap-5  p-5 pb-1 px-[1.6rem] justify-between">
         <section>
           <div className="flex gap-3 items-center">
-            <IoMdMenu className="text-3xl" />
+            <IoMdMenu onClick={handleMenu} className="text-[2.6rem] hover:bg-[#252525] duration-75 cursor-pointer active:bg-[#343434] rounded-full p-2" />
             <div className="flex items-center border-[#555555] p-5 rounded-full py-2">
               <img className="w-[2rem] invert" src={metube} alt="" />
               <h1 className="font-sacramento font-bold text-[1.5rem]">

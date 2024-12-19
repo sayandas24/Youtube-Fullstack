@@ -49,7 +49,7 @@ function NotSignPopupMenu() {
       {menuActive && (
         <div
           ref={menuRef} // Attach ref to menu
-          className="absolute top-[3.5rem] right-[2rem] rounded-xl bg-[#282828] text-white w-[20rem] h-fit py-3"
+          className="absolute top-[3.5rem] z-10 right-[2rem] rounded-xl bg-[#282828] text-white w-[20rem] h-fit py-3"
         >
           <section className="p-3">
             <div className="flex gap-3 items-center">
