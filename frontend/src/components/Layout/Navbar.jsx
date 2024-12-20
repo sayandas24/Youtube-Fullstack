@@ -30,23 +30,6 @@ function Navbar() {
       });
   }, []);
 
-  // console.log("user", user.data);
-
-  const logout = async () => {
-    console.log("logout");
-    await axiosInstance
-      .post("/user/logout")
-      .then((res) => {
-        console.log(res);
-        localStorage.removeItem("accessToken");
-        window.location.reload();
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-
-    // localStorage.removeItem("accessToken");
-  };
 
   const handleMenu = () => {
     setCollapse(!collapse);
@@ -69,9 +52,8 @@ function Navbar() {
               </h1>
             </div>
           </div>
-        </section>
-        {/* <button onClick={getInfo}>Info</button> */}
-        <button onClick={logout}>Logout</button>
+        </section> 
+        
         <section>
           <div className="flex gap-3 items-center">
             <div className="flex items-center ">
@@ -92,17 +74,19 @@ function Navbar() {
         <section>
           {/* <SignPopupMenu/> */}
           {user.data ? (
-            <div
-              onClick={() => setProfileClick(!profileClick)}
-              className={` ${
-                profileClick ? "border-blue-500" : "border-transparent"
-              } border w-[3rem] h-[3rem] rounded-full overflow-hidden`}
-            >
-              <img
-                className="w-full h-full object-cover"
-                src={user.data.avatar.replace('"', " ")}
-                alt="avatar"
-              />
+            <div>
+              <div
+                onClick={() => setProfileClick(!profileClick)}
+                className={` ${
+                  profileClick ? "border-blue-500" : "border-transparent"
+                } border w-[3rem] h-[3rem] rounded-full overflow-hidden`}
+              >
+                <img
+                  className="w-full h-full object-cover"
+                  src={user.data.avatar.replace('"', " ")}
+                  alt="avatar"
+                />
+              </div>
               {profileClick && (
                 <div className="absolute top-[5rem] right-[2rem] z-50">
                   <SignPopupMenu />

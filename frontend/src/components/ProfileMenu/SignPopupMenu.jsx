@@ -3,9 +3,28 @@ import { IoSettingsOutline } from "react-icons/io5";
 import { AiOutlineExclamationCircle } from "react-icons/ai";
 import { GoMoon } from "react-icons/go"; 
 import { CiLocationOn } from "react-icons/ci";
+import axiosInstance from "../../utils/axiosInstance";
 
 
 function SignPopupMenu() {
+
+  const logout = async () => {
+    console.log("logout");
+    await axiosInstance
+      .post("/user/logout")
+      .then((res) => {
+        console.log(res);
+        localStorage.removeItem("accessToken");
+        window.location.reload();
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+
+    // localStorage.removeItem("accessToken");
+  };
+
+
   return (
     <div>
       <div className=" rounded-xl bg-[#282828] text-white w-[20rem] h-fit mx-auto py-3">
@@ -50,6 +69,14 @@ function SignPopupMenu() {
             <h1 className="text-[1rem] font-[320]">Location: India</h1>
           </div>
         </section>
+
+
+        <section className="p-3">
+          <div onClick={logout} className="flex gap-3 items-center">
+            <IoSettingsOutline className="text-2xl text-[#cacaca]" />
+            <h1 className="text-[1rem] font-[320]">Sign out</h1>
+          </div>
+        </section> 
       </div>
     </div>
   );
