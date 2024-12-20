@@ -26,6 +26,7 @@ function Home() {
       .catch((err) => console.log(err));
   };
 
+  // after login, redirect to home, and show profile, hide not login status, fetch user details from current user route, {if user available}
   return (
     <div className="flex">
       <Sidebar/>

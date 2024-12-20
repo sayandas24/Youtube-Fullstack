@@ -2,7 +2,7 @@
 import React, { useState } from "react";
 import { TbLogin2 } from "react-icons/tb";
 import { NavLink } from "react-router";
-import GoogleLogin from "../login/GoogleLogin";
+import GoogleLogin from "../googleLogin/GoogleLogin";
 
 const Register = () => {
   const [username, setUsername] = useState("");

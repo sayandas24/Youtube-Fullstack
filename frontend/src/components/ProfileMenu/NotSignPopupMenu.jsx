@@ -5,6 +5,7 @@ import { GoMoon } from "react-icons/go";
 import { CiLocationOn } from "react-icons/ci";
 import { CgProfile } from "react-icons/cg";
 import { BsThreeDotsVertical } from "react-icons/bs";
+import { NavLink } from "react-router";
 
 function NotSignPopupMenu() {
   const [menuActive, setMenuActive] = useState(false);
@@ -80,12 +81,12 @@ function NotSignPopupMenu() {
         </div>
       )}
 
-      <div className="rounded-full border border-[#696969] cursor-pointer hover:border-transparent hover:bg-[#282828] text-white p-3 h-fit py-2">
+      <NavLink to="/login" className="rounded-full border border-[#696969] cursor-pointer hover:border-transparent hover:bg-[#282828] text-white p-3 h-fit py-2">
         <div className="flex gap-1 items-center">
           <CgProfile className="text-2xl text-[#cacaca]" />
           <h1 className="text-[1.1rem] font-[440]">Sign In</h1>
         </div>
-      </div>
+      </NavLink>
     </div>
   );
 }

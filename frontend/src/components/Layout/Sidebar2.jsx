@@ -43,7 +43,7 @@ function Sidebar2() {
           <div className="">
             <GrHomeRounded className="text-2xl" />
           </div>
-          <div className={` text-xl font-[420] `}>Home</div>
+          <div className={` text-[1.1rem] font-[420] `}>Home</div>
         </section>
       </NavLink>
 
@@ -51,10 +51,11 @@ function Sidebar2() {
         className={`flex gap-5 p-3 px-5 hover:bg-[#2c2c2c] duration-75 cursor-pointer rounded-xl`}
       >
         <div className="">
-          <SiYoutubeshorts className="text-2xl" />
+          <SiYoutubeshorts className="text-2xl stroke-white stroke-[2] !fill-transparent h-[30px] " />
         </div>
-        <div className={` text-xl font-[420] `}>Shorts</div>
+        <div className={`text-[1.1rem] `}>Shorts</div>
       </section>
+
       <hr className="border-zinc-600 my-1" />
 
       <section
@@ -63,7 +64,7 @@ function Sidebar2() {
         <div className="">
           <MdHistory className="text-2xl" />
         </div>
-        <div className={` text-xl font-[420] `}>History</div>
+        <div className={` text-[1.1rem] font-[420] `}>History</div>
       </section>
 
       <section
@@ -72,7 +73,7 @@ function Sidebar2() {
         <div className="">
           <MdOutlineSubscriptions className="text-2xl" />
         </div>
-        <div className={` text-xl font-[420] `}>Playlist</div>
+        <div className={` text-[1.1rem] font-[420] `}>Playlist</div>
       </section>
       <hr className="border-zinc-600 my-1" />
 
@@ -82,7 +83,7 @@ function Sidebar2() {
         <div className="">
           <MdOutlineWatchLater className="text-2xl" />
         </div>
-        <div className={` text-xl font-[420] `}>Later</div>
+        <div className={` text-[1.1rem] font-[420] `}>Later</div>
       </section>
 
       <section
@@ -91,7 +92,7 @@ function Sidebar2() {
         <div className="">
           <BiLike className="text-2xl" />
         </div>
-        <div className={` text-xl font-[420] `}>Liked</div>
+        <div className={` text-[1.1rem] font-[420] `}>Liked</div>
       </section>
     </div>
   );

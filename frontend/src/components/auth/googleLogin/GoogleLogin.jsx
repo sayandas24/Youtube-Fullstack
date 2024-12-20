@@ -1,9 +1,11 @@
 import React, { useState } from "react";
 import { doSignInWithGoogle } from "../../../firebase/auth";
 import axiosInstance from "../../../utils/axiosInstance";
+import { useNavigate } from "react-router";
 
 function GoogleLogin() {
-  const [isSigningIn, setIsSigningIn] = useState(false); 
+  const [isSigningIn, setIsSigningIn] = useState(false);
+  const navigate = useNavigate();
 
   const onGoogleSignIn = async (e) => {
     if (e) e.preventDefault(); // Only needed if bound to a form event
@@ -22,13 +24,24 @@ function GoogleLogin() {
           username: user.email.split("@")[0], // Extract username correctly
           avatar: user.photoURL,
           coverImage: user.photoURL,
-        }; 
+        };
 
         try {
-          const response = await axiosInstance.post("/user/authentication", {
-            data,
-          });
-          console.log("axios - ", response);
+          axiosInstance
+            .post("/user/authentication", {
+              data,
+            })
+            .then((response) => {
+              localStorage.setItem(
+                "accessToken",
+                response.data.data.accessToken
+              );
+              navigate("/");
+              window.location.reload();   
+            })
+            .catch((error) => {
+              console.log("email is same, try login", error);
+            });
         } catch (axiosError) {
           console.error("Error during axios request:", axiosError);
         }

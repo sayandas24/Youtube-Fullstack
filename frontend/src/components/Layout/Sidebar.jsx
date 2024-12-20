@@ -20,15 +20,17 @@ function Sidebar() {
       <NavLink
         to="/"
         className={({ isActive }) =>
-          `${isActive && collapse? "fill-white bg-[#2c2c2c]" : ""} ${
-            collapse ? "flex-col items-center gap-[1px]" : ""
+          `${isActive ? "fill-white bg-[#2c2c2c]" : ""} ${
+            collapse ? "flex-col items-center gap-[1px] bg-transparent" : ""
           } flex gap-5 p-3 px-5 hover:bg-[#2c2c2c] duration-75 cursor-pointer rounded-xl`
         }
       >
         <GrHomeRounded className="text-2xl fill-inherit" />
 
         <div
-          className={`${collapse ? "!text-[.77rem]" : ""} text-xl font-[420] `}
+          className={`${
+            collapse ? "!text-[.77rem]" : ""
+          } text-[1.1rem] font-[420] `}
         >
           Home
         </div>
@@ -37,16 +39,23 @@ function Sidebar() {
       <NavLink
         to="/shorts"
         className={({ isActive }) =>
-          `${isActive && collapse? "fill-white bg-[#2c2c2c]  " : "fill-transparent stroke-transparent"} ${
-            collapse ? "flex-col items-center gap-[1px]" : ""
-          } flex gap-5 p-3 px-5 hover:bg-[#2c2c2c] duration-75 cursor-pointer rounded-xl`
+          `${
+            isActive
+              ? "fill-white bg-[#2c2c2c]  "
+              : "fill-transparent stroke-transparent"
+          } 
+          ${collapse ? "flex-col items-center gap-[1px] bg-transparent" : ""} 
+
+          flex gap-5 p-3 px-5 hover:bg-[#2c2c2c] duration-75 cursor-pointer rounded-xl`
         }
       >
         <div className="">
           <SiYoutubeshorts className="text-2xl stroke-white stroke-[2] !fill-inherit h-[30px]" />
         </div>
         <div
-          className={`${collapse ? "!text-[.77rem]" : ""} text-xl font-[420] `}
+          className={`${
+            collapse ? "!text-[.77rem]" : ""
+          } text-[1.1rem] font-[420] `}
         >
           Shorts
         </div>
@@ -55,8 +64,8 @@ function Sidebar() {
       <NavLink
         to="/history"
         className={({ isActive }) =>
-          `${isActive && collapse? "fill-white bg-[#2c2c2c]" : ""} ${
-            collapse ? "flex-col items-center gap-[1px]" : ""
+          `${isActive ? "fill-white bg-[#2c2c2c]" : ""} ${
+            collapse ? "flex-col items-center gap-[1px] bg-transparent" : ""
           } flex gap-5 p-3 px-5 hover:bg-[#2c2c2c] duration-75 cursor-pointer rounded-xl`
         }
       >
@@ -64,7 +73,9 @@ function Sidebar() {
           <MdHistory className="text-2xl" />
         </div>
         <div
-          className={`${collapse ? "!text-[.77rem]" : ""} text-xl font-[420] `}
+          className={`${
+            collapse ? "!text-[.77rem]" : ""
+          } text-[1.1rem] font-[420] `}
         >
           History
         </div>
@@ -73,8 +84,8 @@ function Sidebar() {
       <NavLink
         to="/playlist"
         className={({ isActive }) =>
-          `${isActive && collapse? "fill-white bg-[#2c2c2c]" : ""} ${
-            collapse ? "flex-col items-center gap-[1px]" : ""
+          `${isActive ? "fill-white bg-[#2c2c2c]" : ""} ${
+            collapse ? "flex-col items-center gap-[1px] bg-transparent" : ""
           } flex gap-5 p-3 px-5 hover:bg-[#2c2c2c] duration-75 cursor-pointer rounded-xl`
         }
       >
@@ -82,7 +93,9 @@ function Sidebar() {
           <MdOutlineSubscriptions className="text-2xl" />
         </div>
         <div
-          className={`${collapse ? "!text-[.77rem]" : ""} text-xl font-[420] `}
+          className={`${
+            collapse ? "!text-[.77rem]" : ""
+          } text-[1.1rem] font-[420] `}
         >
           Playlist
         </div>
@@ -91,8 +104,8 @@ function Sidebar() {
       <NavLink
         to="/later"
         className={({ isActive }) =>
-          `${isActive && collapse? "fill-white bg-[#2c2c2c]" : ""} ${
-            collapse ? "flex-col items-center gap-[1px]" : ""
+          `${isActive ? "fill-white bg-[#2c2c2c]" : ""} ${
+            collapse ? "flex-col items-center gap-[1px] bg-transparent" : ""
           } flex gap-5 p-3 px-5 hover:bg-[#2c2c2c] duration-75 cursor-pointer rounded-xl`
         }
       >
@@ -100,7 +113,9 @@ function Sidebar() {
           <MdOutlineWatchLater className="text-2xl" />
         </div>
         <div
-          className={`${collapse ? "!text-[.77rem]" : ""} text-xl font-[420] `}
+          className={`${
+            collapse ? "!text-[.77rem]" : ""
+          } text-[1.1rem] font-[420] `}
         >
           Later
         </div>
@@ -109,8 +124,8 @@ function Sidebar() {
       <NavLink
         to="/liked"
         className={({ isActive }) =>
-          `${isActive && collapse? "fill-white bg-[#2c2c2c]" : ""} ${
-            collapse ? "flex-col items-center gap-[1px]" : ""
+          `${isActive ? "fill-white bg-[#2c2c2c]" : ""} ${
+            collapse ? "flex-col items-center gap-[1px] bg-transparent" : ""
           } flex gap-5 p-3 px-5 hover:bg-[#2c2c2c] duration-75 cursor-pointer rounded-xl`
         }
       >
@@ -118,7 +133,9 @@ function Sidebar() {
           <BiLike className="text-2xl" />
         </div>
         <div
-          className={`${collapse ? "!text-[.77rem]" : ""} text-xl font-[420] `}
+          className={`${
+            collapse ? "!text-[.77rem]" : ""
+          } text-[1.1rem] font-[420] `}
         >
           Liked
         </div>
