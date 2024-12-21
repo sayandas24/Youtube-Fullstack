@@ -36,7 +36,7 @@ const authentication = asyncHandler(async (req, res, next) => {
     throw new ApiError(400, "Invalid request: Missing required fields");
   }
 
-  const existingUser = await User.findOne({ email: data.email }); 
+  const existingUser = await User.findOne({ email: data.email });
 
   if (existingUser) {
     const oldUser = {
@@ -73,7 +73,7 @@ const registerUser = asyncHandler(async (req, res) => {
         7. remove password and refresh token field from response for security
         8. check for user creation
         9. return res 
-    */
+    */ 
   try {
     const {
       username,
@@ -81,8 +81,8 @@ const registerUser = asyncHandler(async (req, res) => {
       password,
       fullName,
       avatar: googleAvatar,
-      coverImage: googleCover,
-    } = req.body; 
+      coverImage,
+    } = req.body;
 
     // if ( username === "") throw new ApiError(400, "Username is required"); basic error handling
     if (
@@ -109,7 +109,7 @@ const registerUser = asyncHandler(async (req, res) => {
 
     // checking if files are present
     let user;
-    if (req.files) { 
+    if (req.files) {
       // this req.files is from multer that is passed from user.router
       if (!req.files.avatar || !req.files.avatar[0]) {
         throw new ApiError(400, "Avatar file is required");
@@ -154,11 +154,21 @@ const registerUser = asyncHandler(async (req, res) => {
     }
 
     // Creating User
+    // using the generateAccessAndRefreshToken for access values and passing id
+    const { accessToken, refreshToken } = await generateAccessAndRefreshToken(
+      user._id
+    ); 
+
+    // it means no one can edit cookies from frontend (but backend can)
+    const options = {
+      httpOnly: true,
+      secure: true,
+    };
 
     // removing password and refresh token from DB entry
     const createdUser = await User.findById(user._id).select(
       "-password -refreshToken"
-    );
+    ); 
 
     if (!createdUser) {
       throw new ApiError(500, "Something went wrong while creating user");
@@ -166,7 +176,14 @@ const registerUser = asyncHandler(async (req, res) => {
 
     return res
       .status(201)
-      .json(new ApiResponse(200, createdUser, "User registered successfully"));
+      .cookie("accessToken", accessToken, options) // with cookie parse the accessToken, options
+      .cookie("refreshToken", refreshToken, options)
+      .json(new ApiResponse(200, {
+        newUser: createdUser,
+        accessToken,
+        refreshToken,
+      }, "User registered successfully"));
+
   } catch (error) {
     console.log("Error in register user", error);
   }

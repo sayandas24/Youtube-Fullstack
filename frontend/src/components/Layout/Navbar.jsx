@@ -15,9 +15,7 @@ function Navbar() {
 
   const [user, setUser] = useState({});
   const [profileClick, setProfileClick] = useState(false);
-
-  console.log(profileClick);
-
+ 
   useEffect(() => {
     axiosInstance
       .get("/user/current-user")

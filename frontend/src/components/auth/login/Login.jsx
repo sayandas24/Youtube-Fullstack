@@ -20,10 +20,7 @@ const Login = () => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    setProcessing(true); // spinner
-    // setTimeout(() => {
-    //   setProcessing(false);
-    // }, 10000);
+    setProcessing(true); // spinner 
 
     axiosInstance
       .post("/user/login", { email, password })
@@ -55,21 +52,23 @@ const Login = () => {
 
   return (
     <div className="flex">
-      <div className="w-1/2 fixed left-0 top-0 z-[99999] h-screen bg-blue-600">
+      <div className="w-1/2 fixed left-0 top-0 z-[99999] h-screen bg-gradient-to-r from-blue-500 to-purple-600">
         <NavLink to="/">
-          <button>Home</button>
+          <button className="text-white font-bold py-2 px-4 rounded-xl mt-5 ml-5 hover:bg-blue-700 transition duration-300">
+            Home
+          </button>
         </NavLink>
       </div>
-      <div className="w-1/2 fixed right-0 top-0 z-[99999] bg-white  h-screen flex flex-col justify-center items-center">
-        <h1 className="text-[2.5rem] text-center font-semibold mb-5">
+      <div className="w-1/2 fixed right-0 top-0 z-[99999] bg-white h-screen flex flex-col justify-center items-center">
+        <h1 className="text-[2.5rem] text-center font-semibold mb-5 text-transparent bg-clip-text bg-gradient-to-r from-blue-500 to-purple-600">
           Login to your account
         </h1>
-        <form className="  w-[30rem] mx-auto rounded flex flex-col gap-3 p-5">
+        <form className="w-[30rem] mx-auto rounded flex flex-col gap-3 p-5 shadow-lg">
           <input
             type="email"
             value={email}
             onChange={(event) => setEmail(event.target.value)}
-            className="w-full p-2 border text-gray-700 rounded-xl bg-[#f3f7f9]"
+            className="w-full p-2 border text-gray-700 rounded-xl bg-[#f3f7f9] focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-300"
             placeholder="email"
             required
           />
@@ -79,7 +78,7 @@ const Login = () => {
             value={password}
             placeholder="password"
             onChange={(event) => setPassword(event.target.value)}
-            className="w-full p-2 border text-gray-700 rounded-xl bg-[#f3f7f9]"
+            className="w-full p-2 border text-gray-700 rounded-xl bg-[#f3f7f9] focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-300"
             required={true}
           />
 
@@ -98,7 +97,7 @@ const Login = () => {
               buttonDisabled || processing
                 ? "bg-gray-600 hover:bg-gray-600"
                 : "bg-blue-500 hover:bg-blue-700"
-            } text-white font-bold py-2 px-4 rounded-xl`}
+            } text-white font-bold py-2 px-4 rounded-xl transition duration-300`}
           >
             {processing ? (
               <ClipLoader color="#ffffff" loading={true} size={16} />
@@ -113,7 +112,7 @@ const Login = () => {
           <h1
             className={`${
               error ? "visible" : "invisible"
-            } mt-3 rounded-xl mx-auto  w-full flex items-center justify-center p-2 text-red-600 border border-red-600`}
+            } mt-3 rounded-xl mx-auto w-full flex items-center justify-center p-2 text-red-600 border border-red-600 transition duration-300`}
           >
             user not found
           </h1>
@@ -121,7 +120,7 @@ const Login = () => {
         <div className="flex items-center justify-center gap-4 mt-[10rem]">
           Don`t have an account?
           <NavLink to="/register">
-            <span className="flex items-center gap-2 text-xl cursor-pointer">
+            <span className="flex items-center gap-2 text-xl cursor-pointer text-blue-500 hover:text-blue-700 transition duration-300">
               <TbLogin2 />
               <b>Register</b>
             </span>

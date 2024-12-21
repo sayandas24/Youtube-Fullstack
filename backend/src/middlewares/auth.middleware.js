@@ -4,6 +4,7 @@ import jwt from "jsonwebtoken"
 import { User } from "../models/user.model.js"
 
 export const verifyJWT = asyncHandler(async (req, _, next) => {
+    console.log("verifyJWT")
     try {
         // the cookie is universal, it has all the things that has been passed before
         // accessToken is passed from user.controller 
