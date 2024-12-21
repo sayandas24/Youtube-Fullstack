@@ -9,6 +9,7 @@ import Register from "./components/auth/register/Register.jsx";
 import PopupMenu from "./components/ProfileMenu/SignPopupMenu.jsx";
 import NotSignPopupMenu from "./components/ProfileMenu/NotSignPopupMenu.jsx";
 import SignPopupMenu from "./components/ProfileMenu/SignPopupMenu.jsx";
+import VideoPost from "./components/videoPost/VideoPost.jsx";
 
 function App() {
   const router = createBrowserRouter([
@@ -39,6 +40,10 @@ function App() {
         {
           path: "notsignmenu",
           element: <NotSignPopupMenu/>
+        },
+        {
+          path: "videoPost",
+          element: <VideoPost/>
         }
       ],
     },
