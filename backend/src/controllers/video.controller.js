@@ -9,7 +9,7 @@ import { v2 as cloudinary } from "cloudinary";
 
 // upload video
 const uploadVideo = asyncHandler(async (req, res) => {
-  const { title, description } = req.body;
+  const { title, description } = req.body; 
 
   if (
     // advanced error handling

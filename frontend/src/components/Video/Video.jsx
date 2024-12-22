@@ -16,8 +16,7 @@ function Video() {
   const location = useLocation();
   const isRouteActive = location.pathname.startsWith(`/p/`);
   const isHomeRoute = location.pathname === `/`;
-
-  console.log(isRouteActive)
+ 
   // is the class is true then add some class in sidebar,,,
 
   useEffect(() => {

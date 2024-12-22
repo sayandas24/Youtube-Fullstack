@@ -17,7 +17,7 @@ function Home() {
         console.log(err);
       });
   }, []);
-
+  
   const formSubmit = (e, videoLink) => {
     e.preventDefault();
     axiosInstance
@@ -38,9 +38,9 @@ function Home() {
                 onClick={(e) => {
                   e.currentTarget.closest("form").requestSubmit();
                 }}
-                className="flex cursor-pointer flex-col gap-1 w-[25rem]"
+                className="flex cursor-pointer flex-col gap-1 w-[22rem]"
               >
-                <section className="videoParent relative border  border-black bg-zinc-600 rounded-3xl overflow-hidden w-[25rem] h-[16rem] ">
+                <section className="videoParent relative border  border-black bg-zinc-600 rounded-3xl overflow-hidden w-[22rem] h-[13rem] ">
                   <div className="absolute top-0 left-0 w-full h-full bg-transparent duration-200 hover:bg-[#f0f0f010]"></div>
                   <img
                     className="w-full h-full object-cover"
@@ -62,9 +62,8 @@ function Home() {
                   </div>
                   {/* Avatar name, description */}
                   <div className="flex flex-col gap-1 text-white w-[95%]">
-                    <h1 className="text-[1.1rem] leading-5">
-                      Description is the main content of the video thats how
-                      this works in case of any situation
+                    <h1 className="text-[1rem] leading-5">
+                      {file.title}
                     </h1>
                     <p className="text-[1rem] text-zinc-400">
                       {file.owner.fullName}

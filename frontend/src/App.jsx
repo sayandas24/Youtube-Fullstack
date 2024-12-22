@@ -1,5 +1,6 @@
 
 import "./App.css"; 
+import "./script.js"
 import Home from "./components/Home/Home.jsx";
 import Video from "./components/Video/Video.jsx";
 import { createBrowserRouter, RouterProvider } from "react-router";
@@ -10,6 +11,7 @@ import PopupMenu from "./components/ProfileMenu/SignPopupMenu.jsx";
 import NotSignPopupMenu from "./components/ProfileMenu/NotSignPopupMenu.jsx";
 import SignPopupMenu from "./components/ProfileMenu/SignPopupMenu.jsx";
 import VideoPost from "./components/videoPost/VideoPost.jsx";
+import VideoUpload from "./components/videoPost/VideoUpload.jsx";
 
 function App() {
   const router = createBrowserRouter([
@@ -26,11 +28,11 @@ function App() {
           element: <Video />,
         },
         {
-          path: "/login",
+          path: "login",
           element: <Login/>
         },
         {
-          path: "/register",
+          path: "register",
           element: <Register/>
         },
         {
@@ -42,7 +44,11 @@ function App() {
           element: <NotSignPopupMenu/>
         },
         {
-          path: "videoPost",
+          path: "upload",
+          element: <VideoUpload/>
+        },
+        {
+          path: "video-upload",
           element: <VideoPost/>
         }
       ],
