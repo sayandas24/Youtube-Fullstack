@@ -4,15 +4,15 @@ import { PiVideoLight } from "react-icons/pi";
 import { CiSettings } from "react-icons/ci";
 import { CiCircleInfo } from "react-icons/ci";
 
-function Profile() {
+function Profile({ user }) {
   return (
     <section className=" flex flex-col justify-normal px-4 h-full">
         <div className="w-full flex flex-col items-center gap-1">
-          <section className="h-[8rem] w-[8rem] border rounded-full">
-            <img src="" alt="" />
+          <section className="h-[8rem] w-[8rem] rounded-full overflow-hidden">
+            <img className='w-full h-full object-cover' src={user?.avatar} alt="" />
           </section>
           <section>Your Channel</section>
-          <section className="text-zinc-600 text-sm">sayanthisside</section>
+          <section className="text-zinc-400 text-sm">{user?.username}</section>
         </div>
 
         <div className="mt-8">

@@ -33,8 +33,7 @@ function Navbar() {
     axiosInstance
       .get("/user/current-user")
       .then((res) => {
-        setUser(res.data);
-        console.log(res.data);
+        setUser(res.data); 
         setProfilepic(res.data.data.avatar);
       })
       .catch((err) => {
@@ -79,8 +78,8 @@ function Navbar() {
     }, []);
 
   return (
-    <nav className="sticky top-0 left-0 w-full z-50 bg-[#0f0f0f]">
-      <ul className="flex text-md text-white  gap-5  p-5 pb-1 px-[1.6rem] justify-between">
+    <nav className="relative top-0 left-0 w-full z-50 bg-[#0f0f0f] min-h-[6rem]">
+      <ul className="flex fixed bg-[#0f0f0f] w-full top-0 text-md text-white  gap-5  p-5 pb-1 px-[1.6rem] justify-between">
         <section>
           <div className="flex gap-3 items-center">
             <IoMdMenu
@@ -117,9 +116,9 @@ function Navbar() {
           {/* <SignPopupMenu/> */}
           {user.data ? (
             <div className="flex items-center gap-4">
-              <section ref={createButtonRef} onClick={onCreateClick} className="cursor-pointer bg-[#272727] hover:bg-[#2f2f2f] active:bg-[#454545] rounded-full h-[3rem] gap-1 px-4 flex items-center justify-center">
+              <section ref={createButtonRef} onClick={onCreateClick} className="cursor-pointer bg-[#272727] hover:bg-[#2f2f2f] active:bg-[#454545] rounded-full h-[2.8rem] gap-1 px-3 flex items-center justify-center">
                 <GoPlus className="text-[1.7rem]" />
-                <h1 className="text-lg font-semibold">Create</h1>
+                <h1 className="text-[1rem] font-semibold">Create</h1>
               </section>
               {
                 createClick && (

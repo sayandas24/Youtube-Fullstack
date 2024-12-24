@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import axiosInstance from "../../utils/axiosInstance";
 import { useEffect, useState } from "react";
 import { NavLink } from "react-router";
@@ -28,9 +28,12 @@ function Home() {
 
   // after login, redirect to home, and show profile, hide not login status, fetch user details from current user route, {if user available}
   return (
-    <div className="flex">
-      <Sidebar/>
-      <div id="videoContainer" className="flex gap-5 flex-wrap">
+    <div className="flex overflow-hidden">
+      <section className="">
+        <Sidebar/>
+      </section>
+
+      <div id="videoContainer" className="flex gap-5 flex-wrap overflow-y-auto">
         {videos.map((file) => (
           <NavLink key={file._id} to={`/p/${file._id}`} className="h-fit ">
             <form onSubmit={(e) => formSubmit(e, file._id)}> 
@@ -38,7 +41,7 @@ function Home() {
                 onClick={(e) => {
                   e.currentTarget.closest("form").requestSubmit();
                 }}
-                className="flex cursor-pointer flex-col gap-1 w-[22rem]"
+                 id="eachVideo" className="flex cursor-pointer flex-col gap-1 w-[22rem]"
               >
                 <section className="videoParent relative border  border-black bg-zinc-600 rounded-3xl overflow-hidden w-[22rem] h-[13rem] ">
                   <div className="absolute top-0 left-0 w-full h-full bg-transparent duration-200 hover:bg-[#f0f0f010]"></div>

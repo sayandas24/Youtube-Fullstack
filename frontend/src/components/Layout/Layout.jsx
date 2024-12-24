@@ -5,7 +5,7 @@ import Sidebar from "./Sidebar";
 
 function Layout() {
   return (
-    <div>
+    <div className="flex h-screen flex-col">
       <Navbar />
       <Outlet />
     </div>

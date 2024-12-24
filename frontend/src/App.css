@@ -2,7 +2,7 @@
 
 @import url('https://fonts.googleapis.com/css2?family=Sacramento&display=swap');
 body {
-  background-color: #0f0f0f;
+  background-color: #0f0f0f; 
 }
 .react-player {
   video {
@@ -18,6 +18,30 @@ body {
 .playerTrue.show {
   opacity: 1;
   visibility: visible;
+}
+
+/* scrollbar thin *//* Scrollbar styling */
+::-webkit-scrollbar {
+  width: 8px; /* Width of the scrollbar */
+  height: 8px; /* Height of the scrollbar for horizontal scroll */
+  cursor: grab;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #787878; /* Dark color for the scrollbar */
+  border-radius: 10px; /* Round shape */
+  cursor: grab;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #555; /* Slightly lighter color when hovered */
+  cursor: grab;
+} 
+
+::-webkit-scrollbar-track {
+  background: #97979700; /* Background of the scrollbar track */
+  border-radius: 10px; /* Matching round shape for the track */
+  cursor: grab;
 }
 
 /* Svg filter */
@@ -60,3 +84,12 @@ body {
   font-size: .875rem;
   color: #58a9ff;
 }
+
+
+/* Temp */
+/* .videoContainer{
+  columns: 4;
+}
+.eachVideo{
+  width: 100%;
+} */

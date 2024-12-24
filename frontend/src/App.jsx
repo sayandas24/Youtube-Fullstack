@@ -13,6 +13,7 @@ import SignPopupMenu from "./components/ProfileMenu/SignPopupMenu.jsx";
 import VideoPost from "./components/videoPost/VideoPost.jsx";
 import VideoUpload from "./components/videoPost/VideoUpload.jsx";
 import ProfilePage from "./components/profile/ProfilePage.jsx";
+import UpdateVideo from "./components/videoPost/UpdateVideo.jsx";
 
 function App() {
   const router = createBrowserRouter([
@@ -55,7 +56,12 @@ function App() {
         {
           path: "profile",
           element: <ProfilePage/>
+        },
+        {
+          path: "video-update/:id",
+          element: <UpdateVideo/>
         }
+
       ],
     },
   ]);

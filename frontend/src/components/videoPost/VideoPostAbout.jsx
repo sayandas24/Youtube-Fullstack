@@ -4,14 +4,18 @@ import { RiGeminiFill } from "react-icons/ri";
 import VideoPostFooter from "./VideoPostFooter";
 import "../../script.js";
 import axiosInstance from "../../utils/axiosInstance.js";
-import {useNavigate} from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
-function VideoPostAbout({ file }) {
-  const [title, setTitle] = useState("");
-  const [description, setDescription] = useState("");
-  const [thumbnail, setThumbnail] = useState("");
+function VideoPostAbout({ file, existingVideo = null }) {
+  const [title, setTitle] = useState(existingVideo?.title || "");
+  const [description, setDescription] = useState(
+    existingVideo?.description || ""
+  );
+  const [thumbnail, setThumbnail] = useState(null);
   const [loading, setLoading] = useState(false);
-  const [thumbnailPreview, setThumbnailPreview] = useState(null);
+  const [thumbnailPreview, setThumbnailPreview] = useState(
+    existingVideo?.thumbnail
+  );
   const navigate = useNavigate();
 
   const handleSubmit = (e) => {
@@ -20,23 +24,50 @@ function VideoPostAbout({ file }) {
     const formData = new FormData();
     formData.append("title", title);
     formData.append("description", description);
-    formData.append("videoFile", file);
-    formData.append("thumbnail", thumbnail);
 
-    axiosInstance
-      .post("/video/upload", formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      })
-      .then((res) => {
-        console.log(res.data);
-        navigate("/")
+    if (thumbnail) {
+      formData.append("thumbnail", thumbnail);
+    } else if (existingVideo) {
+      formData.append("thumbnail", existingVideo.thumbnail);
+    }
 
-      })
-      .catch((err) => console.log(err))
-      .finally(() => setLoading(false));
+    if (existingVideo === null) {
+      formData.append("videoFile", file);
+
+      axiosInstance
+        .post("/video/upload", formData, {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        })
+        .then((res) => {
+          navigate("/");
+        })
+        .catch((err) => console.log(err))
+        .finally(() => setLoading(false));
+    } else {
+      axiosInstance
+        .patch(`/video/update/${existingVideo._id}`, formData, {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        })
+        .then((res) => {
+          navigate("/profile");
+        })
+        .catch((err) => console.log(err))
+        .finally(() => setLoading(false));
+    }
   };
+
+  useEffect(() => {
+    if (existingVideo) {
+      setTitle(existingVideo.title);
+      setDescription(existingVideo.description);
+      setThumbnailPreview(existingVideo.thumbnail);
+      setThumbnail(existingVideo.thumbnail);
+    }
+  }, [existingVideo]);
 
   const handleThumbnailChange = (e) => {
     const file = e.target.files[0];
@@ -60,6 +91,7 @@ function VideoPostAbout({ file }) {
           type="text"
           className="input border border-zinc-500"
           onChange={(e) => setTitle(e.target.value)}
+          value={title}
         />
         <label className="label text--flicking">
           Title<sup>*</sup>
@@ -72,6 +104,7 @@ function VideoPostAbout({ file }) {
           rows="8"
           className="input w-full resize-none bg-transparent rounded-lg border border-zinc-500"
           onChange={(e) => setDescription(e.target.value)}
+          value={description}
         ></textarea>
         <label className="label text--flicking">
           Description<sup>*</sup>
@@ -93,7 +126,11 @@ function VideoPostAbout({ file }) {
             className="cursor-pointer  border w-[10rem] h-[5rem] border-zinc-400 rounded-lg border-dashed gap-1 flex-col items-center justify-center flex"
           >
             {thumbnailPreview ? (
-              <img src={thumbnailPreview} alt="Thumbnail Preview" className="w-full h-full object-cover rounded-lg" />
+              <img
+                src={thumbnailPreview}
+                alt="Thumbnail Preview"
+                className="w-full h-full object-cover rounded-lg"
+              />
             ) : (
               <>
                 <LuImageDown className="text-xl text-zinc-300" />

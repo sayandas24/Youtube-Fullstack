@@ -347,10 +347,94 @@ const changeCurrentPassword = asyncHandler(async (req, res) => {
 });
 
 // req.user is getting from middleware
-const getCurrentUser = asyncHandler(async (req, res) => {
+const getCurrentUser = asyncHandler(async (req, res) => { 
+
+  const user = await User.aggregate([
+    {
+      $match: {
+        // finding channel by username
+        username: req.user.username,
+      },
+    }, 
+     {
+      // this field is for how many people are subscribed to this channel
+      $lookup: {
+        // lookup joins two collections
+        from: "subscriptions", // from subscriptions model
+        localField: "_id", // find using this field id
+        foreignField: "channel", // joining channel from subscriptions model
+        as: "subscribers", // new field name (join as subscribers)
+      },
+    },
+    {
+      // this field is for how many people i subscribed
+      $lookup: {
+        from: "subscriptions", // model name
+        localField: "_id",
+        foreignField: "subscriber", // which field to join
+        as: "subscribedTo",
+      },
+    },
+    {
+      // Add lookup for user's videos
+      $lookup: {
+        from: "videos",
+        localField: "_id",
+        foreignField: "owner",
+        as: "videos",
+        pipeline: [
+          {
+            $project: {
+              videoFile: 1,
+              thumbnail: 1,
+              title: 1,
+              description: 1,
+              duration: 1,
+              views: 1,
+              isPublished: 1,
+              createdAt: 1,
+            },
+          },
+        ],
+      },
+    },
+    {
+      // extra fields adding
+      $addFields: {
+        subscribersCount: {
+          $size: "$subscribers", // $ - because it is a field from lookup
+        },
+        channelsSubscribedToCount: {
+          $size: "$subscribedTo",
+        },
+        videosCount: {
+          $size: "$videos",
+        }, 
+      },
+    },
+    {
+      // final result i'll provide to frontend
+      $project: {
+        fullName: 1, // 1 = true
+        username: 1,
+        avatar: 1,
+        subscribersCount: 1,
+        channelsSubscribedToCount: 1,
+        videosCount: 1, 
+        coverImage: 1,
+        avatar: 1,
+        email: 1,
+        videos: 1,
+      },
+    },
+  ]);
+  if (!user?.length) {
+    throw new ApiError(404, "user not found");
+  } 
+
   return res
     .status(200)
-    .json(new ApiResponse(200, req.user, "Current User fetched successfully"));
+    .json(new ApiResponse(200, user[0], "Current User fetched successfully"));
 });
 
 // update account details Name and email
@@ -536,7 +620,7 @@ const getUserChannelProfile = asyncHandler(async (req, res) => {
     {
       // final result i'll provide to frontend
       $project: {
-        fullName: 1, // 1 - true
+        fullName: 1, // 1 = true
         username: 1,
         avatar: 1,
         subscribersCount: 1,

@@ -38,7 +38,7 @@ function VideoPost() {
         <VideoPostAbout file={file}/>
 
         {/* right */}
-        <VideoPostRight file={file} videoUrl={videoUrl} fileSizeReadable={fileSizeReadable}/>
+        <VideoPostRight file={file} videoUrl={videoUrl} fileSizeReadable={fileSizeReadable} removeVideo={true}/>
       </main>
 
 

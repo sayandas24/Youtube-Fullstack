@@ -3,10 +3,13 @@ import React from "react";
 import { RiDeleteBack2Line } from "react-icons/ri";
 import { useNavigate } from "react-router";
 
-function VideoPostRight({ file, videoUrl, fileSizeReadable }) {
+function VideoPostRight({ file, videoUrl, fileSizeReadable, removeVideo }) {
   const navigate = useNavigate();
+
   const backToUpload = () => {
-    navigate("/upload");
+    if (removeVideo) {
+      navigate("/upload");
+    }
   };
 
   return (
@@ -27,20 +30,20 @@ function VideoPostRight({ file, videoUrl, fileSizeReadable }) {
           <div className="flex justify-between items-center">
             <section className="flex leading-[15px]  flex-col w-[80%] overflow-hidden">
               <h1 className="text-sm text-zinc-600">video name</h1>
-              <h1 className="text-blue-400 truncate">{file?.name}</h1>
+              <h1 className="text-blue-400 truncate">{file?.name || file.title}</h1>
             </section>
             <div
-              className="rounded-full p-1 cursor-pointer"
+              className={`rounded-full p-1 ${removeVideo? "cursor-pointer" : "cursor-not-allowed"}`}
               onClick={backToUpload}
             >
-              <RiDeleteBack2Line className="text-xl text-zinc-300 hover:text-zinc-50" />
+              <RiDeleteBack2Line className={`text-xl ${removeVideo? "text-zinc-300 hover:text-zinc-50": "text-gray-500 hover:text-gray-500"}`} />
             </div>
           </div>
 
           {/* Down */}
           <div className="flex leading-[18px] flex-col ">
             <h1 className="text-sm text-zinc-600">File size</h1>
-            <h1 className="text-zinc-400">{fileSizeReadable? fileSizeReadable : ""}</h1>
+            <h1 className="text-zinc-400">{fileSizeReadable? fileSizeReadable : "null"}</h1>
           </div>
         </section>
       </div>

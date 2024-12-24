@@ -1,3 +1,5 @@
+import tailwindScrollbar from 'tailwind-scrollbar';
+
 /** @type {import('tailwindcss').Config} */
 export default {
   content: [
@@ -7,10 +9,12 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        spicyRice: 'Spicy Rice', // Add your custom font
+        spicyRice: 'Spicy Rice',
         sacramento: 'Sacramento',
       },
     },
   },
-  plugins: [],
-}
+  plugins: [
+    tailwindScrollbar({ nocompatible: true }),
+  ],
+};

@@ -50,30 +50,31 @@ const updateVideo = asyncHandler(async (req, res) => {
   // only owner can update the video
   try {
     const videoId = req.params.id;
-
     const { title, description } = req.body;
 
-    if ([title, description].some((field) => field?.trim() === "")) {
-      throw new ApiError(400, "All fields are required");
-    }
-
-    if (!req.file?.path) {
-      throw new ApiError(400, "Thumbnail file is required");
-    }
-
-    // delete previous thumbnail
     const video = await Video.findById(videoId);
-    const prevThumbnail = video.thumbnail.split("/").slice(-1)[0].split(".")[0];
 
-    if (prevThumbnail) {
-      await cloudinary.uploader.destroy(prevThumbnail);
+    if (!video) {
+      throw new ApiError(404, "Video not found");
     }
 
-    const thumbnailPath = req.file?.path;
-    const thumbnail = await uploadOnCloudinary(thumbnailPath);
+    let thumbnailUrl = video.thumbnail;
 
-    if (!thumbnail) {
-      throw new ApiError(400, "Thumbnail file uploaded failed");
+    if (req.file?.path) {
+      // delete previous thumbnail
+      const prevThumbnail = video.thumbnail.split("/").slice(-1)[0].split(".")[0];
+      if (prevThumbnail) {
+        await cloudinary.uploader.destroy(prevThumbnail);
+      }
+
+      const thumbnailPath = req.file.path;
+      const thumbnail = await uploadOnCloudinary(thumbnailPath);
+
+      if (!thumbnail) {
+        throw new ApiError(400, "Thumbnail file upload failed");
+      }
+
+      thumbnailUrl = thumbnail.url;
     }
 
     const newVideo = await Video.findByIdAndUpdate(
@@ -81,14 +82,10 @@ const updateVideo = asyncHandler(async (req, res) => {
       {
         title,
         description,
-        thumbnail: thumbnail?.url,
+        thumbnail: thumbnailUrl,
       },
       { new: true }
     );
-
-    if (!newVideo) {
-      throw new ApiError(404, "Video not found");
-    }
 
     return res
       .status(200)
