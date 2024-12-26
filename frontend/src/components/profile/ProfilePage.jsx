@@ -1,15 +1,21 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import Profile from "./Profile";
 import ProfileHeader from "./ProfileHeader";
 import VideoSection from "./VideoSection";
-import { useNavigate } from "react-router";
 import axiosInstance from "../../utils/axiosInstance";
+import Sidebar2 from "../Layout/Sidebar2";
+import { CollapseContext } from "../../contexts/collapseMenu/CollapseContext";
 
 function ProfilePage() {
+  const isRouteActive = location.pathname.startsWith(`/profile`);
+  const {collapse2, setCollapse2} = useContext(CollapseContext)
+
   const [haveVideo, setHaveVideo] = useState(false); 
   const [user, setUser] = useState({});
  
   useEffect(() => {
+    setCollapse2(true) 
+    
     if (window.location.pathname === "/profile") {
       axiosInstance
         .get("/user/current-user")
@@ -19,7 +25,7 @@ function ProfilePage() {
         .catch((err) => {
           console.log(err);
         });
-    }
+    } 
   }, []);
  
 
@@ -33,6 +39,11 @@ function ProfilePage() {
   
   return (
     <main className="flex gap-2 overflow-hidden w-full flex-grow text-white bg-gradient-to-b from-[#0f0f0f] to-[#1b1b1b] border-t border-[#434343]">
+
+      <div className={`${isRouteActive && collapse2? "-translate-x-[18rem]  ": ""} transition-all duration-150 top-[0] left-0 z-[999] fixed sidebar`}>
+        <Sidebar2 />
+      </div>
+
       {/* left */}
       <div className="w-[18rem] mt-5 mb-5">
         <Profile user={user}/>

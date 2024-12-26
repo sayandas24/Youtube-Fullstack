@@ -1,13 +1,16 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { IoSettingsOutline } from "react-icons/io5";
 import { AiOutlineExclamationCircle } from "react-icons/ai";
 import { GoMoon } from "react-icons/go"; 
 import { CiLocationOn } from "react-icons/ci";
 import axiosInstance from "../../utils/axiosInstance";
-
+import { NavLink } from "react-router";
+import { FeatureSoonContext } from "../../contexts/featureSoonContext/UseFeatureSoon";
 
 function SignPopupMenu() {
   const [user, setUser] = useState({});
+
+  const {handleFeatureSoonShow}  = useContext(FeatureSoonContext)
 
   useEffect(() => {
     const fetchUserData = async () => {
@@ -49,34 +52,34 @@ function SignPopupMenu() {
             <div className="leading-[1.4rem] ">
               <h1 className="text-[1rem] ">{user.fullName}</h1>
               <h1 className="text-[1rem] ">@{user.username}</h1>
-              <h1 className="text-[1rem] text-blue-400 cursor-pointer mt-2">
+              <NavLink to="/profile" className="text-[1rem] text-blue-400 cursor-pointer mt-2">
                 View Your Profile
-              </h1>
+              </NavLink>
             </div>
           </div>
         </section>
         <hr className="border-zinc-600 my-1" />
-        <section className="p-3 hover:bg-[#383838] cursor-pointer">
+        <section onClick={handleFeatureSoonShow} className="p-3 hover:bg-[#383838] cursor-pointer">
           <div className="flex gap-3 items-center">
             <IoSettingsOutline className="text-2xl text-[#cacaca]" />
             <h1 className="text-[1rem] font-[320]">Settings</h1>
           </div>
         </section> 
-        <section className="p-3 hover:bg-[#383838] cursor-pointer">
+        <section onClick={handleFeatureSoonShow} className="p-3 hover:bg-[#383838] cursor-pointer">
           <div className="flex gap-3 items-center">
             <AiOutlineExclamationCircle  className="text-2xl text-[#cacaca]" />
             <h1 className="text-[1rem] font-[320]">About</h1>
           </div>
         </section>
         <hr className="border-zinc-600 my-1" />
-        <section className="p-3 hover:bg-[#383838] cursor-pointer">
+        <section onClick={handleFeatureSoonShow} className="p-3 hover:bg-[#383838] cursor-pointer">
           <div className="flex gap-3 items-center ">
             <GoMoon  className="text-2xl text-[#cacaca]" />
             <h1 className="text-[1rem] font-[320]">Appearance: Dark</h1>
           </div>
         </section>
         <hr className="border-zinc-600 my-1" />
-        <section className="p-3 hover:bg-[#383838] cursor-pointer">
+        <section onClick={handleFeatureSoonShow} className="p-3 hover:bg-[#383838] cursor-pointer">
           <div className="flex gap-3 items-center">
             <CiLocationOn  className="text-2xl text-[#cacaca]" />
             <h1 className="text-[1rem] font-[320]">Location: India</h1>

@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { GrHomeRounded } from "react-icons/gr";
 import { MdOutlineWatchLater } from "react-icons/md";
 import { MdHistory } from "react-icons/md";
@@ -6,24 +6,45 @@ import { SiYoutubeshorts } from "react-icons/si";
 import { MdOutlineSubscriptions } from "react-icons/md";
 import { BiLike } from "react-icons/bi";
 import { CollapseContext } from "../../contexts/collapseMenu/CollapseContext";
+import { IoSettingsOutline } from "react-icons/io5";
+import { CgProfile } from "react-icons/cg";
+
 
 import metube from "../../assets/metube.svg";
 
 import { IoMdMenu } from "react-icons/io";
 import { NavLink } from "react-router";
+import { FeatureSoonContext } from "../../contexts/featureSoonContext/UseFeatureSoon";
 
 function Sidebar2() {
   const { collapse2, setCollapse2 } = useContext(CollapseContext);
+  const { handleFeatureSoonShow } = useContext(FeatureSoonContext)
 
   const handleMenu = () => {
     setCollapse2(!collapse2);
   };
 
+  // temp
+  const handleClickOutsideSidebar = (event) => {
+    if (!event.target.closest(".sidebar") && !event.target.closest(".more-options")) {
+      setCollapse2(true);
+      console.log("clicked outside")
+    }
+  };
+  useEffect(() => {
+    document.addEventListener("click", handleClickOutsideSidebar);
+
+    return () => {
+      document.removeEventListener("click", handleClickOutsideSidebar);
+    };
+  }, [])
+  
+
   return (
     <div
       className={`w-[18rem] h-screen bg-[#0f0f0f] text-white py-5 px-2 gap-1 flex flex-col`}
     >
-      <section className="ml-3">
+      <NavLink className="ml-3 cursor-pointer">
         <div className="flex gap-3 items-center">
           <IoMdMenu
             onClick={handleMenu}
@@ -34,7 +55,7 @@ function Sidebar2() {
             <h1 className="font-sacramento font-bold text-[1.5rem]">Metube</h1>
           </div>
         </div>
-      </section>
+      </NavLink>
 
       <NavLink to="/">
         <section
@@ -48,6 +69,7 @@ function Sidebar2() {
       </NavLink>
 
       <section
+        onClick={handleFeatureSoonShow}
         className={`flex gap-5 p-3 px-5 hover:bg-[#2c2c2c] duration-75 cursor-pointer rounded-xl`}
       >
         <div className="">
@@ -59,6 +81,7 @@ function Sidebar2() {
       <hr className="border-zinc-600 my-1" />
 
       <section
+        onClick={handleFeatureSoonShow}
         className={`flex gap-5 p-3 px-5 hover:bg-[#2c2c2c] duration-75 cursor-pointer rounded-xl`}
       >
         <div className="">
@@ -68,6 +91,7 @@ function Sidebar2() {
       </section>
 
       <section
+      onClick={handleFeatureSoonShow}
         className={`flex gap-5 p-3 px-5 hover:bg-[#2c2c2c] duration-75 cursor-pointer rounded-xl`}
       >
         <div className="">
@@ -78,22 +102,23 @@ function Sidebar2() {
       <hr className="border-zinc-600 my-1" />
 
       <section
+      onClick={handleFeatureSoonShow}
         className={`flex gap-5 p-3 px-5 hover:bg-[#2c2c2c] duration-75 cursor-pointer rounded-xl`}
       >
         <div className="">
-          <MdOutlineWatchLater className="text-2xl" />
+          <IoSettingsOutline className="text-2xl" />
         </div>
-        <div className={` text-[1.1rem] font-[420] `}>Later</div>
+        <div className={` text-[1.1rem] font-[420] `}>Settings</div>
       </section>
 
-      <section
+      <NavLink to="/profile" 
         className={`flex gap-5 p-3 px-5 hover:bg-[#2c2c2c] duration-75 cursor-pointer rounded-xl`}
       >
         <div className="">
-          <BiLike className="text-2xl" />
+          <CgProfile className="text-2xl" />
         </div>
-        <div className={` text-[1.1rem] font-[420] `}>Liked</div>
-      </section>
+        <div className={` text-[1.1rem] font-[420] `}>Profile</div>
+      </NavLink>
     </div>
   );
 }

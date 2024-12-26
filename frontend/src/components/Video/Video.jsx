@@ -16,8 +16,14 @@ function Video() {
   const location = useLocation();
   const isRouteActive = location.pathname.startsWith(`/p/`);
   const isHomeRoute = location.pathname === `/`;
+
+  const {collapse2, setCollapse2} = useContext(CollapseContext)
  
   // is the class is true then add some class in sidebar,,,
+  useEffect(() => {
+    setCollapse2(true)
+  }, [])
+  
 
   useEffect(() => {
     axiosInstance.get(`/video/p/${videoId}`).then((res) => {
@@ -26,16 +32,14 @@ function Video() {
   }, [videoId]);
 
 
-  const {collapse2, setCollapse2} = useContext(CollapseContext)
-
   if (isHomeRoute) {
     setCollapse2(true)
   }
 
 
   return (
-    <div className="p-5 py-14 flex relative">
-      <div className={`${isRouteActive && collapse2? "-translate-x-[18rem]  ": ""} transition-all duration-150 top-[0] left-0 z-[999] fixed `}>
+    <div className="p-5 py-14 flex relative overflow-x-hidden">
+      <div className={`${isRouteActive && collapse2? "-translate-x-[18rem]  ": ""} transition-all duration-150 top-[0] left-0 z-[999] fixed sidebar`}>
         <Sidebar2 />
       </div>
       <main className={`${collapse2? "": "opacity-50 blur-[2px]"} flex gap-5 transition-all duration-150`}>

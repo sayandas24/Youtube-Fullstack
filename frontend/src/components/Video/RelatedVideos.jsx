@@ -17,7 +17,7 @@ function RelatedVideos() {
   }, []); 
 
   return (
-    <section className=" w-full rounded-2xl flex text-white flex-col gap-3">
+    <section className=" w-[28rem] rounded-2xl flex text-white flex-col gap-3">
       {videos.map((video) => (
         <div key={video._id} className="flex  gap-2 w-full">
           {/* thumbnail */}

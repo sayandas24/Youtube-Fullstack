@@ -26,6 +26,7 @@ router
   .patch(verifyJWT, upload.single("thumbnail"), updateVideo);
 
 // get the video by id
+
 router.route("/p/:id").get(getVideo) 
 
 // delete video by id

@@ -94,9 +94,9 @@ function VideoSection({ videos }) {
                       >
                         <MdOutlineEdit />
                       </NavLink>
-                      <div className=" p-2 cursor-pointer rounded-full text-xl hover:bg-[#353535]">
+                      <NavLink to={`/p/${video?._id}`} className=" p-2 cursor-pointer rounded-full text-xl hover:bg-[#353535]">
                         <PiYoutubeLogo />
-                      </div>
+                      </NavLink>
 
                       <div
                         onClick={() => handleMoreClick(index)}

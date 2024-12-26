@@ -1,6 +1,10 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { NavLink } from 'react-router-dom'
+import { FeatureSoonContext } from '../../contexts/featureSoonContext/UseFeatureSoon'
 function ProfileHeader() {
+
+  const {handleFeatureSoonShow} = useContext(FeatureSoonContext)
+
   return (
     <nav className="w-full ">
     <h1 className="text-[1.3rem] px-8 mt-8">Channel Content</h1>
@@ -18,10 +22,11 @@ function ProfileHeader() {
         <h1>Videos</h1>
       </NavLink>
       <NavLink
-        to="/"
+        to="#"
+        onClick={handleFeatureSoonShow}
         className={({ isActive }) =>
           `hover:border-b text-[.9rem] text-zinc-400 font-[500] hover:border-zinc-500 p-2 px-1 flex items-center gap-2 ${
-            isActive
+            !isActive
               ? "!font-[800] border-b !border-white !text-white"
               : ""
           }`
@@ -30,10 +35,11 @@ function ProfileHeader() {
         <h1>Tweets</h1>
       </NavLink>
       <NavLink
-        to="/"
+        to="#"
+        onClick={handleFeatureSoonShow}
         className={({ isActive }) =>
           `hover:border-b text-[.9rem] text-zinc-400 font-[500] hover:border-zinc-500 p-2 px-1 flex items-center gap-2 ${
-            isActive
+            !isActive
               ? "!font-[800] border-b !border-white !text-white"
               : ""
           }`
@@ -42,10 +48,11 @@ function ProfileHeader() {
         <h1>Shorts</h1>
       </NavLink>
       <NavLink
-        to="/"
+        to="#"
+        onClick={handleFeatureSoonShow}
         className={({ isActive }) =>
           `hover:border-b text-[.9rem] text-zinc-400 font-[500] hover:border-zinc-500 p-2 px-1 flex items-center gap-2 ${
-            isActive
+            !isActive
               ? "!font-[800] border-b !border-white !text-white"
               : ""
           }`

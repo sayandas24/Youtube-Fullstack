@@ -2,10 +2,16 @@ import React, { useContext, useState } from "react";
 import { NavLink } from "react-router";
 import { MdOutlineEdit } from "react-icons/md";
 import { MdDelete } from "react-icons/md";
+import { PiYoutubeLogo } from "react-icons/pi";
 import { ProfileContext } from "../../contexts/profileContext/profileContext";
 
 function ThreeDot({ video }) {
-  const {deleteClick, setDeleteClick} = useContext(ProfileContext)
+  const {deleteClick, setDeleteClick, setVideoDetails} = useContext(ProfileContext)
+
+  const handleDelete = (video) => {
+    setDeleteClick(!deleteClick)
+    setVideoDetails(video)
+  }
 
   return (
     <div>
@@ -15,14 +21,23 @@ function ThreeDot({ video }) {
           className="flex items-center gap-2 hover:bg-[#363636] p-2 px-4"
         >
           <MdOutlineEdit className="text-xl" />
-          <div className="text-[.8rem]">Edit title, description...</div>
+          <div className="text-[.8rem] text-nowrap">Edit title, description...</div>
         </NavLink>
+        <NavLink
+          to={`/p/${video?._id}`}
+           
+          className="flex items-center gap-2 hover:bg-[#363636] p-2 px-4 cursor-pointer"
+        >
+          <PiYoutubeLogo className="text-xl" />
+          <h1 className="text-[.8rem] text-nowrap">Watch Video</h1>
+        </NavLink>
+
         <div
-          onClick={() => setDeleteClick(!deleteClick)}
-          className="flex items-center gap-2 hover:bg-[#363636] p-2 px-4"
+          onClick={() => handleDelete(video)}
+          className="flex items-center gap-2 hover:bg-[#363636] p-2 px-4 cursor-pointer"
         >
           <MdDelete className="text-xl" />
-          <h1 className="text-[.8rem]">Delete Forever</h1>
+          <h1 className="text-[.8rem] text-nowrap">Delete Forever</h1>
         </div>
       </section>
  

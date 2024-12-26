@@ -5,12 +5,14 @@ import axiosInstance from "../../utils/axiosInstance";
 import { useParams } from "react-router";
 import { ClipLoader } from "react-spinners"; // Example of a spinner component
 import { FaPlay, FaPause } from "react-icons/fa";
+import screenfull from "screenfull"; // Import screenfull for fullscreen functionality
 
 function VideoPlayer( {getVideo} ) {
   const [isVideoLoaded, setIsVideoLoaded] = useState(false);
   const [isBuffering, setIsBuffering] = useState(false);
   const [playing, setPlaying] = useState(false); // Track play/pause state
   const [volume, setVolume] = useState(0.8); // Volume state
+  const [playbackRate, setPlaybackRate] = useState(1.0); // Playback rate state
   
   const [showControls, setShowControls] = useState(false); // State to control visibility of play/pause icon
   const playerRef = useRef(null); // Reference to the player
@@ -67,6 +69,16 @@ function VideoPlayer( {getVideo} ) {
     console.log("ended")
     setPlaying(false)
   }
+
+  const toggleFullscreen = () => {
+    if (screenfull.isEnabled) {
+      screenfull.toggle(playerRef.current.wrapper);
+    }
+  };
+
+  const handlePlaybackRateChange = (event) => {
+    setPlaybackRate(parseFloat(event.target.value));
+  };
   
 
   return (
@@ -86,6 +98,7 @@ function VideoPlayer( {getVideo} ) {
           volume={volume}
           onProgress={handleProgress}
           onEnded={videoEnd}
+          playbackRate={playbackRate} // Set playback rate
           width="100%"
           height="100%"
           className="react-player"
@@ -96,8 +109,6 @@ function VideoPlayer( {getVideo} ) {
             <ClipLoader color="#ffffff" loading={true} size={50} />
           </div>
         )}
-        {/* Centered Play/Pause Button */}
-        {/* {showControls && ( */}
         {isVideoLoaded && (
           <div className="absolute inset-0 flex items-center justify-center">
             <button
@@ -111,8 +122,16 @@ function VideoPlayer( {getVideo} ) {
             </button>
           </div>
         )}
-
-        {/* )} */}
+        {/* Fullscreen Button */}
+        {isVideoLoaded && (
+          <button
+            onClick={toggleFullscreen}
+            className="absolute bottom-4 right-4 bg-transparent border-none cursor-pointer text-white"
+            style={{ fontSize: "2rem" }}
+          >
+            ⛶
+          </button>
+        )}
       </section>
       {/* Volume Control */}
       <div className="flex justify-between items-center mt-2">
@@ -139,6 +158,20 @@ function VideoPlayer( {getVideo} ) {
           value={currentTime} 
           
         />
+      </div>
+      {/* Playback Rate Control */}
+      <div className="flex justify-between items-center mt-2">
+        <label className="text-white mr-2">Speed:</label>
+        <select
+          value={playbackRate}
+          onChange={handlePlaybackRateChange}
+          className="bg-zinc-800 text-white p-1 rounded"
+        >
+          <option value="0.5">0.5x</option>
+          <option value="1">1x</option>
+          <option value="1.5">1.5x</option>
+          <option value="2">2x</option>
+        </select>
       </div>
     </section>
   );

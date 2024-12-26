@@ -100,7 +100,7 @@ const updateVideo = asyncHandler(async (req, res) => {
 
 // delete video
 const deleteVideo = asyncHandler(async (req, res) => {
-  const { id } = req.params;
+  const { id } = req.params; 
 
   const video = await Video.findById(id);
 

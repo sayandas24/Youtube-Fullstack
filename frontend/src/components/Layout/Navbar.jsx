@@ -12,11 +12,14 @@ import { GoPlus } from "react-icons/go";
 import { LuMessageSquareDiff } from "react-icons/lu";
 
 import { SlCloudUpload } from "react-icons/sl";
+import NewFeatureMSG from "../UI/NewFeatureMSG";
+import { FeatureSoonContext } from "../../contexts/featureSoonContext/UseFeatureSoon";
 
 
 function Navbar() {
   const { collapse, setCollapse } = useContext(CollapseContext);
   const { collapse2, setCollapse2 } = useContext(CollapseContext);
+  const {handleFeatureSoonShow}  = useContext(FeatureSoonContext)
 
   const [user, setUser] = useState({});
   const [profileClick, setProfileClick] = useState(false);
@@ -79,12 +82,13 @@ function Navbar() {
 
   return (
     <nav className="relative top-0 left-0 w-full z-50 bg-[#0f0f0f] min-h-[6rem]">
+      <NewFeatureMSG/>  
       <ul className="flex fixed bg-[#0f0f0f] w-full top-0 text-md text-white  gap-5  p-5 pb-1 px-[1.6rem] justify-between">
         <section>
           <div className="flex gap-3 items-center">
             <IoMdMenu
               onClick={handleMenu}
-              className="text-[2.6rem] hover:bg-[#252525] duration-75 cursor-pointer active:bg-[#343434] rounded-full p-2"
+              className="more-options text-[2.6rem] hover:bg-[#252525] duration-75 cursor-pointer active:bg-[#343434] rounded-full p-2"
             />
             <div className="flex items-center border-[#555555] p-5 rounded-full py-2">
               <img className="w-[2rem] invert" src={metube} alt="" />
@@ -103,11 +107,11 @@ function Navbar() {
                 className="pl-5 h-[2.90rem] w-[30rem] outline-none focus:border-[#0062ff] rounded-full border-[#393939] border bg-[#121212] rounded-r-none"
                 placeholder="Search"
               />
-              <div className="flex justify-center items-center rounded-l-none  h-[3rem] px-5 rounded-full bg-[#222222]">
+              <div onClick={handleFeatureSoonShow} className="flex justify-center items-center rounded-l-none  h-[3rem] px-5 rounded-full bg-[#222222]">
                 <IoIosSearch className="text-[1.4rem]" />
               </div>
             </div>
-            <div className="h-[3rem] w-[3rem] flex items-center justify-center rounded-full bg-[#222222] hover:bg-[#2f2f2f]">
+            <div onClick={handleFeatureSoonShow} className="h-[3rem] w-[3rem] flex items-center justify-center rounded-full bg-[#222222] hover:bg-[#2f2f2f]">
               <IoMdMic className="text-2xl" />
             </div>
           </div>
@@ -129,7 +133,7 @@ function Navbar() {
                         <SlCloudUpload className="text-[1.3rem]"/>
                         <h1 className="text-[1rem] ">Upload Video</h1>
                      </NavLink>
-                     <div className="flex items-center gap-4 p-3 px-4 hover:bg-[#3b3b3b] cursor-pointer">
+                     <div onClick={handleFeatureSoonShow} className="flex items-center gap-4 p-3 px-4 hover:bg-[#3b3b3b] cursor-pointer">
                         <LuMessageSquareDiff className="text-[1.3rem]"/>
                         <h1 className="text-[1rem] ">Create Tweet</h1>
                      </div> 
