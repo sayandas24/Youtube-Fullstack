@@ -1,22 +1,18 @@
 // src/components/RegisterForm.js
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { TbLogin2 } from "react-icons/tb";
 import { NavLink, useNavigate } from "react-router";
 import GoogleLogin from "../googleLogin/GoogleLogin";
 import axiosInstance from "../../../utils/axiosInstance";
-import { ClipLoader } from "react-spinners"; // Example of a spinner component
-import { useQueryClient } from "@tanstack/react-query";
+import { ClipLoader } from "react-spinners"; // Example of a spinner component  
 
 const Login = () => {
   const [processing, setProcessing] = useState(false);
   const [error, setError] = useState(false);
   const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [googleData, setGoogleData] = useState({});
+  const [password, setPassword] = useState(""); 
   const [buttonDisabled, setButtonDisabled] = useState(true);
-
-  const navigate = useNavigate();
-  const queryClient = useQueryClient();
+  
 
   const handleSubmit = (event) => {
     event.preventDefault();

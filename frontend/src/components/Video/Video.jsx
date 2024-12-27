@@ -38,7 +38,7 @@ function Video() {
 
 
   return (
-    <div className="p-5 py-14 flex relative overflow-x-hidden">
+    <div className="p-10 py-14 flex relative overflow-x-hidden">
       <div className={`${isRouteActive && collapse2? "-translate-x-[18rem]  ": ""} transition-all duration-150 top-[0] left-0 z-[999] fixed sidebar`}>
         <Sidebar2 />
       </div>

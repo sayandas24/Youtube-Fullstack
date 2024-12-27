@@ -69,7 +69,7 @@ function Sidebar2() {
       </NavLink>
 
       <section
-        onClick={handleFeatureSoonShow}
+        onClick={() => handleFeatureSoonShow("Shorts w'll be added soon")}
         className={`flex gap-5 p-3 px-5 hover:bg-[#2c2c2c] duration-75 cursor-pointer rounded-xl`}
       >
         <div className="">
@@ -81,7 +81,7 @@ function Sidebar2() {
       <hr className="border-zinc-600 my-1" />
 
       <section
-        onClick={handleFeatureSoonShow}
+        onClick={() => handleFeatureSoonShow("History working on it")}
         className={`flex gap-5 p-3 px-5 hover:bg-[#2c2c2c] duration-75 cursor-pointer rounded-xl`}
       >
         <div className="">
@@ -91,7 +91,7 @@ function Sidebar2() {
       </section>
 
       <section
-      onClick={handleFeatureSoonShow}
+      onClick={() => handleFeatureSoonShow("Feature coming soon")}
         className={`flex gap-5 p-3 px-5 hover:bg-[#2c2c2c] duration-75 cursor-pointer rounded-xl`}
       >
         <div className="">
@@ -102,7 +102,7 @@ function Sidebar2() {
       <hr className="border-zinc-600 my-1" />
 
       <section
-      onClick={handleFeatureSoonShow}
+      onClick={() => handleFeatureSoonShow("Feature coming soon")}
         className={`flex gap-5 p-3 px-5 hover:bg-[#2c2c2c] duration-75 cursor-pointer rounded-xl`}
       >
         <div className="">

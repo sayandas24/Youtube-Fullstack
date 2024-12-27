@@ -11,8 +11,7 @@ import SignPopupMenu from "../ProfileMenu/SignPopupMenu";
 import { GoPlus } from "react-icons/go";
 import { LuMessageSquareDiff } from "react-icons/lu";
 
-import { SlCloudUpload } from "react-icons/sl";
-import NewFeatureMSG from "../UI/NewFeatureMSG";
+import { SlCloudUpload } from "react-icons/sl"; 
 import { FeatureSoonContext } from "../../contexts/featureSoonContext/UseFeatureSoon";
 
 
@@ -82,7 +81,7 @@ function Navbar() {
 
   return (
     <nav className="relative top-0 left-0 w-full z-50 bg-[#0f0f0f] min-h-[6rem]">
-      <NewFeatureMSG/>  
+      {/* <NewFeatureMSG/>   */}
       <ul className="flex fixed bg-[#0f0f0f] w-full top-0 text-md text-white  gap-5  p-5 pb-1 px-[1.6rem] justify-between">
         <section>
           <div className="flex gap-3 items-center">
@@ -107,11 +106,11 @@ function Navbar() {
                 className="pl-5 h-[2.90rem] w-[30rem] outline-none focus:border-[#0062ff] rounded-full border-[#393939] border bg-[#121212] rounded-r-none"
                 placeholder="Search"
               />
-              <div onClick={handleFeatureSoonShow} className="flex justify-center items-center rounded-l-none  h-[3rem] px-5 rounded-full bg-[#222222]">
+              <div onClick={() => handleFeatureSoonShow()} className="flex justify-center items-center rounded-l-none  h-[3rem] px-5 rounded-full bg-[#222222]">
                 <IoIosSearch className="text-[1.4rem]" />
               </div>
             </div>
-            <div onClick={handleFeatureSoonShow} className="h-[3rem] w-[3rem] flex items-center justify-center rounded-full bg-[#222222] hover:bg-[#2f2f2f]">
+            <div onClick={() => handleFeatureSoonShow()} className="h-[3rem] w-[3rem] flex items-center justify-center rounded-full bg-[#222222] hover:bg-[#2f2f2f]">
               <IoMdMic className="text-2xl" />
             </div>
           </div>
@@ -133,7 +132,7 @@ function Navbar() {
                         <SlCloudUpload className="text-[1.3rem]"/>
                         <h1 className="text-[1rem] ">Upload Video</h1>
                      </NavLink>
-                     <div onClick={handleFeatureSoonShow} className="flex items-center gap-4 p-3 px-4 hover:bg-[#3b3b3b] cursor-pointer">
+                     <div onClick={() => handleFeatureSoonShow()} className="flex items-center gap-4 p-3 px-4 hover:bg-[#3b3b3b] cursor-pointer">
                         <LuMessageSquareDiff className="text-[1.3rem]"/>
                         <h1 className="text-[1rem] ">Create Tweet</h1>
                      </div> 

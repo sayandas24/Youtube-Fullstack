@@ -13,7 +13,7 @@ import { CgProfile } from "react-icons/cg";
 
 function Sidebar() {
   const { collapse } = useContext(CollapseContext); 
-  const { featureSoonShow, handleFeatureSoonShow} = useContext(FeatureSoonContext)
+  const { handleFeatureSoonShow} = useContext(FeatureSoonContext)
 
   return (
     <div
@@ -40,10 +40,11 @@ function Sidebar() {
           Home
         </div>
       </NavLink>
+      
 
       <NavLink 
         to="/"
-        onClick={handleFeatureSoonShow}
+        onClick={() => handleFeatureSoonShow("Shorts w'll be added soon")}
         className={({ isActive }) =>
           `${
             !isActive
@@ -66,10 +67,12 @@ function Sidebar() {
           Shorts
         </div>
       </NavLink>
-
+      {!collapse && (
+        <hr className="border-zinc-600 my-1" />
+      )}
       <NavLink
         to="/"
-        onClick={handleFeatureSoonShow}
+        onClick={() => handleFeatureSoonShow("History working on it")}
         className={({ isActive }) =>
           `${!isActive ? "fill-white bg-[#2c2c2c]" : ""} ${
             collapse ? "flex-col items-center gap-[1px] bg-transparent" : ""
@@ -90,7 +93,7 @@ function Sidebar() {
 
       <NavLink
         to="/"
-        onClick={handleFeatureSoonShow}
+        onClick={() => handleFeatureSoonShow("Playlist feature not added yet")}
         className={({ isActive }) =>
           `${!isActive ? "fill-white bg-[#2c2c2c]" : ""} ${
             collapse ? "flex-col items-center gap-[1px] bg-transparent" : ""
@@ -108,10 +111,12 @@ function Sidebar() {
           Playlist
         </div>
       </NavLink>
-
+      {!collapse && (
+        <hr className="border-zinc-600 my-1" />
+      )}
       <NavLink
         to="/"
-        onClick={handleFeatureSoonShow}
+        onClick={() => handleFeatureSoonShow("Feature coming soon")}
         className={({ isActive }) =>
           `${!isActive ? "fill-white bg-[#2c2c2c]" : ""} ${
             collapse ? "flex-col items-center gap-[1px] bg-transparent" : ""
@@ -129,7 +134,7 @@ function Sidebar() {
           Settings
         </div>
       </NavLink>
-
+      
       <NavLink
         to="/profile"
         className={({ isActive }) =>

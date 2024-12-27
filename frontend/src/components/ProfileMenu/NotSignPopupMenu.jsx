@@ -57,27 +57,27 @@ function NotSignPopupMenu() {
           ref={menuRef} // Attach ref to menu
           className="absolute top-[3.5rem] z-10 right-[2rem] rounded-xl bg-[#282828] text-white w-[20rem] h-fit py-3"
         >
-          <section onClick={handleFeatureSoonShow}   className="p-3 hover:bg-[#383838] cursor-pointer">
+          <section onClick={() => handleFeatureSoonShow()}   className="p-3 hover:bg-[#383838] cursor-pointer">
             <div className="flex gap-3 items-center">
               <IoSettingsOutline className="text-2xl text-[#cacaca]" />
               <h1 className="text-[1rem] font-[320]">Settings</h1>
             </div>
           </section>
-          <section onClick={handleFeatureSoonShow} className="p-3 hover:bg-[#383838] cursor-pointer">
+          <section onClick={() => handleFeatureSoonShow()} className="p-3 hover:bg-[#383838] cursor-pointer">
             <div className="flex gap-3 items-center">
               <AiOutlineExclamationCircle className="text-2xl text-[#cacaca]" />
               <h1 className="text-[1rem] font-[320]">About</h1>
             </div>
           </section>
           <hr className="border-zinc-600 my-1" />
-          <section onClick={handleFeatureSoonShow} className="p-3 hover:bg-[#383838] cursor-pointer">
+          <section onClick={() => handleFeatureSoonShow()} className="p-3 hover:bg-[#383838] cursor-pointer">
             <div className="flex gap-3 items-center ">
               <GoMoon className="text-2xl text-[#cacaca]" />
               <h1 className="text-[1rem] font-[320]">Appearance: Dark</h1>
             </div>
           </section>
           <hr className="border-zinc-600 my-1" />
-          <section  onClick={handleFeatureSoonShow} className="p-3 hover:bg-[#383838] cursor-pointer">
+          <section  onClick={() => handleFeatureSoonShow()} className="p-3 hover:bg-[#383838] cursor-pointer">
             <div className="flex gap-3 items-center">
               <CiLocationOn className="text-2xl text-[#cacaca]" />
               <h1 className="text-[1rem] font-[320]">Location: India</h1>

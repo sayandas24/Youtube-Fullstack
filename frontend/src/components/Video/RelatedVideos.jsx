@@ -1,23 +1,28 @@
 import React, { useEffect, useState } from "react";
 import axiosInstance from "../../utils/axiosInstance";
 import { NavLink } from "react-router";
+import RelatedVideoSkeleton from "../UI/skeleton/RelatedVideoSkeleton";
 
 function RelatedVideos() {
   const [videos, setVideos] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     axiosInstance
       .get("video/")
       .then((res) => {
         setVideos(res.data.message);
+        setLoading(false);
       })
       .catch((err) => {
         console.log(err);
+        setLoading(false);
       });
   }, []); 
 
   return (
-    <section className=" w-[28rem] rounded-2xl flex text-white flex-col gap-3">
+    <section className={`${loading? "!overflow-hidden": ""} w-[28rem] rounded-2xl flex text-white flex-col gap-3`}>
+      {loading && <RelatedVideoSkeleton number={8}/>}
       {videos.map((video) => (
         <div key={video._id} className="flex  gap-2 w-full">
           {/* thumbnail */}

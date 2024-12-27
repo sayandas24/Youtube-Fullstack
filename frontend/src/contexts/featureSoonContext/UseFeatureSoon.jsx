@@ -4,9 +4,11 @@ export const FeatureSoonContext = createContext()
 
 export function FeatureSoonProvider({children}) {
     const [featureSoonShow, setFeatureSoonShow] = useState(false)
+    const [featureMSG, setFeatureMSG] = useState("")
 
-    const handleFeatureSoonShow = () => {
+    const handleFeatureSoonShow = (msg="Feature Coming Soon") => {
         setFeatureSoonShow(true)
+        setFeatureMSG(msg)
 
         setTimeout(() => {
             setFeatureSoonShow(false)
@@ -15,7 +17,7 @@ export function FeatureSoonProvider({children}) {
 
 
     return (
-        <FeatureSoonContext.Provider value={{featureSoonShow, handleFeatureSoonShow}}>
+        <FeatureSoonContext.Provider value={{featureSoonShow, handleFeatureSoonShow, featureMSG, setFeatureMSG}}>
             {children}
         </FeatureSoonContext.Provider>
     )

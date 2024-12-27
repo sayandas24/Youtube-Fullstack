@@ -1,6 +1,5 @@
-
-import "./App.css"; 
-import "./script.js"
+import "./App.css";
+import "./script.js";
 import Home from "./components/Home/Home.jsx";
 import Video from "./components/Video/Video.jsx";
 import { createBrowserRouter, RouterProvider } from "react-router";
@@ -14,6 +13,7 @@ import VideoPost from "./components/videoPost/VideoPost.jsx";
 import VideoUpload from "./components/videoPost/VideoUpload.jsx";
 import ProfilePage from "./components/profile/ProfilePage.jsx";
 import UpdateVideo from "./components/videoPost/UpdateVideo.jsx";
+import { SkeletonTheme } from "react-loading-skeleton";
 
 function App() {
   const router = createBrowserRouter([
@@ -31,46 +31,47 @@ function App() {
         },
         {
           path: "login",
-          element: <Login/>
+          element: <Login />,
         },
         {
           path: "register",
-          element: <Register/>
+          element: <Register />,
         },
         {
           path: "menu",
-          element: <SignPopupMenu/>
+          element: <SignPopupMenu />,
         },
         {
           path: "notsignmenu",
-          element: <NotSignPopupMenu/>
+          element: <NotSignPopupMenu />,
         },
         {
           path: "upload",
-          element: <VideoUpload/>
+          element: <VideoUpload />,
         },
         {
           path: "video-upload",
-          element: <VideoPost/>
+          element: <VideoPost />,
         },
         {
           path: "profile",
-          element: <ProfilePage/>
+          element: <ProfilePage />,
         },
         {
           path: "video-update/:id",
-          element: <UpdateVideo/>
-        }
-
+          element: <UpdateVideo />,
+        },
       ],
     },
   ]);
 
   return (
     <>
+    <SkeletonTheme color="#202020" highlightColor="#444"> 
       <RouterProvider router={router}>
-        <Login/>
+        <Login />
       </RouterProvider>
+      </SkeletonTheme>
     </>
   );
 }
