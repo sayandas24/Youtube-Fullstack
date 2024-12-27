@@ -58,7 +58,7 @@ function Profile({ user }) {
 
       <div className="mt-8">
         <section
-          onClick={handleFeatureSoonShow}
+          onClick={() => handleFeatureSoonShow()}
           className="hover:bg-[#1f1f1f] rounded-lg p-2 px-3 flex items-center gap-2 cursor-pointer"
         >
           <LuLayoutDashboard className="text-xl" />
@@ -79,14 +79,14 @@ function Profile({ user }) {
 
       <div className="mt-auto">
         <section
-          onClick={handleFeatureSoonShow}
+          onClick={() => handleFeatureSoonShow()}
           className="cursor-pointer hover:bg-[#1f1f1f] rounded-lg p-2 px-3 flex items-center gap-2"
         >
           <CiSettings className="text-xl" />
           <h1 className="text-[1rem] font-semibold">Settings</h1>
         </section>
         <section
-          onClick={handleFeatureSoonShow}
+          onClick={() => handleFeatureSoonShow()}
           className="cursor-pointer hover:bg-[#1f1f1f] rounded-lg p-2 px-3 flex items-center gap-2"
         >
           <CiCircleInfo className="text-xl" />
