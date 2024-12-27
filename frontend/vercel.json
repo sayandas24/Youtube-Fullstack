@@ -1,0 +1,23 @@
+{
+    "version": 2,
+    "builds": [
+      {
+        "src": "build/**/*.js",
+        "use": "@vercel/node"
+      },
+      {
+        "src": "build/**/*.jsx",
+        "use": "@vercel/react"
+      },
+      {
+        "src": "build/**/*.tsx",
+        "use": "@vercel/react"
+      }
+    ],
+    "routes": [
+      {
+        "src": "/(.*)",
+        "dest": "build/index.html"
+      }
+    ]
+  }
