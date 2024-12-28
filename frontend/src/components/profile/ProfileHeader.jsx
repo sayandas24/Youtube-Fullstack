@@ -23,7 +23,7 @@ function ProfileHeader() {
       </NavLink>
       <NavLink
         to="#"
-        onClick={handleFeatureSoonShow}
+        onClick={() => handleFeatureSoonShow()}
         className={({ isActive }) =>
           `hover:border-b text-[.9rem] text-zinc-400 font-[500] hover:border-zinc-500 p-2 px-1 flex items-center gap-2 ${
             !isActive
@@ -36,7 +36,7 @@ function ProfileHeader() {
       </NavLink>
       <NavLink
         to="#"
-        onClick={handleFeatureSoonShow}
+        onClick={() => handleFeatureSoonShow()}
         className={({ isActive }) =>
           `hover:border-b text-[.9rem] text-zinc-400 font-[500] hover:border-zinc-500 p-2 px-1 flex items-center gap-2 ${
             !isActive
@@ -49,7 +49,7 @@ function ProfileHeader() {
       </NavLink>
       <NavLink
         to="#"
-        onClick={handleFeatureSoonShow}
+        onClick={() => handleFeatureSoonShow()}
         className={({ isActive }) =>
           `hover:border-b text-[.9rem] text-zinc-400 font-[500] hover:border-zinc-500 p-2 px-1 flex items-center gap-2 ${
             !isActive

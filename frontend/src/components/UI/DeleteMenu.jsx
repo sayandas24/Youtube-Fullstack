@@ -3,15 +3,16 @@ import { NavLink, useNavigate } from "react-router";
 import { ProfileContext } from "../../contexts/profileContext/profileContext";
 import axiosInstance from "../../utils/axiosInstance";
 import { ClipLoader } from "react-spinners"; // Example of a spinner component
+import Checkbox from "@mui/material/Checkbox";
 
 function DeleteMenu() {
   const { setDeleteClick, videoDetails } = useContext(ProfileContext);
   const [loading, setLoading] = useState(false);
   const [checkInput, setCheckInput] = useState(false);
 
-  const navigate = useNavigate();
+  const navigate = useNavigate(); 
 
-  const handleDelete = () => { 
+  const handleDelete = () => {
     setLoading(true);
     axiosInstance
       .delete(`/video/delete/${videoDetails?._id}`)
@@ -52,15 +53,19 @@ function DeleteMenu() {
           </div>
         </section>
 
-        <section className="flex gap-2 mt-4">
-          <input
+        <section className="flex gap-1 mt-1 items-center">
+
+          <Checkbox 
+            className="!text-white "
+            aria-label="Checkbox demo"
+            defaultChecked
             onChange={(e) => setCheckInput(e.target.checked)}
-            type="checkbox"
             name="understand"
             id="understand"
-            className="bg-transparent rounded-xl border border-zinc-700"
-          />
-          <label htmlFor="understand" className="cursor-pointer">I understand, delete forever</label>
+          /> 
+          <label htmlFor="understand" className="cursor-pointer">
+            I understand, delete forever
+          </label>
         </section>
 
         <section className="mt-[1rem] flex justify-between items-center">
