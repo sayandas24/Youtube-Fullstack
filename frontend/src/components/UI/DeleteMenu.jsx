@@ -58,7 +58,6 @@ function DeleteMenu() {
           <Checkbox 
             className="!text-white "
             aria-label="Checkbox demo"
-            defaultChecked
             onChange={(e) => setCheckInput(e.target.checked)}
             name="understand"
             id="understand"

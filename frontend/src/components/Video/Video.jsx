@@ -35,6 +35,7 @@ function Video() {
   if (isHomeRoute) {
     setCollapse2(true)
   }
+  console.log(getVideo)
 
 
   return (

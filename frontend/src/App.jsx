@@ -5,15 +5,15 @@ import Video from "./components/Video/Video.jsx";
 import { createBrowserRouter, RouterProvider } from "react-router";
 import Layout from "./components/Layout/Layout.jsx";
 import Login from "./components/auth/login/Login.jsx";
-import Register from "./components/auth/register/Register.jsx";
-import PopupMenu from "./components/ProfileMenu/SignPopupMenu.jsx";
-import NotSignPopupMenu from "./components/ProfileMenu/NotSignPopupMenu.jsx";
-import SignPopupMenu from "./components/ProfileMenu/SignPopupMenu.jsx";
+import Register from "./components/auth/register/Register.jsx"; 
+import NotSignPopupMenu from "./components/ProfileMenuPopup/NotSignPopupMenu.jsx";
+import SignPopupMenu from "./components/ProfileMenuPopup/SignPopupMenu.jsx";
 import VideoPost from "./components/videoPost/VideoPost.jsx";
 import VideoUpload from "./components/videoPost/VideoUpload.jsx";
 import ProfilePage from "./components/profile/ProfilePage.jsx";
 import UpdateVideo from "./components/videoPost/UpdateVideo.jsx";
 import { SkeletonTheme } from "react-loading-skeleton";
+import ProfileDashboard from "./components/profile/ProfileDashboard.jsx";
 
 function App() {
   const router = createBrowserRouter([
@@ -61,6 +61,10 @@ function App() {
           path: "video-update/:id",
           element: <UpdateVideo />,
         },
+        {
+          path: "dashboard",
+          element: <ProfileDashboard/>
+        }
       ],
     },
   ]);

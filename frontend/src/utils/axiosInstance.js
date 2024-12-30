@@ -1,8 +1,8 @@
 import axios from "axios";
 
 const axiosInstance = axios.create({
-  baseURL: "https://metube-n3vg.onrender.com/api/v1", // Replace with your backend's base URL
-  // timeout: 20000, // Optional: set timeout
+  baseURL: "http://localhost:8000/api/v1", // Replace with your backend's base URL
+  // "https://metube-n3vg.onrender.com/api/v1",
 });
 
 axiosInstance.interceptors.request.use((config) => {

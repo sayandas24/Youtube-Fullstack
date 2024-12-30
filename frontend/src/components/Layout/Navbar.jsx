@@ -1,13 +1,13 @@
 import React, { useContext, useEffect, useRef, useState } from "react";
-import { NavLink, useLocation, useSearchParams } from "react-router";
+import { NavLink } from "react-router";
 import { IoMdMenu } from "react-icons/io";
 import metube from "../../assets/metube.svg";
 import { IoIosSearch } from "react-icons/io";
-import NotSignPopupMenu from "../ProfileMenu/NotSignPopupMenu";
+import NotSignPopupMenu from "../ProfileMenuPopup/NotSignPopupMenu";
 import { IoMdMic } from "react-icons/io";
 import { CollapseContext } from "../../contexts/collapseMenu/CollapseContext";
 import axiosInstance from "../../utils/axiosInstance";
-import SignPopupMenu from "../ProfileMenu/SignPopupMenu";
+import SignPopupMenu from "../ProfileMenuPopup/SignPopupMenu";
 import { GoPlus } from "react-icons/go";
 import { LuMessageSquareDiff } from "react-icons/lu";
 

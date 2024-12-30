@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-import Profile from "./Profile";
+import ProfileSection from "./ProfileSection";
 import ProfileHeader from "./ProfileHeader";
 import VideoSection from "./VideoSection";
 import axiosInstance from "../../utils/axiosInstance";
@@ -60,7 +60,7 @@ function ProfilePage() {
 
       {/* left */}
       <div className="w-[18rem] mt-5 mb-5">
-        <Profile user={user} />
+        <ProfileSection user={user} />
       </div>
       {/* right */}
       <section className="w-[100%] border-l border-[#434343] overflow-y-auto">

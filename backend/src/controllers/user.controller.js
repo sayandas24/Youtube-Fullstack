@@ -206,8 +206,7 @@ const loginUser = asyncHandler(async (req, res) => {
     }
     const user = await User.findOne({
       $or: [{ username }, { email }],
-    });
-    console.log("in login", req.body);
+    }); 
 
     if (!user) {
       throw new ApiError(404, "User not exist");
@@ -256,7 +255,7 @@ const loginUser = asyncHandler(async (req, res) => {
   }
 });
 
-// for logout thats why we make auth middleware
+// for logout thats why we make auth middleware 
 const logoutUser = asyncHandler(async (req, res) => {
   await User.findByIdAndUpdate(
     req.user._id,
@@ -707,6 +706,8 @@ const getWatchHistory = asyncHandler(async (req, res) => {
     .status(200)
     .json(new ApiResponse(200, user[0].watchHistory, "Watch history fetched"));
 });
+
+ 
 
 export {
   registerUser,

@@ -1,15 +1,14 @@
 import { asyncHandler } from "../utils/asyncHandler.js";
 import { ApiError } from "../utils/ApiError.js";
-import { User } from "../models/user.model.js";
 import { Video } from "../models/video.model.js";
 import { uploadOnCloudinary } from "../utils/cloudinary.js";
 import { ApiResponse } from "../utils/ApiResponse.js";
-import jwt from "jsonwebtoken";
 import { v2 as cloudinary } from "cloudinary";
+import mongoose from "mongoose";
 
 // upload video
 const uploadVideo = asyncHandler(async (req, res) => {
-  const { title, description } = req.body; 
+  const { title, description } = req.body;
 
   if (
     // advanced error handling
@@ -100,7 +99,7 @@ const updateVideo = asyncHandler(async (req, res) => {
 
 // delete video
 const deleteVideo = asyncHandler(async (req, res) => {
-  const { id } = req.params; 
+  const { id } = req.params;
 
   const video = await Video.findById(id);
 
@@ -119,28 +118,124 @@ const deleteVideo = asyncHandler(async (req, res) => {
     .status(200)
     .json(new ApiResponse(200, "Video deleted", videoDelete));
 });
- 
+
 
 // get the video
+// getting the video
 const getVideo = asyncHandler(async (req, res) => {
-  const videoId = req.params.id; 
+  const videoId = req.params.id;
+
   if (!videoId) {
     throw new ApiError(500, "Can't find id");
   }
-  //populating the owner details
-  const video = await Video.findById(videoId).populate(
-    "owner",
-    "username fullName email avatar"
-  );
 
-  if (!video) {
+  const video = await Video.aggregate([
+    {
+      $match: {
+        _id: new mongoose.Types.ObjectId(videoId),
+      },
+    },
+    // lookup owner details
+    {
+      $lookup: {
+        from: "users",
+        localField: "owner",
+        foreignField: "_id",
+        as: "ownerDetails",
+      },
+    },
+    // means we want to unwind the array
+    {
+      $unwind: { 
+        path: "$ownerDetails",
+        preserveNullAndEmptyArrays: true,
+      },
+    },
+    // lookup subscribers details
+    {
+      $lookup: {
+        from: "subscriptions",
+        localField: "ownerDetails._id", // Use ownerDetails._id to match with Subscriptions
+        foreignField: "channel",
+        as: "subscribers",
+      },
+    },
+    // lookup subscribedTo details
+    {
+      $lookup: {
+        from: "subscriptions",
+        localField: "ownerDetails._id", // Use ownerDetails._id to match with Subscriptions
+        foreignField: "subscriber",
+        as: "subscribedTo",
+      },
+    },
+    // lookup videoLikes details
+    {
+      $lookup: {
+        from : "likes",
+        localField: "_id",
+        foreignField: "videoLike",
+        as: "videoLikes"
+      },
+    },
+    {
+      $lookup: {
+        from: "comments",
+        localField: "_id",
+        foreignField: "videoDetails",
+        as: "comments"
+      }
+    },
+    // adding fields to 
+    {
+      $addFields: {
+        subscribersCount: { $size: "$subscribers" },
+        channelsSubscribedToCount: { $size: "$subscribedTo" },
+        videoLikes: {$size: "$videoLikes"},
+        comments: "$comments",
+        commentCount: {$size: "$comments"}
+      },
+    },
+    {
+      $project: {
+        _id: 1,
+        videoFile: 1,
+        thumbnail: 1,
+        title: 1,
+        description: 1,
+        duration: 1,
+        views: 1,
+        isPublished: 1,
+        createdAt: 1,
+        ownerDetails: {
+          _id: 1,
+          username: 1,
+          fullName: 1,
+          email: 1,
+          avatar: 1,
+          coverImage: 1,
+        },
+        subscribersCount: 1,
+        channelsSubscribedToCount: 1,
+        videoLikes: 1,
+        commentCount: 1,
+        comments: 1
+      },
+    },
+  ]);
+
+  console.log(video)
+
+  if (!video.length) {
     throw new ApiError(500, "Can't find video from database");
   }
 
   return res
     .status(200)
-    .json(new ApiResponse(200, "Video found successfully", video));
+    .json(new ApiResponse(200, "Video found successfully", video[0]));
 });
+
+
 
 // getting all the videos in home page
 const allVideos = asyncHandler(async (req, res) => {
@@ -151,7 +246,7 @@ const allVideos = asyncHandler(async (req, res) => {
   if (!videos) {
     throw new ApiError(500, "can't find videos")
   }
-  return res 
+  return res
     .status(200)
     .json(new ApiResponse(200, "Getting all videos", videos))
 
