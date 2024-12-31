@@ -10,12 +10,11 @@ import Sidebar2 from "../Layout/Sidebar2";
 import { CollapseContext } from "../../contexts/collapseMenu/CollapseContext";
 import { BiLike } from "react-icons/bi";
 import { BsThreeDots } from "react-icons/bs";
-
-
-
+import ThumbUpOutlinedIcon from "@mui/icons-material/ThumbUpOutlined";
+import ThumbUpIcon from "@mui/icons-material/ThumbUp";
 
 function Video() {
-  const [getVideo, setGetVideo] = useState({}); 
+  const [getVideo, setGetVideo] = useState({});
 
   const { videoId } = useParams();
   const location = useLocation();
@@ -52,7 +51,6 @@ function Video() {
         });
     }
     if (getVideo.isSubscribed == true) {
-      
       axiosInstance
         .get(`/subscription/unsubscribe/${getVideo.ownerDetails._id}`)
         .then((res) => {
@@ -64,11 +62,44 @@ function Video() {
           }));
         });
     }
-  }; 
+  };
+
+  // Function to handle like
+  const handleLikeVideo = (videoId) => {
+    if (getVideo.isLiked === false) {
+      axiosInstance
+        .get(`/like/like-video/${videoId}`)
+        .then((res) => {
+          setGetVideo((prev) => ({
+            ...prev,
+            videoLikes: prev.videoLikes + 1,
+            isLiked: true,
+          }));
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
+
+    if (getVideo.isLiked === true) {
+      axiosInstance
+        .get(`/like/dislike-video/${videoId}`)
+        .then((res) => {
+          setGetVideo((prev) => ({
+            ...prev,
+            videoLikes: prev.videoLikes - 1,
+            isLiked: false,
+          }));
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
+  };
 
   if (isHomeRoute) {
     setCollapse2(true);
-  } 
+  }
 
   return (
     <div className="p-10 py-14 flex relative overflow-x-hidden">
@@ -123,27 +154,37 @@ function Video() {
               <div className="flex justify-between w-full">
                 <button
                   onClick={handleSubscribe}
-                  className={`${getVideo.isSubscribed? "": "!bg-white hover:!bg-[#d6d6d6] !text-black"}  p-[.4rem] px-5 basicButton1  rounded-full text-sm font-semibold`}
+                  className={`${
+                    getVideo.isSubscribed
+                      ? ""
+                      : "!bg-white hover:!bg-[#d6d6d6] !text-black"
+                  }  p-[.4rem] px-5 basicButton1  rounded-full text-sm font-semibold`}
                 >
                   {getVideo.isSubscribed ? "Unsubscribe" : "Subscribe"}
                 </button>
 
                 <div className="flex gap-2 ">
-                  <button className="p-[.4rem] basicButton1  px-5 flex gap-2 items-center  rounded-full text-sm font-semibold">
-                  <BiLike className="text-xl"/> <span>{getVideo.videoLikes}</span>
-
+                  <button
+                    onClick={() => handleLikeVideo(getVideo._id)}
+                    className="p-[.4rem]  basicButton1 px-5 flex gap-1 items-center  rounded-full text-sm font-semibold"
+                  >
+                    {getVideo.isLiked ? (
+                      <ThumbUpIcon className="text-xl" />
+                    ) : (
+                      <ThumbUpOutlinedIcon className="text-xl" />
+                    )}
+                    <span className="like text-lg font-semibold w-5">
+                      {getVideo.videoLikes}
+                    </span>
                   </button>
                   <button className="p-[.4rem] basicButton1  px-5 rounded-full text-sm font-semibold">
                     <RiShareForwardLine />
-                   
                   </button>
                   <button className="p-[.4rem] basicButton1 px-5  rounded-full text-sm font-semibold">
-                   
                     <LiaDownloadSolid />
                   </button>
                   <button className="p-[.4rem] basicButton1 px-5  rounded-full text-sm font-semibold">
-                  <BsThreeDots />
-
+                    <BsThreeDots />
                   </button>
                 </div>
               </div>
@@ -153,7 +194,14 @@ function Video() {
           <div className="flex gap-2 w-full  bg-[#262626]  px-3 py-5 rounded-2xl flex-col">
             {/* video description */}
             <div>
-              <h1>{getVideo.views} views Posted on {getVideo.createdAt?.slice(0, 10).split("-").reverse().join("-")}</h1>
+              <h1>
+                {getVideo.views} views Posted on{" "}
+                {getVideo.createdAt
+                  ?.slice(0, 10)
+                  .split("-")
+                  .reverse()
+                  .join("-")}
+              </h1>
               <p>{getVideo.description}</p>
             </div>
 

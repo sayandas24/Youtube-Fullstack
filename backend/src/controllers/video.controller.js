@@ -128,7 +128,7 @@ const getVideo = asyncHandler(async (req, res) => {
   if (!videoId) {
     throw new ApiError(500, "Can't find id");
   }
-  
+
 
   const video = await Video.aggregate([
     {
@@ -147,7 +147,7 @@ const getVideo = asyncHandler(async (req, res) => {
     },
     // means we want to unwind the array
     {
-      $unwind: { 
+      $unwind: {
         path: "$ownerDetails",
         preserveNullAndEmptyArrays: true,
       },
@@ -158,7 +158,7 @@ const getVideo = asyncHandler(async (req, res) => {
         from: "subscriptions",
         localField: "ownerDetails._id", // Use ownerDetails._id to match with Subscriptions
         foreignField: "channel",
-        as: "subscribers", 
+        as: "subscribers",
       },
     },
     // lookup subscribedTo details
@@ -173,7 +173,7 @@ const getVideo = asyncHandler(async (req, res) => {
     // lookup videoLikes details
     {
       $lookup: {
-        from : "likes",
+        from: "likes",
         localField: "_id",
         foreignField: "videoLike",
         as: "videoLikes"
@@ -205,22 +205,29 @@ const getVideo = asyncHandler(async (req, res) => {
             }
           },
           {
-            $unwind: { 
+            $unwind: {
               path: "$commentOwner",
               preserveNullAndEmptyArrays: true,
             },
           },
         ]
       }
-    }, 
+    },
     // adding fields to 
     {
       $addFields: {
         subscribersCount: { $size: "$subscribers" },
         channelsSubscribedToCount: { $size: "$subscribedTo" },
-        videoLikes: {$size: "$videoLikes"},
+        videoLikes: { $size: "$videoLikes" },
         comments: "$commentDetails",
-        commentCount: {$size: "$commentDetails"},
+        commentCount: { $size: "$commentDetails" },
+        isLiked: {
+          $cond: {
+            if: { $in: [req.user?._id, "$videoLikes.likedBy"] },
+            then: true,
+            else: false,
+          },
+        },
         isSubscribed: {
           $cond: {
             if: { $in: [req.user?._id, "$subscribers.subscriber"] },
@@ -255,12 +262,13 @@ const getVideo = asyncHandler(async (req, res) => {
         channelsSubscribedToCount: 1,
         videoLikes: 1,
         commentCount: 1,
-        comments: 1
+        comments: 1,
+        isLiked: 1
       },
     },
   ]);
 
-  
+
 
   if (!video.length) {
     throw new ApiError(500, "Can't find video from database");
