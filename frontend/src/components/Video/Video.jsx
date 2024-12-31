@@ -5,45 +5,81 @@ import { RiShareForwardLine } from "react-icons/ri";
 import { LiaDownloadSolid } from "react-icons/lia";
 import VideoPlayer from "./VideoPlayer";
 import axiosInstance from "../../utils/axiosInstance";
-import { useParams, useLocation } from "react-router"; 
+import { useParams, useLocation } from "react-router";
 import Sidebar2 from "../Layout/Sidebar2";
 import { CollapseContext } from "../../contexts/collapseMenu/CollapseContext";
 
 function Video() {
   const [getVideo, setGetVideo] = useState({});
+  const [subscribed, setSubscribed] = useState();
 
   const { videoId } = useParams();
   const location = useLocation();
   const isRouteActive = location.pathname.startsWith(`/p/`);
   const isHomeRoute = location.pathname === `/`;
 
-  const {collapse2, setCollapse2} = useContext(CollapseContext)
- 
+  const { collapse2, setCollapse2 } = useContext(CollapseContext);
+
   // is the class is true then add some class in sidebar,,,
   useEffect(() => {
-    setCollapse2(true)
-  }, [])
-  
+    setCollapse2(true);
+  }, []);
 
+  // fetch the video
   useEffect(() => {
     axiosInstance.get(`/video/p/${videoId}`).then((res) => {
       setGetVideo(res.data.message);
     });
   }, [videoId]);
 
+  // Function to handle subscription
+  const handleSubscribe = () => {
+    // Check if the user is already subscribed
+    if (getVideo.isSubscribed == false) {
+      axiosInstance
+        .get(`/subscription/subscribe/${getVideo.ownerDetails._id}`)
+        .then((res) => {
+          // Update the subscriber count in the state
+          setGetVideo((prev) => ({
+            ...prev,
+            subscribersCount: prev.subscribersCount + 1,
+            isSubscribed: true,
+          }));
+        });
+    }
+    if (getVideo.isSubscribed == true) {
+      
+      axiosInstance
+        .get(`/subscription/unsubscribe/${getVideo.ownerDetails._id}`)
+        .then((res) => {
+          // Update the subscriber count in the state
+          setGetVideo((prev) => ({
+            ...prev,
+            subscribersCount: prev.subscribersCount - 1,
+            isSubscribed: false,
+          }));
+        });
+    }
+  }; 
 
   if (isHomeRoute) {
-    setCollapse2(true)
+    setCollapse2(true);
   }
-  console.log(getVideo)
-
 
   return (
     <div className="p-10 py-14 flex relative overflow-x-hidden">
-      <div className={`${isRouteActive && collapse2? "-translate-x-[18rem]  ": ""} transition-all duration-150 top-[0] left-0 z-[999] fixed sidebar`}>
+      <div
+        className={`${
+          isRouteActive && collapse2 ? "-translate-x-[18rem]  " : ""
+        } transition-all duration-150 top-[0] left-0 z-[999] fixed sidebar`}
+      >
         <Sidebar2 />
       </div>
-      <main className={`${collapse2? "": "opacity-50 blur-[2px]"} flex gap-5 transition-all duration-150`}>
+      <main
+        className={`${
+          collapse2 ? "" : "opacity-50 blur-[2px]"
+        } flex gap-5 transition-all duration-150`}
+      >
         {/* left video */}
         <section className="w-[75rem] text-white flex flex-col gap-3">
           {/* video player, channel details */}
@@ -62,7 +98,9 @@ function Video() {
                 <div className="w-[2.4rem] h-[2.4rem] overflow-hidden rounded-full">
                   <img
                     className="w-full h-full object-cover"
-                    src={getVideo.owner ? getVideo.owner.avatar : ""}
+                    src={
+                      getVideo.ownerDetails ? getVideo.ownerDetails.avatar : ""
+                    }
                     alt="avatar"
                   />
                 </div>
@@ -70,14 +108,21 @@ function Video() {
               {/* Avatar name, description */}
               <div className="flex flex-col text-white text-nowrap">
                 <p className="text-[1.2rem]">
-                  {getVideo.owner ? getVideo.owner.fullName : "N/A"}
+                  {getVideo.ownerDetails
+                    ? getVideo.ownerDetails.fullName
+                    : "N/A"}
                 </p>
-                <p className="text-[.8rem] text-zinc-500">23M Subscribers</p>
+                <p className="text-[.8rem] text-zinc-500">
+                  {getVideo ? getVideo.subscribersCount : 0} Subscribers
+                </p>
               </div>
               {/* Subscribe and other buttons */}
               <div className="flex justify-between w-full">
-                <button className="p-[.4rem] px-5 border border-zinc-600 bg-zinc-700 rounded-full text-sm font-semibold">
-                  Subscribe
+                <button
+                  onClick={handleSubscribe}
+                  className="p-[.4rem] px-5 border border-zinc-600 bg-zinc-700 rounded-full text-sm font-semibold"
+                >
+                  {getVideo.isSubscribed ? "Unsubscribe" : "Subscribe"}
                 </button>
 
                 <div className="flex gap-2">
@@ -114,7 +159,9 @@ function Video() {
                 <div className="w-[2.4rem] h-[2.4rem] overflow-hidden rounded-full">
                   <img
                     className="w-full h-full object-cover"
-                    src={getVideo.owner ? getVideo.owner.avatar : ""}
+                    src={
+                      getVideo.ownerDetails ? getVideo.ownerDetails.avatar : ""
+                    }
                     alt="avatar"
                   />
                 </div>
@@ -122,9 +169,13 @@ function Video() {
               {/* Avatar name, description */}
               <div className="flex flex-col text-white text-nowrap">
                 <p className="text-[1.2rem]">
-                  {getVideo.owner ? getVideo.owner.fullName : "N/A"}
+                  {getVideo.ownerDetails
+                    ? getVideo.ownerDetails.fullName
+                    : "N/A"}
                 </p>
-                <p className="text-[.8rem] text-zinc-500">23M Subscribers</p>
+                <p className="text-[.8rem] text-zinc-500">
+                  {getVideo ? getVideo.subscribersCount : 0} Subscribers
+                </p>
               </div>
             </section>
 
@@ -143,7 +194,7 @@ function Video() {
           </div>
 
           {/* comments */}
-          <Comments />
+          <Comments getVideo={getVideo} />
         </section>
 
         {/* right other videos */}

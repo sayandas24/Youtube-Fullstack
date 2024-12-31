@@ -27,8 +27,7 @@ function Sidebar2() {
   // temp
   const handleClickOutsideSidebar = (event) => {
     if (!event.target.closest(".sidebar") && !event.target.closest(".more-options")) {
-      setCollapse2(true);
-      console.log("clicked outside")
+      setCollapse2(true); 
     }
   };
   useEffect(() => {

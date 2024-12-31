@@ -13,13 +13,14 @@ const subscribeUser = asyncHandler(async (req, res) => {
 
     if (existingSubscription) {
         return res.status(400).json(new ApiResponse(400, existingSubscription, "Already subscribed to this channel"));
-    }
+    } 
 
     // Create a new subscription
     const newSubscription = await Subscription.create({
         subscriber: req.user._id,
         channel: req.params.id
     });
+ 
 
     return res
         .status(200)
