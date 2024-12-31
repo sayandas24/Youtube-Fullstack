@@ -4,6 +4,7 @@ import { BiLike, BiDislike } from "react-icons/bi";
 import { BsThreeDotsVertical } from "react-icons/bs";
 import axiosInstance from "../../utils/axiosInstance";
 import { NavLink } from "react-router";
+import NProgress from "nprogress";
 
 function Comments({ getVideo }) {
   const [content, setContent] = useState("");
@@ -26,13 +27,15 @@ function Comments({ getVideo }) {
 
   // Function to add a new comment
   const formSubmit = async (e) => {
+    NProgress.start();
     e.preventDefault();
     try {
       // Post the new comment to the server
-      const response = await axiosInstance.post(
-        `/comment/comment-video/${getVideo._id}`,
-        { content }
-      );
+      const response = await axiosInstance
+        .post(`/comment/comment-video/${getVideo._id}`, { content })
+        .finally(() => {
+          NProgress.done();
+        });
 
       // Assuming the server returns the newly created comment with its `_id`
       const newComment = response.data.data;
@@ -53,31 +56,37 @@ function Comments({ getVideo }) {
       setContent("");
     } catch (error) {
       console.error("Error adding comment:", error);
+      NProgress.done();
     }
   };
 
   // Function to delete a comment
   const handleCommentDelete = async (commentOwnerId, commentId) => {
-    console.log(commentId);
-  
+    NProgress.start();
+
     if (loginUser._id === commentOwnerId) {
       try {
         // Send the delete request to the server
-        await axiosInstance.delete(`/comment/delete-comment-video/${commentId}`);
-  
+        await axiosInstance.delete(
+          `/comment/delete-comment-video/${commentId}`
+        ).finally(() => {
+          NProgress.done();
+        });
+
         // Update the state by filtering out the deleted comment
-        setOwnerOfComment((prevComments) =>
-          prevComments.filter((comment) => comment._id !== commentId) // Correct filter logic
+        setOwnerOfComment(
+          (prevComments) =>
+            prevComments.filter((comment) => comment._id !== commentId) // Correct filter logic
         );
-  
+
         // Decrement the comment count
         setCommentNumber((prevCount) => prevCount - 1);
       } catch (error) {
         console.error("Error deleting comment:", error);
+        NProgress.done();
       }
     }
   };
-  
 
   return (
     <div className="flex gap-2 w-full h-[20rem]  border-zinc-600 p-2 py-5 rounded-2xl flex-col">
@@ -116,13 +125,22 @@ function Comments({ getVideo }) {
                 />
               </div>
               <div className="flex gap-2 justify-end">
-                <div className="p-[.4rem] px-5 border border-zinc-600 rounded-full text-sm font-semibold">
+                <div
+                  disabled={content === ""}
+                  onClick={() => setContent("")}
+                  className={`${
+                    content === "" ? "opacity-50 pointer-events-none" : ""
+                  } p-[.4rem] px-5 border border-zinc-600 rounded-full text-sm font-semibold hover:bg-[#3a3a3a] cursor-pointer`}
+                >
                   Cancel
                 </div>
                 <button
                   type="submit"
+                  disabled={content === ""}
                   onClick={(e) => formSubmit(e)}
-                  className="p-[.4rem] px-5 bg-blue-600 active:bg-blue-800 border-zinc-600 rounded-full text-sm font-semibold"
+                  className={`${
+                    content === "" ? "opacity-50 pointer-events-none" : ""
+                  } p-[.4rem] px-5 bg-blue-600 active:bg-blue-800 border-zinc-600 rounded-full text-sm font-semibold`}
                 >
                   Comment
                 </button>

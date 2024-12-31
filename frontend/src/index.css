@@ -2,4 +2,6 @@
 @tailwind components;
 @tailwind utilities;
  
- 
+.basicButton1{
+    @apply bg-[#262626] text-white border border-black hover:bg-[#3e3e3e] hover:text-white duration-200 
+}

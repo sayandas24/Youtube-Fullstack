@@ -16,7 +16,7 @@ createRoot(document.getElementById("root")).render(
       <CollapseProvider>
         <ProfileProvider>
           <FeatureSoonProvider> 
-            <App /> 
+              <App /> 
           </FeatureSoonProvider>
         </ProfileProvider>
       </CollapseProvider>

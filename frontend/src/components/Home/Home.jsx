@@ -4,22 +4,27 @@ import { useEffect, useState } from "react";
 import { NavLink } from "react-router";
 import Sidebar from "../Layout/Sidebar";
 import VideoHomeSkeleton from "../UI/skeleton/VideoHomeSkeleton";
-import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
+import Skeleton, { SkeletonTheme } from "react-loading-skeleton"; 
+import NProgress from "nprogress";
 
 function Home() {
   const [videos, setVideos] = useState([]);
   const [loading, setLoading] = useState(true);
+ 
 
   useEffect(() => {
+    NProgress.start();
     axiosInstance
       .get("/video")
       .then((res) => {
         setVideos(res.data.message);
         setLoading(false);
+        NProgress.done();
       })
       .catch((err) => {
         console.log(err);
         setLoading(false);
+        NProgress.done();
       });
   }, []);
   
@@ -27,18 +32,21 @@ function Home() {
     e.preventDefault();
     axiosInstance
       .get(`/video/p/${videoLink}`)
-      .then((res) => console.log(res))
+      .then((res) => {
+        // pass tp context 
+        console.log("passed video")
+      })
       .catch((err) => console.log(err));
   };
 
   // after login, redirect to home, and show profile, hide not login status, fetch user details from current user route, {if user available}
   return (
-    <div className="flex overflow-hidden">
+    <div className="flex overflow-shidden">
       <section className=""> 
         <Sidebar/>
       </section>
 
-      <div id="videoContainer" className={`${loading? "overflow-y-hidden" : ""} flex gap-5 flex-wrap overflow-y-auto`}>
+      <div id="videoContainer" className={`${loading? "overflow-y-hidden" : ""} px-5 w-full gap-5 flex-wrap overflow-y-auto`}>
         {loading ? (
            
           <VideoHomeSkeleton number={12}/>
@@ -51,9 +59,9 @@ function Home() {
                   onClick={(e) => {
                     e.currentTarget.closest("form").requestSubmit();
                   }}
-                  id="eachVideo" className="flex cursor-pointer flex-col gap-1 w-[22rem]"
+                  id="eachVideo" className="flex overflow-hidden cursor-pointer flex-col gap-1"
                 >
-                  <section className="videoParent relative border  border-black bg-zinc-600 rounded-3xl overflow-hidden w-[22rem] h-[13rem] ">
+                  <section className="videoParent relative border h-[18rem]   border-black bg-zinc-600 rounded-3xl overflow-hidden">
                     <div className="absolute top-0 left-0 w-full h-full bg-transparent duration-200 hover:bg-[#f0f0f010]"></div>
                     <img
                       className="w-full h-full object-cover"

@@ -84,12 +84,35 @@ body {
   font-size: .875rem;
   color: #58a9ff;
 }
+/* Input box */
 
 
-/* Temp */
-/* .videoContainer{
-  columns: 4;
+/* Video columns */
+#videoContainer{
+  columns: 350px;
+  /* overflow: hidden; */
+  
 }
-.eachVideo{
-  width: 100%;
-} */
+#eachVideo{
+  min-width: 10rem; 
+  overflow: hidden;
+}
+/* Video columns */
+/* layout */
+
+/* Customize the progress bar */
+#nprogress .bar {
+  background: #e81414 !important; /* Custom color */
+  height: 2px !important; /* Thickness */
+}
+
+#nprogress .peg {
+  box-shadow: 0 0 10px #d81d1d, 0 0 5px #d8201d !important;
+}
+
+#nprogress .spinner {
+  display: none !important; /* Hide spinner */
+}
+
+/* Add specificity to override NProgress styles */
+

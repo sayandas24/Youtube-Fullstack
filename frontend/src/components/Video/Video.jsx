@@ -8,10 +8,14 @@ import axiosInstance from "../../utils/axiosInstance";
 import { useParams, useLocation } from "react-router";
 import Sidebar2 from "../Layout/Sidebar2";
 import { CollapseContext } from "../../contexts/collapseMenu/CollapseContext";
+import { BiLike } from "react-icons/bi";
+import { BsThreeDots } from "react-icons/bs";
+
+
+
 
 function Video() {
-  const [getVideo, setGetVideo] = useState({});
-  const [subscribed, setSubscribed] = useState();
+  const [getVideo, setGetVideo] = useState({}); 
 
   const { videoId } = useParams();
   const location = useLocation();
@@ -64,7 +68,7 @@ function Video() {
 
   if (isHomeRoute) {
     setCollapse2(true);
-  }
+  } 
 
   return (
     <div className="p-10 py-14 flex relative overflow-x-hidden">
@@ -88,8 +92,7 @@ function Video() {
             <VideoPlayer getVideo={getVideo} />
             {/* video title */}
             <section className="text-[1.2rem] leading-[1.4rem]">
-              Description is the main content of the video that s how this
-              works. In case of any situation, you can use this description.
+              {getVideo?.title} | {getVideo.ownerDetails?.fullName}
             </section>
             {/* channel details, subs */}
             <section className="flex gap-2 items-center">
@@ -120,36 +123,38 @@ function Video() {
               <div className="flex justify-between w-full">
                 <button
                   onClick={handleSubscribe}
-                  className="p-[.4rem] px-5 border border-zinc-600 bg-zinc-700 rounded-full text-sm font-semibold"
+                  className={`${getVideo.isSubscribed? "": "!bg-white hover:!bg-[#d6d6d6] !text-black"}  p-[.4rem] px-5 basicButton1  rounded-full text-sm font-semibold`}
                 >
                   {getVideo.isSubscribed ? "Unsubscribe" : "Subscribe"}
                 </button>
 
-                <div className="flex gap-2">
-                  <button className="p-[.4rem] px-5 border border-zinc-600 bg-zinc-700 rounded-full text-sm font-semibold">
-                    Like
+                <div className="flex gap-2 ">
+                  <button className="p-[.4rem] basicButton1  px-5 flex gap-2 items-center  rounded-full text-sm font-semibold">
+                  <BiLike className="text-xl"/> <span>{getVideo.videoLikes}</span>
+
                   </button>
-                  <button className="p-[.4rem] px-5 border border-zinc-600 bg-zinc-700 rounded-full text-sm font-semibold">
+                  <button className="p-[.4rem] basicButton1  px-5 rounded-full text-sm font-semibold">
                     <RiShareForwardLine />
-                    Share
+                   
                   </button>
-                  <button className="p-[.4rem] px-5 border border-zinc-600 bg-zinc-700 rounded-full text-sm font-semibold">
-                    More
+                  <button className="p-[.4rem] basicButton1 px-5  rounded-full text-sm font-semibold">
+                   
                     <LiaDownloadSolid />
                   </button>
-                  <button className="p-[.4rem] px-5 border border-zinc-600 bg-zinc-700 rounded-full text-sm font-semibold">
-                    More
+                  <button className="p-[.4rem] basicButton1 px-5  rounded-full text-sm font-semibold">
+                  <BsThreeDots />
+
                   </button>
                 </div>
               </div>
             </section>
           </div>
           {/* video description */}
-          <div className="flex gap-2 w-full border border-zinc-600 p-2 py-5 rounded-2xl flex-col">
+          <div className="flex gap-2 w-full  bg-[#262626]  px-3 py-5 rounded-2xl flex-col">
             {/* video description */}
             <div>
-              <h1>Video time when posted and tags</h1>
-              <p>Video description</p>
+              <h1>{getVideo.views} views Posted on {getVideo.createdAt?.slice(0, 10).split("-").reverse().join("-")}</h1>
+              <p>{getVideo.description}</p>
             </div>
 
             {/* channel details, subs */}
