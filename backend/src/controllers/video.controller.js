@@ -179,6 +179,15 @@ const getVideo = asyncHandler(async (req, res) => {
         as: "videoLikes"
       },
     },
+    // lookup for views
+    {
+      $lookup: {
+        from: "views",
+        localField: "_id",
+        foreignField: "videoDetails",
+        as: "videoViews"
+      }
+    },
     {
       $lookup: {
         from: "comments",
@@ -221,6 +230,7 @@ const getVideo = asyncHandler(async (req, res) => {
         videoLikes: { $size: "$videoLikes" },
         comments: "$commentDetails",
         commentCount: { $size: "$commentDetails" },
+        viewsCount: { $size: "$videoViews" },
         isLiked: {
           $cond: {
             if: { $in: [req.user?._id, "$videoLikes.likedBy"] },
@@ -245,7 +255,7 @@ const getVideo = asyncHandler(async (req, res) => {
         title: 1,
         description: 1,
         duration: 1,
-        views: 1,
+        viewsCount: 1,
         isPublished: 1,
         createdAt: 1,
         ownerDetails: {
@@ -282,18 +292,72 @@ const getVideo = asyncHandler(async (req, res) => {
 
 
 // getting all the videos in home page
+// const allVideos = asyncHandler(async (req, res) => {
+//   const videos = await Video.find({}).populate(
+//     "owner",
+//     "username fullName email avatar"
+//   ); 
+//   if (!videos) {
+//     throw new ApiError(500, "can't find videos")
+//   }
+//   return res
+//     .status(200)
+//     .json(new ApiResponse(200, "Getting all videos", videos))
+
+// });
 const allVideos = asyncHandler(async (req, res) => {
-  const videos = await Video.find({}).populate(
-    "owner",
-    "username fullName email avatar"
-  );
+  const videos = await Video.aggregate([
+    {
+      $lookup: {
+        from: "views",
+        localField: "_id",
+        foreignField: "videoDetails",
+        as: "views"
+      }
+    },
+    {
+      $addFields: {
+        viewsCount: { $size: "$views" }
+      }
+    },
+    {
+      $lookup: {
+        from: "users",
+        localField: "owner",
+        foreignField: "_id",
+        as: "owner"
+      }
+    },
+    {
+      $unwind: "$owner"
+    },
+    {
+      $project: {
+        _id: 1,
+        videoFile: 1,
+        thumbnail: 1,
+        title: 1,
+        description: 1,
+        duration: 1,
+        isPublished: 1,
+        createdAt: 1,
+        owner: {
+          _id: 1,
+          username: 1,
+          fullName: 1,
+          email: 1,
+          avatar: 1
+        },
+        viewsCount: 1
+      }
+    }
+  ]);
   if (!videos) {
     throw new ApiError(500, "can't find videos")
   }
   return res
     .status(200)
     .json(new ApiResponse(200, "Getting all videos", videos))
-
 });
 
 export { uploadVideo, updateVideo, getVideo, deleteVideo, allVideos };

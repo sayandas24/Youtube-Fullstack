@@ -5,7 +5,6 @@ import RelatedVideoSkeleton from "../UI/skeleton/RelatedVideoSkeleton";
 import NProgress from "nprogress";
 // import "nprogress/nprogress.css"; // Default styles
 
-
 function RelatedVideos() {
   const [videos, setVideos] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -28,22 +27,42 @@ function RelatedVideos() {
         NProgress.done(); // Finish the progress bar on error
       });
   }, []);
-  
-  const handleNavigation = (path) => {
+
+  const handleNavigation = (path, videoId) => {
     NProgress.start(); // Start progress bar
-    navigate(path); // Perform navigation
-    NProgress.done(); // Complete progress bar after navigation
+    axiosInstance
+      .get(`/view/video/${videoId}`)
+      .then((res) => {
+        setVideos((prevVideos) =>
+          prevVideos.map((video) =>
+            video._id === videoId
+              ? { ...video, viewsCount: video.viewsCount + 1 }
+              : video
+          )
+        );
+        NProgress.done(); // Complete progress bar after navigation
+      })
+      .catch((err) => {
+        console.error(err);
+        NProgress.done(); // Complete progress bar on error
+      });
+      navigate(path); // Perform navigation
   };
-
-
+ 
 
   return (
-    <section className={`${loading  ? "!overflow-hidden": ""} w-[28rem] rounded-2xl flex text-white flex-col gap-3`}>
-      {loading && <RelatedVideoSkeleton number={8}/>}
+    <section
+      className={`${
+        loading ? "!overflow-hidden" : ""
+      } w-[28rem] rounded-2xl flex text-white flex-col gap-3`}
+    >
+      {loading && <RelatedVideoSkeleton number={8} />}
       {videos.map((video) => (
         <div key={video._id} className="flex  gap-2 w-full">
           {/* thumbnail */}
-          <section onClick={() => handleNavigation(`/p/${video._id}`)}>
+          <section
+            onClick={() => handleNavigation(`/p/${video._id}`, video._id)}
+          >
             <div className="w-[13rem] h-[8rem] border-zinc-600 rounded-2xl overflow-hidden">
               <img
                 className="h-full w-full object-cover"
@@ -62,8 +81,10 @@ function RelatedVideos() {
             <div className="flex flex-col text-zinc-400 text-[1rem]">
               <h2 className="text-zinc-300">{video.owner.fullName}</h2>
               <div className="flex gap-2 items-center">
-                <span>{video.views} views</span>
-                <span>{video.createdAt?.slice(0, 10).split("-").reverse().join("-")}</span>
+                <span>{video.viewsCount} views</span>
+                <span>
+                  {video.createdAt?.slice(0, 10).split("-").reverse().join("-")}
+                </span>
               </div>
             </div>
           </div>

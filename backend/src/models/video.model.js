@@ -25,8 +25,8 @@ const videoSchema = new Schema(
             required: true
         }, 
         views: {
-            type: Number, 
-            default: 0
+            type: Schema.Types.ObjectId, 
+            ref: "View"
         }, 
         isPublished: {
             type: Boolean,

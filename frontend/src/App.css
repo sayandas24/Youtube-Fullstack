@@ -89,7 +89,7 @@ body {
 
 /* Video columns */
 #videoContainer{
-  columns: 350px;
+  columns: 350px; 
   /* overflow: hidden; */
   
 }

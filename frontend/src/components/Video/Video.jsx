@@ -15,6 +15,7 @@ import ThumbUpIcon from "@mui/icons-material/ThumbUp";
 
 function Video() {
   const [getVideo, setGetVideo] = useState({});
+  const [viewsCount, setViewsCount] = useState(0); // Add state for views count
 
   const { videoId } = useParams();
   const location = useLocation();
@@ -32,7 +33,21 @@ function Video() {
   useEffect(() => {
     axiosInstance.get(`/video/p/${videoId}`).then((res) => {
       setGetVideo(res.data.message);
+      setViewsCount(res.data.message.viewsCount); // Set initial views count
     });
+    axiosInstance
+      .get(`/view/video/${videoId}`)
+      .then((res) => {
+        console.log(res, "in views");
+        setGetVideo((prev) => ({
+          ...prev,
+          viewsCount: prev.viewsCount + 1
+        }));
+        setViewsCount((prev) => prev + 1); // Update views count state
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   }, [videoId]);
 
   // Function to handle subscription
@@ -195,7 +210,7 @@ function Video() {
             {/* video description */}
             <div>
               <h1>
-                {getVideo.views} views Posted on{" "}
+                {viewsCount} views Posted on{" "}
                 {getVideo.createdAt
                   ?.slice(0, 10)
                   .split("-")

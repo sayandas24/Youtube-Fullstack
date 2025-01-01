@@ -59,7 +59,7 @@ function Home() {
                   onClick={(e) => {
                     e.currentTarget.closest("form").requestSubmit();
                   }}
-                  id="eachVideo" className="flex overflow-hidden cursor-pointer flex-col gap-1"
+                  id="eachVideo" className="flex overflow-hidden cursor-pointer flex-col gap-1 mb-5"
                 >
                   <section className="videoParent relative border h-[18rem]   border-black bg-zinc-600 rounded-3xl overflow-hidden">
                     <div className="absolute top-0 left-0 w-full h-full bg-transparent duration-200 hover:bg-[#f0f0f010]"></div>
@@ -82,12 +82,15 @@ function Home() {
                       </div>
                     </div>
                     {/* Avatar name, description */}
-                    <div className="flex flex-col gap-1 text-white w-[95%]">
+                    <div className="flex flex-col text-white w-[95%]">
                       <h1 className="text-[1rem] leading-5">
                         {file.title}
                       </h1>
-                      <p className="text-[1rem] text-zinc-400">
+                      <p className="text-[.8rem] text-zinc-400">
                         {file.owner.fullName}
+                      </p>
+                      <p className="text-[.8rem] text-zinc-400">
+                        {file.viewsCount} views | posted on {file.createdAt?.slice(0, 10).split("-").reverse().join("-")} 
                       </p>
                     </div>
                   </section>
