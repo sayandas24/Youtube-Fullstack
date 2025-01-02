@@ -1,42 +1,49 @@
-import React from 'react'
-import Sidebar from '../Layout/Sidebar'
-import BasicButton from '../UI/BasicButton'
+import React, { useState } from "react";  
+import SearchIcon from "@mui/icons-material/Search"; 
+import ProfileDashboardDP from "./profileDashboard/ProfileDashboardDP";
+import ProfileDashboardCover from "./profileDashboard/ProfileDashboardCover";
 
-function ProfileDashboard() {
+function ProfileDashboard({ user }) {
+ 
+
   return (
-    <div className='flex w-full'>
-      <Sidebar/>
+    <div className="flex w-full text-white">
+      {/* <Sidebar /> */}
 
-      <main className='flex gap-5 border border-red-600 flex-col w-[85rem] mx-auto'>
-        <section className='w-full'>
-            <div className='w-full rounded-xl border border-blue-500 h-[15rem] overflow-hidden'>
-                <img src="" alt="" />
-            </div>
+      <main className="flex flex-col w-[85rem] mx-auto">
+        {/* banner */}
+        <ProfileDashboardCover user={user} />
+        {/* profile */}
+        <ProfileDashboardDP user={user} />
+        {/* playlists header*/}
+        <section className=" w-full">
+          <div className="flex gap-5 text-xl font-semibold">
+            <h1 className="border-b-2 rounded-[5px] pb-2">Playlists</h1>
+            <h1 className="pb-2">
+              <SearchIcon className="!text-3xl text-zinc-500" />
+            </h1>
+          </div>
+          <hr className="border-t border-zinc-600" />
         </section>
-        <section>
-            <div className='border flex gap-2'>
-                <section className='left border w-[10rem] h-[10rem] rounded-full overflow-hidden'>
-                    <img src="" alt="" />
-                </section>
-                <section className='right'>
-                    <h1>Sayn das</h1>
-                    <p>
-                        <span>username</span>
-                        <span>subscribers</span>
-                    </p>          
-                    <p>About</p>
-                    <div className='flex gap-2 items-center'>
-                        <BasicButton text={"Edit Profile" }/>
-                        <BasicButton text={"Change Password" }/>
-                    </div>
-                </section>
+
+        {/* playlists */}
+        <section className="my-5">
+          <h1 className="my-2 text-xl">Created Playlist</h1>
+          <main className="flex gap-5">
+            <div className="w-[14rem] h-[8.5rem] border rounded-xl overflow-hidden">
+              <img src="" alt="" />
             </div>
+            <div className="w-[14rem] h-[8.5rem] border rounded-xl overflow-hidden">
+              <img src="" alt="" />
+            </div>
+            <div className="w-[14rem] h-[8.5rem] border rounded-xl overflow-hidden">
+              <img src="" alt="" />
+            </div>
+          </main>
         </section>
-        <section></section>
-        <section></section>
       </main>
     </div>
-  )
+  );
 }
 
-export default ProfileDashboard
+export default ProfileDashboard;

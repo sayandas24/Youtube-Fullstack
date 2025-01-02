@@ -73,7 +73,7 @@ const registerUser = asyncHandler(async (req, res) => {
         7. remove password and refresh token field from response for security
         8. check for user creation
         9. return res 
-    */ 
+    */
   try {
     const {
       username,
@@ -157,7 +157,7 @@ const registerUser = asyncHandler(async (req, res) => {
     // using the generateAccessAndRefreshToken for access values and passing id
     const { accessToken, refreshToken } = await generateAccessAndRefreshToken(
       user._id
-    ); 
+    );
 
     // it means no one can edit cookies from frontend (but backend can)
     const options = {
@@ -168,7 +168,7 @@ const registerUser = asyncHandler(async (req, res) => {
     // removing password and refresh token from DB entry
     const createdUser = await User.findById(user._id).select(
       "-password -refreshToken"
-    ); 
+    );
 
     if (!createdUser) {
       throw new ApiError(500, "Something went wrong while creating user");
@@ -206,7 +206,7 @@ const loginUser = asyncHandler(async (req, res) => {
     }
     const user = await User.findOne({
       $or: [{ username }, { email }],
-    }); 
+    });
 
     if (!user) {
       throw new ApiError(404, "User not exist");
@@ -346,7 +346,7 @@ const changeCurrentPassword = asyncHandler(async (req, res) => {
 });
 
 // req.user is getting from middleware
-const getCurrentUser = asyncHandler(async (req, res) => { 
+const getCurrentUser = asyncHandler(async (req, res) => {
 
   const user = await User.aggregate([
     {
@@ -354,8 +354,8 @@ const getCurrentUser = asyncHandler(async (req, res) => {
         // finding channel by username
         username: req.user.username,
       },
-    }, 
-     {
+    },
+    {
       // this field is for how many people are subscribed to this channel
       $lookup: {
         // lookup joins two collections
@@ -381,7 +381,30 @@ const getCurrentUser = asyncHandler(async (req, res) => {
         localField: "_id",
         foreignField: "owner",
         as: "videos",
+
         pipeline: [
+          {
+            $lookup: {
+              from: "views",
+              localField: "_id",
+              foreignField: "videoDetails",
+              as: "viewsCount"
+            }
+          },
+          {
+            $lookup: {
+              from: "likes",
+              localField: "_id",
+              foreignField: "videoLike",
+              as: "likesCount"
+            }
+          },
+          {
+            $addFields: {
+              viewsCount: { $size: "$viewsCount" },
+              likesCount: { $size: "$likesCount" }
+            }
+          },
           {
             $project: {
               videoFile: 1,
@@ -389,9 +412,10 @@ const getCurrentUser = asyncHandler(async (req, res) => {
               title: 1,
               description: 1,
               duration: 1,
-              views: 1,
+              viewsCount: 1,
               isPublished: 1,
               createdAt: 1,
+              likesCount: 1
             },
           },
         ],
@@ -408,7 +432,7 @@ const getCurrentUser = asyncHandler(async (req, res) => {
         },
         videosCount: {
           $size: "$videos",
-        }, 
+        },
       },
     },
     {
@@ -419,7 +443,7 @@ const getCurrentUser = asyncHandler(async (req, res) => {
         avatar: 1,
         subscribersCount: 1,
         channelsSubscribedToCount: 1,
-        videosCount: 1, 
+        videosCount: 1,
         coverImage: 1,
         avatar: 1,
         email: 1,
@@ -429,7 +453,7 @@ const getCurrentUser = asyncHandler(async (req, res) => {
   ]);
   if (!user?.length) {
     throw new ApiError(404, "user not found");
-  } 
+  }
 
   return res
     .status(200)
@@ -438,9 +462,10 @@ const getCurrentUser = asyncHandler(async (req, res) => {
 
 // update account details Name and email
 const updateAccountDetails = asyncHandler(async (req, res) => {
-  const { fullName, email } = req.body;
+  const { fullName, username } = req.body;
+  console.log(fullName, username);
 
-  if (!fullName || !email) {
+  if (!fullName || !username) {
     throw new ApiError(400, "All fields are required");
   }
 
@@ -449,7 +474,7 @@ const updateAccountDetails = asyncHandler(async (req, res) => {
     {
       $set: {
         fullName,
-        email: email,
+        username: username,
       },
     },
     { new: true }
@@ -707,7 +732,7 @@ const getWatchHistory = asyncHandler(async (req, res) => {
     .json(new ApiResponse(200, user[0].watchHistory, "Watch history fetched"));
 });
 
- 
+
 
 export {
   registerUser,

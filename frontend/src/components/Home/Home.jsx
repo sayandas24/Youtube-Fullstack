@@ -1,6 +1,5 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import axiosInstance from "../../utils/axiosInstance";
-import { useEffect, useState } from "react";
 import { NavLink } from "react-router";
 import Sidebar from "../Layout/Sidebar";
 import VideoHomeSkeleton from "../UI/skeleton/VideoHomeSkeleton";
@@ -10,7 +9,6 @@ import NProgress from "nprogress";
 function Home() {
   const [videos, setVideos] = useState([]);
   const [loading, setLoading] = useState(true);
- 
 
   useEffect(() => {
     NProgress.start();
@@ -27,30 +25,47 @@ function Home() {
         NProgress.done();
       });
   }, []);
-  
+
   const formSubmit = (e, videoLink) => {
     e.preventDefault();
     axiosInstance
       .get(`/video/p/${videoLink}`)
       .then((res) => {
-        // pass tp context 
+        // pass to context 
         console.log("passed video")
       })
       .catch((err) => console.log(err));
   };
 
-  // after login, redirect to home, and show profile, hide not login status, fetch user details from current user route, {if user available}
+  const timeSince = (date) => {
+    const now = new Date();
+    const postedDate = new Date(date);
+    const seconds = Math.floor((now - postedDate) / 1000);
+
+    let interval = Math.floor(seconds / 31536000);
+    if (interval >= 1) return `${interval} ${interval === 1 ? 'year' : 'years'} ago`;
+    interval = Math.floor(seconds / 2592000);
+    if (interval >= 1) return `${interval} ${interval === 1 ? 'month' : 'months'} ago`;
+    interval = Math.floor(seconds / 604800);
+    if (interval >= 1) return `${interval} ${interval === 1 ? 'week' : 'weeks'} ago`;
+    interval = Math.floor(seconds / 86400);
+    if (interval >= 1) return `${interval} ${interval === 1 ? 'day' : 'days'} ago`;
+    interval = Math.floor(seconds / 3600);
+    if (interval >= 1) return `${interval} ${interval === 1 ? 'hour' : 'hours'} ago`;
+    interval = Math.floor(seconds / 60);
+    if (interval >= 1) return `${interval} ${interval === 1 ? 'minute' : 'minutes'} ago`;
+    return `${Math.floor(seconds)} ${seconds === 1 ? 'second' : 'seconds'} ago`;
+  };
+
   return (
-    <div className="flex overflow-shidden">
+    <div className="flex">
       <section className=""> 
         <Sidebar/>
       </section>
 
       <div id="videoContainer" className={`${loading? "overflow-y-hidden" : ""} px-5 w-full gap-5 flex-wrap overflow-y-auto`}>
         {loading ? (
-           
           <VideoHomeSkeleton number={12}/>
-          
         ) : (
           videos.map((file) => (
             <NavLink key={file._id} to={`/p/${file._id}`} className="h-fit ">
@@ -90,7 +105,7 @@ function Home() {
                         {file.owner.fullName}
                       </p>
                       <p className="text-[.8rem] text-zinc-400">
-                        {file.viewsCount} views | posted on {file.createdAt?.slice(0, 10).split("-").reverse().join("-")} 
+                        {file.viewsCount} views | posted {timeSince(file.createdAt)}
                       </p>
                     </div>
                   </section>

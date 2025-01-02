@@ -5,3 +5,6 @@
 .basicButton1{
     @apply bg-[#262626] text-white border border-black hover:bg-[#3e3e3e] hover:text-white duration-200 
 }
+.basicButton2{
+    @apply p-2 font-[500] text-[14px] rounded-full px-4 bg-[#2e2e2e] hover:bg-[#3a3a3a] text-white active:bg-[#4d4d4d]
+}

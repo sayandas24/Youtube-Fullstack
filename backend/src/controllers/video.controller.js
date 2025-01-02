@@ -22,11 +22,11 @@ const uploadVideo = asyncHandler(async (req, res) => {
   }
 
   const videoFilePath = req.files?.videoFile[0]?.path;
-  const thumbnailFilePath = req.files?.thumbnail[0]?.path;
+  const thumbnailFilePath = req.files?.thumbnail[0]?.path; 
 
   const videoFile = await uploadOnCloudinary(videoFilePath);
   const thumbnail = await uploadOnCloudinary(thumbnailFilePath);
-
+  
   if (!videoFile || !thumbnail) {
     throw new ApiError(400, "Video and thumbnail file uploaded failed");
   }

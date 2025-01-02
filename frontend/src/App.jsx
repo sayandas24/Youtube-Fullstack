@@ -62,10 +62,10 @@ function App() {
           path: "video-update/:id",
           element: <UpdateVideo />,
         },
-        {
-          path: "dashboard",
-          element: <ProfileDashboard />,
-        },
+        // {
+        //   path: "dashboard",
+        //   element: <ProfileDashboard />,
+        // },
       ],
     },
   ]);

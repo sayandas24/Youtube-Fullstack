@@ -1,4 +1,5 @@
 import tailwindScrollbar from 'tailwind-scrollbar';
+import tailwindMotion from 'tailwindcss-motion';
 
 /** @type {import('tailwindcss').Config} */
 export default {
@@ -16,5 +17,6 @@ export default {
   },
   plugins: [
     tailwindScrollbar({ nocompatible: true }),
+    tailwindMotion
   ],
 };

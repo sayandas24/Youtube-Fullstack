@@ -16,7 +16,21 @@ function VideoPostAbout({ file, existingVideo = null }) {
   const [thumbnailPreview, setThumbnailPreview] = useState(
     existingVideo?.thumbnail
   );
+  const [error, setError] = useState("");
   const navigate = useNavigate();
+
+  const handleThumbnailChange = (e) => {
+    const file = e.target.files[0];
+    if (file.size > 5 * 1024 * 1024) { // Check if file size is greater than 5MB
+      setError("Thumbnail size should be less than 5MB");
+      setThumbnail(null);
+      setThumbnailPreview(null);
+    } else {
+      setError("");
+      setThumbnail(file);
+      setThumbnailPreview(URL.createObjectURL(file));
+    }
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -69,20 +83,8 @@ function VideoPostAbout({ file, existingVideo = null }) {
     }
   }, [existingVideo]);
 
-  const handleThumbnailChange = (e) => {
-    const file = e.target.files[0];
-    setThumbnail(file);
-    setThumbnailPreview(URL.createObjectURL(file));
-  };
-
   return (
-    <form
-      onSubmit={handleSubmit}
-      action="localhost:8000/"
-      method="post"
-      className="w-[65%] h-full border-zinc-700 rounded-xl flex flex-col gap-2"
-      encType="multipart/form-data"
-    >
+    <form onSubmit={handleSubmit} className="w-[65%] h-full border-zinc-700 rounded-xl flex flex-col gap-2">
       <h1 className="text-2xl font-semibold">Details</h1>
       {/* title */}
       <div className="input-box ">
@@ -170,6 +172,8 @@ function VideoPostAbout({ file, existingVideo = null }) {
           Add tags to help viewers discover your video
         </p>
       </div>
+
+      {error && <p className="text-red-500">{error}</p>}
 
       <div className="w-full absolute left-0 bottom-0">
         <VideoPostFooter loading={loading} />

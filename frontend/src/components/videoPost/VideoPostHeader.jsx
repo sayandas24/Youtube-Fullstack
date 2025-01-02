@@ -3,9 +3,10 @@ import { RxCross2 } from "react-icons/rx";
 import { ImCross } from "react-icons/im";
 import { useNavigate } from "react-router";
 
-function videoPostNav() {
+function videoPostNav({ file }) {
   const navigation = useNavigate();
 
+  console.log("file", file)
   const handleCross = () => {
     navigation("/profile");
   };
@@ -13,7 +14,7 @@ function videoPostNav() {
   return (
     <header className="p-4 border-zinc-800 bg-[#282828] z-10 flex justify-between items-center border w-full sticky top-0  ">
       <section>
-        <h1 className="text-2xl">Title</h1>
+        <h1 className="text-2xl">{file?.name? file.name : "Video Title"}</h1>
       </section>
       <section>
         <div

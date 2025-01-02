@@ -43,11 +43,11 @@ function UpdateVideo() {
       return `${sizeInBytes.toFixed(2)} ${units[index]}`;
     };
     fileSizeReadable = formatFileSize(file.size);
-  }
+  } 
 
   return (
     <div className="border bg-[#282828] border-zinc-800 text-white h-[48rem] w-[55rem] mx-auto mt-5 rounded-xl relative overflow-x-auto">
-      <VideoPostHeader />
+      <VideoPostHeader/>
 
       <main className="flex  px-[2rem] gap-5">
         {/* left about section*/}

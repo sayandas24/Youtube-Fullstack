@@ -48,16 +48,17 @@ function VideoSection({ videos }) {
     return () => {
       document.removeEventListener("click", handleClickOutside);
     };
-  }, []);
+  }, []); 
 
   return (
     <div>
       <table className="w-full">
         <thead className="">
           <tr className="border-b border-[#434343]">
-            <th className="p-2 px-8 text-left">Video</th>
-            <th className="p-2 px-8 text-left">Views</th>
-            <th className="p-2 px-8 text-left">Modified date</th>
+            <th className="p-2 px-8 text-left ">Video</th>
+            <th className="p-2 px-8 text-center">Views</th>
+            <th className="p-2 px-8 text-center">Likes</th>
+            <th className="p-2 px-8 text-center">Modified date</th>
             <th className="p-2 px-8 text-right">More Options</th>
           </tr>
         </thead>
@@ -110,11 +111,12 @@ function VideoSection({ videos }) {
                   </div>
                 </section>
               </td>
-              <td className="p-2 px-8 align-text-top pt-3">{video?.views}</td>
-              <td className="p-2 px-8 align-text-top pt-3">
+              <td className="p-2 px-8 align-text-top pt-3 text-center">{video?.viewsCount}</td>
+              <td className="p-2 px-8 align-text-top pt-3 text-center">{video?.likesCount}</td> 
+              <td className="p-2 px-8 align-text-top pt-3 text-center">
                 {video?.createdAt.slice(0, 10).split("-").reverse().join("-")}
               </td>
-              <td className="p-2 px-8 text-right align-text-top pt-3">
+              <td className="p-2 px-8 text-right align-text-top pt-3 text-center">
                 <NavLink
                   to={`/video-update/${video?._id}`}
                   className="ml-auto p-[.5rem] px-3 hover:bg-[#535353] bg-[#343434] rounded-full font-[500] text-[.8rem]"

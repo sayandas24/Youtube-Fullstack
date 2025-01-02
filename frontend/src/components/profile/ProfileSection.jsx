@@ -6,9 +6,11 @@ import { CiCircleInfo } from "react-icons/ci";
 import { NavLink } from "react-router";
 import { FeatureSoonContext } from "../../contexts/featureSoonContext/UseFeatureSoon";
 import Skeleton from "react-loading-skeleton";
+import { ProfileContext } from "../../contexts/profileContext/profileContext";
 
-function ProfileSection({ user }) {
+function ProfileSection({ user, showUserContent, showDashboard }) {
   const { handleFeatureSoonShow } = useContext(FeatureSoonContext);
+  const { profileContentPassFunc } = useContext(ProfileContext);
 
   return (
     <section className=" flex flex-col justify-normal px-4 h-full">
@@ -58,35 +60,41 @@ function ProfileSection({ user }) {
 
       <div className="mt-8">
         <section
-          onClick={() => handleFeatureSoonShow()}
-          className="hover:bg-[#1f1f1f] rounded-lg p-2 px-3 flex items-center gap-2 cursor-pointer"
+          onClick={() => profileContentPassFunc("dashboard")}
+          className={`${
+            showDashboard ? "bg-[#1f1f1f]" : ""
+          } hover:bg-[#1f1f1f] rounded-lg p-2 px-3 flex items-center gap-2 cursor-pointer`}
         >
           <LuLayoutDashboard className="text-xl" />
           <h1 className="text-[1rem] font-semibold">Dashboard</h1>
         </section>
-        <NavLink
-          to="#"
-          className={({ isActive }) =>
-            `${
-              isActive ? "bg-[#1f1f1f]" : ""
-            } hover:bg-[#1f1f1f] mt-1 rounded-lg p-2 px-3 flex items-center gap-2`
-          }
+        <section
+          onClick={() => {
+            profileContentPassFunc("content");
+          }}
+          className={`${showUserContent ? "bg-[#1f1f1f]" : ""} hover:bg-[#1f1f1f] mt-1 rounded-lg p-2 px-3 flex items-center gap-2`}
         >
           <PiVideoLight className="text-xl" />
           <h1 className="text-[1rem] font-semibold">Content</h1>
-        </NavLink>
+        </section>
       </div>
 
       <div className="mt-auto">
         <section
-          onClick={() => handleFeatureSoonShow()}
+          onClick={() => {
+            handleFeatureSoonShow();
+            profileContentPassFunc("settings");
+          }}
           className="cursor-pointer hover:bg-[#1f1f1f] rounded-lg p-2 px-3 flex items-center gap-2"
         >
           <CiSettings className="text-xl" />
           <h1 className="text-[1rem] font-semibold">Settings</h1>
         </section>
         <section
-          onClick={() => handleFeatureSoonShow()}
+          onClick={() => {
+            handleFeatureSoonShow();
+            profileContentPassFunc("about");
+          }}
           className="cursor-pointer hover:bg-[#1f1f1f] rounded-lg p-2 px-3 flex items-center gap-2"
         >
           <CiCircleInfo className="text-xl" />
