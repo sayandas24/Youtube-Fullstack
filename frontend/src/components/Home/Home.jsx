@@ -85,7 +85,8 @@ function Home() {
                     />
                   </section>
 
-                  <section className="flex gap-2">
+                  {/* Video about */}
+                  <NavLink to={`channel/${file.owner.username}`} className="flex gap-2">
                     {/* Avatar */}
                     <div className="w-[2.8rem] h-[2.8rem]">
                       <div className="w-[2.8rem] h-[2.8rem] overflow-hidden rounded-full">
@@ -108,7 +109,7 @@ function Home() {
                         {file.viewsCount} views | posted {timeSince(file.createdAt)}
                       </p>
                     </div>
-                  </section>
+                  </NavLink>
                 </main>
               </form>
             </NavLink>

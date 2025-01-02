@@ -15,6 +15,7 @@ import UpdateVideo from "./components/videoPost/UpdateVideo.jsx";
 import { SkeletonTheme } from "react-loading-skeleton";
 import ProfileDashboard from "./components/profile/ProfileDashboard.jsx"; 
 import "nprogress/nprogress.css"; // Default styles 
+import UserChannel from "./components/userChannel/UserChannel.jsx";
 
 function App() {
   const router = createBrowserRouter([
@@ -62,10 +63,10 @@ function App() {
           path: "video-update/:id",
           element: <UpdateVideo />,
         },
-        // {
-        //   path: "dashboard",
-        //   element: <ProfileDashboard />,
-        // },
+        {
+          path: "channel/:channel",
+          element: <UserChannel />,
+        },
       ],
     },
   ]);
