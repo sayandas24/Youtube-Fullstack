@@ -594,7 +594,7 @@ const getUserChannelProfile = asyncHandler(async (req, res) => {
         foreignField: "subscriber", // which field to join
         as: "subscribedTo",
       },
-    },
+    }, 
     {
       // Add lookup for user's videos
       $lookup: {
@@ -604,13 +604,23 @@ const getUserChannelProfile = asyncHandler(async (req, res) => {
         as: "videos",
         pipeline: [
           {
+            $lookup: {
+              from: "views",
+              localField: "_id",
+              foreignField: "videoDetails",
+              as: "totalViews",
+            }
+          },
+          {
             $project: {
               videoFile: 1,
               thumbnail: 1,
               title: 1,
               description: 1,
-              duration: 1,
-              views: 1,
+              duration: 1, 
+              totalViews: {
+                $size: "$totalViews"
+              },
               isPublished: 1,
               createdAt: 1,
             },
@@ -655,6 +665,7 @@ const getUserChannelProfile = asyncHandler(async (req, res) => {
         avatar: 1,
         email: 1,
         videos: 1,
+
       },
     },
   ]);

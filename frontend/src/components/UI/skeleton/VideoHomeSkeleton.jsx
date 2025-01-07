@@ -18,7 +18,7 @@ function VideoHomeSkeleton({number}) {
             <Skeleton count={2} borderRadius={15} containerClassName="flex-1 "/>
           </div>
         </div>
-      </SkeletonTheme> 
+      </SkeletonTheme>
     ))
   );
 }

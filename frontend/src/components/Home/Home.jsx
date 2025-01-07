@@ -2,9 +2,9 @@ import React, { useContext, useEffect, useState } from "react";
 import axiosInstance from "../../utils/axiosInstance";
 import { NavLink } from "react-router";
 import Sidebar from "../Layout/Sidebar";
-import VideoHomeSkeleton from "../UI/skeleton/VideoHomeSkeleton";
-import Skeleton, { SkeletonTheme } from "react-loading-skeleton"; 
+import VideoHomeSkeleton from "../UI/skeleton/VideoHomeSkeleton"; 
 import NProgress from "nprogress";
+import timeSince from "../../utils/timeSince";
 
 function Home() {
   const [videos, setVideos] = useState([]);
@@ -37,25 +37,7 @@ function Home() {
       .catch((err) => console.log(err));
   };
 
-  const timeSince = (date) => {
-    const now = new Date();
-    const postedDate = new Date(date);
-    const seconds = Math.floor((now - postedDate) / 1000);
-
-    let interval = Math.floor(seconds / 31536000);
-    if (interval >= 1) return `${interval} ${interval === 1 ? 'year' : 'years'} ago`;
-    interval = Math.floor(seconds / 2592000);
-    if (interval >= 1) return `${interval} ${interval === 1 ? 'month' : 'months'} ago`;
-    interval = Math.floor(seconds / 604800);
-    if (interval >= 1) return `${interval} ${interval === 1 ? 'week' : 'weeks'} ago`;
-    interval = Math.floor(seconds / 86400);
-    if (interval >= 1) return `${interval} ${interval === 1 ? 'day' : 'days'} ago`;
-    interval = Math.floor(seconds / 3600);
-    if (interval >= 1) return `${interval} ${interval === 1 ? 'hour' : 'hours'} ago`;
-    interval = Math.floor(seconds / 60);
-    if (interval >= 1) return `${interval} ${interval === 1 ? 'minute' : 'minutes'} ago`;
-    return `${Math.floor(seconds)} ${seconds === 1 ? 'second' : 'seconds'} ago`;
-  };
+  
 
   return (
     <div className="flex">
