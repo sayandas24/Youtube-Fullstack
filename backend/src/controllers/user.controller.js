@@ -348,6 +348,7 @@ const changeCurrentPassword = asyncHandler(async (req, res) => {
 // req.user is getting from middleware
 const getCurrentUser = asyncHandler(async (req, res) => {
 
+
   const user = await User.aggregate([
     {
       $match: {
@@ -433,6 +434,7 @@ const getCurrentUser = asyncHandler(async (req, res) => {
         videosCount: {
           $size: "$videos",
         },
+        // watchHistory: 1 
       },
     },
     {
@@ -448,6 +450,7 @@ const getCurrentUser = asyncHandler(async (req, res) => {
         avatar: 1,
         email: 1,
         videos: 1,
+        // watchHistory: 1
       },
     },
   ]);
@@ -594,7 +597,7 @@ const getUserChannelProfile = asyncHandler(async (req, res) => {
         foreignField: "subscriber", // which field to join
         as: "subscribedTo",
       },
-    }, 
+    },
     {
       // Add lookup for user's videos
       $lookup: {
@@ -617,7 +620,7 @@ const getUserChannelProfile = asyncHandler(async (req, res) => {
               thumbnail: 1,
               title: 1,
               description: 1,
-              duration: 1, 
+              duration: 1,
               totalViews: {
                 $size: "$totalViews"
               },
@@ -690,6 +693,7 @@ const getWatchHistory = asyncHandler(async (req, res) => {
         _id: new mongoose.Types.ObjectId(req.user._id),
       },
     },
+    
     {
       // nesting pipeline 1 is for watchHistory, 2 is for video owner
       $lookup: {
@@ -703,18 +707,56 @@ const getWatchHistory = asyncHandler(async (req, res) => {
         pipeline: [
           {
             $lookup: {
+              from: "views",
+              localField: "_id",
+              foreignField: "videoDetails",
+              as: "viewsCount"
+            }
+          },
+          {
+            
+              $project: {
+                videoFile  : 1,
+                watchHistory: 1,
+                owner: 1,
+                title: 1,
+                description: 1,
+                thumbnail: 1,
+                viewsCount: {
+                  $size: "$viewsCount"
+                }
+              },
+            
+          },
+          {
+            $lookup: {
               from: "users",
               localField: "owner", // videos local field is owner
               foreignField: "_id",
               as: "owner",
 
               pipeline: [
+                {
+                  // this field is for how many people are subscribed to this channel
+                  $lookup: {
+                    // lookup joins two collections
+                    from: "subscriptions", // from subscriptions model
+                    localField: "_id", // find using this field id
+                    foreignField: "channel", // joining channel from subscriptions model
+                    as: "subscribers", // new field name (join as subscribers)
+                  },
+
+                },
                 // passing only necessary fields from owner
                 {
                   $project: {
                     fullName: 1,
                     avatar: 1,
                     username: 1,
+                    subscribers: {
+                      $size: "$subscribers"
+                    }
+
                   },
                 },
               ],
@@ -732,7 +774,10 @@ const getWatchHistory = asyncHandler(async (req, res) => {
         ],
       },
     },
+    
   ]);
+
+  console.log(user)
 
   if (!user?.length) {
     throw new ApiError(404, "User not found");

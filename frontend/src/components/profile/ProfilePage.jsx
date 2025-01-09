@@ -33,7 +33,7 @@ function ProfilePage() {
       axiosInstance
         .get("/user/current-user")
         .then((res) => {
-          setUser(res.data.data);
+          setUser(res.data.data); 
           setLoading(false);
         })
         .catch((err) => {

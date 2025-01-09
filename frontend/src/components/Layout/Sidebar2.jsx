@@ -79,15 +79,15 @@ function Sidebar2() {
 
       <hr className="border-zinc-600 my-1" />
 
-      <section
-        onClick={() => handleFeatureSoonShow("History working on it")}
+      <NavLink to="/user/history"
+        // onClick={() => handleFeatureSoonShow("History working on it")}
         className={`flex gap-5 p-3 px-5 hover:bg-[#2c2c2c] duration-75 cursor-pointer rounded-xl`}
       >
         <div className="">
           <MdHistory className="text-2xl" />
         </div>
         <div className={` text-[1.1rem] font-[420] `}>History</div>
-      </section>
+      </NavLink>
 
       <section
       onClick={() => handleFeatureSoonShow("Feature coming soon")}

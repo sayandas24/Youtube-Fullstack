@@ -52,7 +52,7 @@ function Sidebar() {
           className={({ isActive }) =>
             `${
               !isActive
-                ? "fill-white bg-[#2c2c2c]  "
+                ? "fill-whiteX bg-[#2c2c2c]X  "
                 : "fill-transparent stroke-transparent "
             } 
           ${collapse ? "flex-col items-center gap-[1px] bg-transparent" : ""} 
@@ -73,10 +73,10 @@ function Sidebar() {
         </NavLink>
         {!collapse && <hr className="border-zinc-600 my-1" />}
         <NavLink
-          to="/"
-          onClick={() => handleFeatureSoonShow("History working on it")}
+          to="/user/history"
+          // onClick={() => handleFeatureSoonShow("History working on it")}
           className={({ isActive }) =>
-            `${!isActive ? "fill-white bg-[#2c2c2c]" : ""} ${
+            `${isActive ? "fill-white bg-[#2c2c2c]" : ""} ${
               collapse ? "flex-col items-center gap-[1px] bg-transparent" : ""
             } flex gap-5 p-3 px-5 hover:bg-[#2c2c2c] duration-75 cursor-pointer rounded-xl`
           }
@@ -99,7 +99,7 @@ function Sidebar() {
             handleFeatureSoonShow("Playlist feature not added yet")
           }
           className={({ isActive }) =>
-            `${!isActive ? "fill-white bg-[#2c2c2c]" : ""} ${
+            `${!isActive ? "fill-whiteX bg-[#2c2c2c]X" : ""} ${
               collapse ? "flex-col items-center gap-[1px] bg-transparent" : ""
             } flex gap-5 p-3 px-5 hover:bg-[#2c2c2c] duration-75 cursor-pointer rounded-xl`
           }
@@ -120,7 +120,7 @@ function Sidebar() {
           to="/"
           onClick={() => handleFeatureSoonShow("Feature coming soon")}
           className={({ isActive }) =>
-            `${!isActive ? "fill-white bg-[#2c2c2c]" : ""} ${
+            `${!isActive ? "fill-whiteX bg-[#2c2c2c]X" : ""} ${
               collapse ? "flex-col items-center gap-[1px] bg-transparent" : ""
             } flex gap-5 p-3 px-5 hover:bg-[#2c2c2c] duration-75 cursor-pointer rounded-xl`
           }

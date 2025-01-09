@@ -16,6 +16,7 @@ import { SkeletonTheme } from "react-loading-skeleton";
 import ProfileDashboard from "./components/profile/ProfileDashboard.jsx"; 
 import "nprogress/nprogress.css"; // Default styles 
 import UserChannel from "./components/userChannel/UserChannel.jsx";
+import WatchHistory from "./components/profile/WatchHistory.jsx";
 
 function App() {
   const router = createBrowserRouter([
@@ -67,6 +68,10 @@ function App() {
           path: "channel/:channel",
           element: <UserChannel />,
         },
+        {
+          path: "user/history",
+          element: <WatchHistory/>
+        }
       ],
     },
   ]);

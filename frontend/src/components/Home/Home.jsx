@@ -2,7 +2,8 @@ import React, { useContext, useEffect, useState } from "react";
 import axiosInstance from "../../utils/axiosInstance";
 import { NavLink } from "react-router";
 import Sidebar from "../Layout/Sidebar";
-import VideoHomeSkeleton from "../UI/skeleton/VideoHomeSkeleton"; 
+import VideoHomeSkeleton from "../UI/skeleton/VideoHomeSkeleton";
+import Skeleton, { SkeletonTheme } from "react-loading-skeleton"; 
 import NProgress from "nprogress";
 import timeSince from "../../utils/timeSince";
 
@@ -36,7 +37,6 @@ function Home() {
       })
       .catch((err) => console.log(err));
   };
-
   
 
   return (
@@ -67,8 +67,7 @@ function Home() {
                     />
                   </section>
 
-                  {/* Video about */}
-                  <NavLink to={`channel/${file.owner.username}`} className="flex gap-2">
+                  <section className="flex gap-2">
                     {/* Avatar */}
                     <div className="w-[2.8rem] h-[2.8rem]">
                       <div className="w-[2.8rem] h-[2.8rem] overflow-hidden rounded-full">
@@ -91,7 +90,7 @@ function Home() {
                         {file.viewsCount} views | posted {timeSince(file.createdAt)}
                       </p>
                     </div>
-                  </NavLink>
+                  </section>
                 </main>
               </form>
             </NavLink>
