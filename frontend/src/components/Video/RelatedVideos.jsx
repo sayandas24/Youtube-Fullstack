@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
 import axiosInstance from "../../utils/axiosInstance";
-import { NavLink, useNavigate } from "react-router";
+import { Link, NavLink, useNavigate } from "react-router";
 import RelatedVideoSkeleton from "../UI/skeleton/RelatedVideoSkeleton";
 import NProgress from "nprogress";
+import timeSince from "../../utils/timeSince";
 // import "nprogress/nprogress.css"; // Default styles
 
 function RelatedVideos() {
@@ -46,27 +47,7 @@ function RelatedVideos() {
         console.error(err);
         NProgress.done(); // Complete progress bar on error
       });
-      navigate(path); // Perform navigation
-  };
-
-  const timeSince = (date) => {
-    const now = new Date();
-    const postedDate = new Date(date);
-    const seconds = Math.floor((now - postedDate) / 1000);
-
-    let interval = Math.floor(seconds / 31536000);
-    if (interval >= 1) return `${interval} ${interval === 1 ? 'year' : 'years'} ago`;
-    interval = Math.floor(seconds / 2592000);
-    if (interval >= 1) return `${interval} ${interval === 1 ? 'month' : 'months'} ago`;
-    interval = Math.floor(seconds / 604800);
-    if (interval >= 1) return `${interval} ${interval === 1 ? 'week' : 'weeks'} ago`;
-    interval = Math.floor(seconds / 86400);
-    if (interval >= 1) return `${interval} ${interval === 1 ? 'day' : 'days'} ago`;
-    interval = Math.floor(seconds / 3600);
-    if (interval >= 1) return `${interval} ${interval === 1 ? 'hour' : 'hours'} ago`;
-    interval = Math.floor(seconds / 60);
-    if (interval >= 1) return `${interval} ${interval === 1 ? 'minute' : 'minutes'} ago`;
-    return `${Math.floor(seconds)} ${seconds === 1 ? 'second' : 'seconds'} ago`;
+    navigate(path); // Perform navigation
   };
 
   return (
@@ -82,7 +63,7 @@ function RelatedVideos() {
           <section
             onClick={() => handleNavigation(`/p/${video._id}`, video._id)}
           >
-            <div className="w-[13rem] h-[8rem] border-zinc-600 rounded-2xl overflow-hidden">
+            <div className="w-[13rem] h-[8rem] cursor-pointer border-zinc-600 rounded-2xl overflow-hidden">
               <img
                 className="h-full w-full object-cover"
                 src={video.thumbnail}
@@ -98,7 +79,12 @@ function RelatedVideos() {
             </h1>
 
             <div className="flex flex-col text-zinc-400 text-[1rem]">
-              <h2 className="text-zinc-300">{video.owner.fullName}</h2>
+              <Link
+                to={`/channel/${video.owner.username}`}
+                className="text-zinc-300 hover:text-zinc-100"
+              >
+                {video.owner.fullName}
+              </Link>
               <div className="flex gap-2 items-center">
                 <span>{video.viewsCount} views</span>
                 <span>{timeSince(video.createdAt)}</span>

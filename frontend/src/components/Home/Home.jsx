@@ -50,7 +50,7 @@ function Home() {
           <VideoHomeSkeleton number={12}/>
         ) : (
           videos.map((file) => (
-            <NavLink key={file._id} to={`/p/${file._id}`} className="h-fit ">
+            <section key={file._id}  className="h-fit ">
               <form onSubmit={(e) => formSubmit(e, file._id)}> 
                 <main
                   onClick={(e) => {
@@ -58,14 +58,14 @@ function Home() {
                   }}
                   id="eachVideo" className="flex overflow-hidden cursor-pointer flex-col gap-1 mb-5"
                 >
-                  <section className="videoParent relative border h-[18rem]   border-black bg-zinc-600 rounded-3xl overflow-hidden">
+                  <NavLink to={`/p/${file._id}`} className="videoParent relative border h-[18rem]   border-black bg-zinc-600 rounded-3xl overflow-hidden">
                     <div className="absolute top-0 left-0 w-full h-full bg-transparent duration-200 hover:bg-[#f0f0f010]"></div>
                     <img
                       className="w-full h-full object-cover"
                       src={file.thumbnail}
                       alt="video"
                     />
-                  </section>
+                  </NavLink>
 
                   <NavLink  to={`/channel/${file.owner.username}`} className="flex gap-2">
                     {/* Avatar */}
@@ -93,7 +93,7 @@ function Home() {
                   </NavLink>
                 </main>
               </form>
-            </NavLink>
+            </section>
           ))
         )}
       </div>

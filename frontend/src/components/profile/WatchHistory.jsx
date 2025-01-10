@@ -3,6 +3,7 @@ import Sidebar from "../Layout/Sidebar";
 import { RxCross1 } from "react-icons/rx";
 import { BsThreeDotsVertical } from "react-icons/bs";
 import axiosInstance from "../../utils/axiosInstance";
+import { NavLink } from "react-router";
 
 function WatchHistory() {
   const [data, setData] = useState([]);
@@ -23,20 +24,20 @@ function WatchHistory() {
         <Sidebar />
       </section>
 
-      <section className="w-[70rem] mx-auto flex justify-center text-white flex-col gap-2">
+      <section className="w-[60rem] mx-auto flex justify-center text-white flex-col gap-4">
         {data &&
           data.map((video) => (
             <div
               key={data._id}
-              className=" rounded-xl h-[13rem] w-[55rem] flex"
+              className=" rounded-xl h-[11rem] w-[50rem] flex"
             >
-              <section className="h-full w-[20rem]  overflow-hidden rounded-xl">
+              <NavLink to={`/p/${video._id}`} className="h-full w-[18rem]  overflow-hidden rounded-xl">
                 <img className="w-full h-full object-cover" src={video.thumbnail} alt="" />
-              </section>
+              </NavLink>
 
               <section className="w-full  flex-1">
                 <div className=" flex justify-between flex-row w-full p-2 pl-5">
-                  <h1 className="text-2xl line-clamp-2">
+                  <h1 className="text-xl line-clamp-2">
                     {video.title}
                   </h1>
                   <div className="ml-auto flex  gap-5 ">
@@ -45,12 +46,12 @@ function WatchHistory() {
                   </div>
                 </div>
 
-                <div className="flex gap-5 my-5 text-[#aaaaaa] px-5">
+                <div className="flex gap-5 my-1 text-[#aaaaaa] px-5 font-[450]">
                   <span>{video.owner.fullName}</span>
                   <span>| &nbsp;&nbsp;{video.viewsCount} Views</span>
                 </div>
 
-                <div className="text-[#aaaaaa] text-[1.1rem] px-5">
+                <div className="text-[#808080] text-[1rem] px-5">
                   <h2>{video.description}</h2>
                 </div>
               </section>
