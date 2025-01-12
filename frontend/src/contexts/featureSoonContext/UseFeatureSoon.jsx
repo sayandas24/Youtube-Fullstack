@@ -4,6 +4,7 @@ export const FeatureSoonContext = createContext()
 
 export function FeatureSoonProvider({children}) {
     const [featureSoonShow, setFeatureSoonShow] = useState(false)
+    const [isLoginUser, setIsLoginUser] = useState(true)
     const [featureMSG, setFeatureMSG] = useState("")
 
     const handleFeatureSoonShow = (msg="Feature Coming Soon") => {
@@ -17,7 +18,7 @@ export function FeatureSoonProvider({children}) {
 
 
     return (
-        <FeatureSoonContext.Provider value={{featureSoonShow, handleFeatureSoonShow, featureMSG, setFeatureMSG}}>
+        <FeatureSoonContext.Provider value={{featureSoonShow, handleFeatureSoonShow, featureMSG, setFeatureMSG, isLoginUser, setIsLoginUser}}>
             {children}
         </FeatureSoonContext.Provider>
     )

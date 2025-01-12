@@ -215,6 +215,28 @@ const getVideo = asyncHandler(async (req, res) => {
             }
           },
           {
+            $lookup:{
+              from: "likes",
+              localField: "_id",
+              foreignField: "videoCommentLike",
+              as: "videoCommentLikes",
+              
+            }
+          },
+          {
+            $addFields: {
+              isLiked: {
+                $cond: {
+                  if: { $in: [req.user?._id, "$videoCommentLikes.likedBy"] },
+                  then: true,
+                  else: false,
+                },
+              }, 
+              commentLikesCount: { $size: "$videoCommentLikes" },
+              
+            },
+          },
+          {
             $unwind: {
               path: "$commentOwner",
               preserveNullAndEmptyArrays: true,

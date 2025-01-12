@@ -7,18 +7,17 @@ import VideoPlayer from "./VideoPlayer";
 import axiosInstance from "../../utils/axiosInstance";
 import { useParams, useLocation, Link } from "react-router";
 import Sidebar2 from "../Layout/Sidebar2";
-import { CollapseContext } from "../../contexts/collapseMenu/CollapseContext";
-import { BiLike } from "react-icons/bi";
+import { CollapseContext } from "../../contexts/collapseMenu/CollapseContext"; 
 import { BsThreeDots } from "react-icons/bs";
 import ThumbUpOutlinedIcon from "@mui/icons-material/ThumbUpOutlined";
 import ThumbUpIcon from "@mui/icons-material/ThumbUp";
-import timeSince from "../../utils/timeSince";
-import { RxCross2 } from "react-icons/rx";
+import timeSince from "../../utils/timeSince"; 
+import LoginErrorWarn from "../../utils/LoginErrorWarn";
+import { FeatureSoonContext } from "../../contexts/featureSoonContext/UseFeatureSoon";
 
 function Video() {
   const [getVideo, setGetVideo] = useState({});
-  const [viewsCount, setViewsCount] = useState(0); // Add state for views count
-  const [isLoginUser, setIsLoginUser] = useState(true);
+  const [viewsCount, setViewsCount] = useState(0); // Add state for views count 
 
   const { videoId } = useParams();
   const location = useLocation();
@@ -26,11 +25,14 @@ function Video() {
   const isHomeRoute = location.pathname === `/`;
 
   const { collapse2, setCollapse2 } = useContext(CollapseContext);
+  const {isLoginUser, setIsLoginUser} = useContext(FeatureSoonContext);
 
   // is the class is true then add some class in sidebar,,,
   useEffect(() => {
     setCollapse2(true);
   }, []);
+
+ 
 
   // fetch the video
   useEffect(() => {
@@ -137,6 +139,9 @@ function Video() {
 
   return (
     <div className="p-10 py-14 flex relative overflow-x-hidden">
+       {/* Error modal */}
+       <LoginErrorWarn/>
+
       <div
         className={`${
           isRouteActive && collapse2 ? "-translate-x-[18rem]  " : ""
@@ -292,27 +297,7 @@ function Video() {
           {/* comments */}
           <Comments getVideo={getVideo} />
         </section>
-        {/* Error modal */}
-        <section
-          className={`${
-            isLoginUser
-              ? "invisible opacity-0 translate-y-[20px]"
-              : "visible opacity-100 translate-y-0"
-          } transition-all duration-300 ease-in-out fixed w-[100vw] h-[100vh] bg-[#0000007e] rounded-xl top-0 left-0 z-[99]`}
-        >
-          <div className="absolute bg-[#fca55d6d] border flex items-center gap-16 border-orange-300 rounded-xl p-5 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
-            <h1 className="text-xl text-white font-bold">
-              <Link to={"/login"} className="text-blue-400 cursor-pointer">
-                Login
-              </Link>{" "}
-              to active all features...
-            </h1>
-            <RxCross2
-              onClick={() => setIsLoginUser(true)}
-              className="text-xl text-orange-300 cursor-pointer hover:scale-110"
-            />
-          </div>
-        </section>
+       
 
         {/* right other videos */}
         <RelatedVideos />

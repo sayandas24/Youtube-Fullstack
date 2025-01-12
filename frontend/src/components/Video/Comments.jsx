@@ -1,16 +1,21 @@
-import React from "react";
-import { useEffect, useState } from "react";
-import { BiLike, BiDislike } from "react-icons/bi";
+import React, { useContext } from "react";
+import { useEffect, useState } from "react"; 
 import { BsThreeDotsVertical } from "react-icons/bs";
 import axiosInstance from "../../utils/axiosInstance";
 import { NavLink } from "react-router";
 import NProgress from "nprogress";
+import ThumbUpOutlinedIcon from "@mui/icons-material/ThumbUpOutlined";
+import ThumbUpIcon from "@mui/icons-material/ThumbUp";
+import LoginErrorWarn from "../../utils/LoginErrorWarn";
+import { FeatureSoonContext } from "../../contexts/featureSoonContext/UseFeatureSoon";
 
 function Comments({ getVideo }) {
   const [content, setContent] = useState("");
   const [commentNumber, setCommentNumber] = useState(null);
   const [OwnerOfComment, setOwnerOfComment] = useState([]);
   const [loginUser, setLoginUser] = useState({});
+
+  const { setIsLoginUser } = useContext(FeatureSoonContext); 
 
   useEffect(() => {
     if (getVideo?.comments) {
@@ -67,11 +72,11 @@ function Comments({ getVideo }) {
     if (loginUser._id === commentOwnerId) {
       try {
         // Send the delete request to the server
-        await axiosInstance.delete(
-          `/comment/delete-comment-video/${commentId}`
-        ).finally(() => {
-          NProgress.done();
-        });
+        await axiosInstance
+          .delete(`/comment/delete-comment-video/${commentId}`)
+          .finally(() => {
+            NProgress.done();
+          });
 
         // Update the state by filtering out the deleted comment
         setOwnerOfComment(
@@ -88,8 +93,66 @@ function Comments({ getVideo }) {
     }
   };
 
+  // handleCommentLike
+  const handleCommentLike = async (commentId, ownerLiked) => {
+    console.log("ownerLiked", ownerLiked);
+    axiosInstance.get("/user/current-user").then((res) => {
+      setIsLoginUser(true);
+    }).catch((err) => {
+      setIsLoginUser(false);
+    });
+
+    if (loginUser) {
+      if (ownerLiked === false) {
+        axiosInstance
+          .get(`/like/video-comment-like/${commentId}`)
+          .then((res) => {
+            setOwnerOfComment((prevComments) =>
+              prevComments.map((comment) => {
+                if (comment._id === commentId) {
+                  return {
+                    ...comment,
+                    isLiked: true,
+                    commentLikesCount: comment.commentLikesCount + 1,
+                  };
+                }
+                return comment;
+              })
+            );
+          })
+          .catch((err) => {
+            console.error(err);
+          });
+      }
+
+      if (ownerLiked === true) {
+        axiosInstance
+          .get(`/like/video-comment-dislike/${commentId}`)
+          .then((res) => {
+            setOwnerOfComment((prevComments) =>
+              prevComments.map((comment) => {
+                if (comment._id === commentId) {
+                  console.log("comment", comment);
+                  return {
+                    ...comment,
+                    isLiked: false,
+                    commentLikesCount: comment.commentLikesCount - 1,
+                  };
+                }
+                return comment;
+              })
+            );
+          })
+          .catch((err) => {
+            console.error(err);
+          });
+      }
+    }
+  };
+
   return (
     <div className="flex gap-2 w-full h-[20rem]  border-zinc-600 p-2 py-5 rounded-2xl flex-col">
+      <LoginErrorWarn />
       {/* video description */}
       <div className="flex flex-col gap-2">
         <h1 className="text-[1.2rem] font-semibold">
@@ -168,7 +231,7 @@ function Comments({ getVideo }) {
                   <div className="w-[45px] h-[45px] overflow-hidden rounded-full">
                     <img
                       className="w-full h-full object-cover"
-                      src={user.commentOwner.avatar}
+                      src={user.commentOwner.avatar || ""}
                       alt="Profile"
                     />
                   </div>
@@ -188,12 +251,21 @@ function Comments({ getVideo }) {
                   </p>
                   <div className="flex gap-2 text-[.8rem]">
                     <span className="flex items-center gap-1 font-light">
-                      <BiLike className="cursor-pointer text-zinc-300 text-[2rem] hover:bg-zinc-700 p-1 rounded-full" />{" "}
-                      {user.likes || 0}
+                      <div
+                        onClick={() =>
+                          handleCommentLike(user._id, user.isLiked)
+                        }
+                      >
+                        {user.isLiked ? (
+                          <ThumbUpIcon className="cursor-pointer text-zinc-300 !text-[2rem] hover:bg-zinc-700 p-1 rounded-full" />
+                        ) : (
+                          <ThumbUpOutlinedIcon className="cursor-pointer text-zinc-300 !text-[2rem] hover:bg-zinc-700 p-1 rounded-full" />
+                        )}
+                      </div>
+
+                      <span className="w-4">{user.commentLikesCount || 0}</span>
                     </span>
-                    <span className="flex items-center gap-2 font-light">
-                      <BiDislike className="cursor-pointer text-zinc-300 text-[2rem] hover:bg-zinc-700 p-1 rounded-full" />
-                    </span>
+
                     <span className="font-semibold hover:bg-zinc-700 p-1 rounded-full px-2 cursor-pointer my-auto">
                       Reply
                     </span>

@@ -76,7 +76,7 @@ function UserChannel() {
           }));
         });
     }
-  };
+  }; 
 
   return (
     <SkeletonTheme baseColor="#202020" highlightColor="#333">
