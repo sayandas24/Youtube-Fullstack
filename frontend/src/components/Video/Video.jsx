@@ -5,19 +5,17 @@ import { RiShareForwardLine } from "react-icons/ri";
 import { LiaDownloadSolid } from "react-icons/lia";
 import VideoPlayer from "./VideoPlayer";
 import axiosInstance from "../../utils/axiosInstance";
-import { useParams, useLocation, Link } from "react-router";
+import { useParams, useLocation } from "react-router";
 import Sidebar2 from "../Layout/Sidebar2";
-import { CollapseContext } from "../../contexts/collapseMenu/CollapseContext"; 
+import { CollapseContext } from "../../contexts/collapseMenu/CollapseContext";
+import { BiLike } from "react-icons/bi";
 import { BsThreeDots } from "react-icons/bs";
 import ThumbUpOutlinedIcon from "@mui/icons-material/ThumbUpOutlined";
 import ThumbUpIcon from "@mui/icons-material/ThumbUp";
-import timeSince from "../../utils/timeSince"; 
-import LoginErrorWarn from "../../utils/LoginErrorWarn";
-import { FeatureSoonContext } from "../../contexts/featureSoonContext/UseFeatureSoon";
 
 function Video() {
   const [getVideo, setGetVideo] = useState({});
-  const [viewsCount, setViewsCount] = useState(0); // Add state for views count 
+  const [viewsCount, setViewsCount] = useState(0); // Add state for views count
 
   const { videoId } = useParams();
   const location = useLocation();
@@ -25,14 +23,11 @@ function Video() {
   const isHomeRoute = location.pathname === `/`;
 
   const { collapse2, setCollapse2 } = useContext(CollapseContext);
-  const {isLoginUser, setIsLoginUser} = useContext(FeatureSoonContext);
 
   // is the class is true then add some class in sidebar,,,
   useEffect(() => {
     setCollapse2(true);
   }, []);
-
- 
 
   // fetch the video
   useEffect(() => {
@@ -46,7 +41,7 @@ function Video() {
         console.log(res, "in views");
         setGetVideo((prev) => ({
           ...prev,
-          viewsCount: prev.viewsCount + 1,
+          viewsCount: prev.viewsCount + 1
         }));
         setViewsCount((prev) => prev + 1); // Update views count state
       })
@@ -57,14 +52,6 @@ function Video() {
 
   // Function to handle subscription
   const handleSubscribe = () => {
-    axiosInstance
-      .get("/user/current-user")
-      .then((res) => {
-        setIsLoginUser(true);
-      })
-      .catch((err) => {
-        setIsLoginUser(false);
-      });
     // Check if the user is already subscribed
     if (getVideo.isSubscribed == false) {
       axiosInstance
@@ -94,14 +81,6 @@ function Video() {
 
   // Function to handle like
   const handleLikeVideo = (videoId) => {
-    axiosInstance
-      .get("/user/current-user")
-      .then((res) => {
-        setIsLoginUser(true);
-      })
-      .catch((err) => {
-        setIsLoginUser(false);
-      });
     if (getVideo.isLiked === false) {
       axiosInstance
         .get(`/like/like-video/${videoId}`)
@@ -133,15 +112,32 @@ function Video() {
     }
   };
 
+  const timeSince = (date) => {
+    const now = new Date();
+    const postedDate = new Date(date);
+    const seconds = Math.floor((now - postedDate) / 1000);
+
+    let interval = Math.floor(seconds / 31536000);
+    if (interval >= 1) return `${interval} ${interval === 1 ? 'year' : 'years'} ago`;
+    interval = Math.floor(seconds / 2592000);
+    if (interval >= 1) return `${interval} ${interval === 1 ? 'month' : 'months'} ago`;
+    interval = Math.floor(seconds / 604800);
+    if (interval >= 1) return `${interval} ${interval === 1 ? 'week' : 'weeks'} ago`;
+    interval = Math.floor(seconds / 86400);
+    if (interval >= 1) return `${interval} ${interval === 1 ? 'day' : 'days'} ago`;
+    interval = Math.floor(seconds / 3600);
+    if (interval >= 1) return `${interval} ${interval === 1 ? 'hour' : 'hours'} ago`;
+    interval = Math.floor(seconds / 60);
+    if (interval >= 1) return `${interval} ${interval === 1 ? 'minute' : 'minutes'} ago`;
+    return `${Math.floor(seconds)} ${seconds === 1 ? 'second' : 'seconds'} ago`;
+  };
+
   if (isHomeRoute) {
     setCollapse2(true);
   }
 
   return (
     <div className="p-10 py-14 flex relative overflow-x-hidden">
-       {/* Error modal */}
-       <LoginErrorWarn/>
-
       <div
         className={`${
           isRouteActive && collapse2 ? "-translate-x-[18rem]  " : ""
@@ -167,15 +163,8 @@ function Video() {
             {/* channel details, subs */}
             <section className="flex gap-2 items-center">
               {/* Avatar */}
-              <Link
-                to={
-                  getVideo.ownerDetails
-                    ? `/channel/${getVideo.ownerDetails.username}`
-                    : ""
-                }
-                className="w-[2.4rem]"
-              >
-                <div className="w-[3rem]  h-[3rem] overflow-hidden rounded-full">
+              <div className="w-[2.4rem]">
+                <div className="w-[2.4rem] h-[2.4rem] overflow-hidden rounded-full">
                   <img
                     className="w-full h-full object-cover"
                     src={
@@ -184,16 +173,9 @@ function Video() {
                     alt="avatar"
                   />
                 </div>
-              </Link>
+              </div>
               {/* Avatar name, description */}
-              <Link
-                to={
-                  getVideo.ownerDetails
-                    ? `/channel/${getVideo.ownerDetails.username}`
-                    : ""
-                }
-                className="flex flex-col text-white text-nowrap ml-3"
-              >
+              <div className="flex flex-col text-white text-nowrap">
                 <p className="text-[1.2rem]">
                   {getVideo.ownerDetails
                     ? getVideo.ownerDetails.fullName
@@ -202,7 +184,7 @@ function Video() {
                 <p className="text-[.8rem] text-zinc-500">
                   {getVideo ? getVideo.subscribersCount : 0} Subscribers
                 </p>
-              </Link>
+              </div>
               {/* Subscribe and other buttons */}
               <div className="flex justify-between w-full">
                 <button
@@ -297,7 +279,6 @@ function Video() {
           {/* comments */}
           <Comments getVideo={getVideo} />
         </section>
-       
 
         {/* right other videos */}
         <RelatedVideos />

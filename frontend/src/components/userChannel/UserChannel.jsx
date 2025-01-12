@@ -7,6 +7,8 @@ import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
 import Sidebar2 from "../Layout/Sidebar2";
 import { CollapseContext } from "../../contexts/collapseMenu/CollapseContext";
 import NProgress from "nprogress";
+import Playlists from "./Playlists";
+import Tweets from "../profile/Tweets";
 
 function UserChannel() {
   const { channel } = useParams();
@@ -14,6 +16,9 @@ function UserChannel() {
   const [currUser, setCurrUser] = useState({});
   const [error, setError] = useState(false);
   const [loading, setLoading] = useState(true);
+  const [showPlaylists, setShowPlaylists] = useState(true);
+  const [showTweets, setShowTweets] = useState(false);
+  const [allTweets, setAllTweets] = useState([]);
 
   const { collapse2, setCollapse2 } = useContext(CollapseContext);
 
@@ -77,6 +82,20 @@ function UserChannel() {
         });
     }
   }; 
+
+  const handlePlaylistClick = () => {
+    setShowPlaylists(true);
+    setShowTweets(false);
+  }
+
+  const handleTweetsClick = () => {
+    
+    
+    setShowPlaylists(false);
+    setShowTweets(true);
+  }
+
+  
 
   return (
     <SkeletonTheme baseColor="#202020" highlightColor="#333">
@@ -176,43 +195,21 @@ function UserChannel() {
           {/* playlists header*/}
           <section className=" w-full">
             <div className="flex gap-5 text-xl font-semibold">
-              <h1 className="border-b-2 rounded-[5px] pb-2">Playlists</h1>
-              <h1 className="pb-2">
+              <h1 onClick={handlePlaylistClick} className={`${showPlaylists ? "border-b-2" : "text-zinc-400"} pb-2 cursor-pointer`}>Playlists</h1>
+              <h1  onClick={handleTweetsClick} className={`${showTweets ? "border-b-2" : "text-zinc-400"} pb-2 cursor-pointer`}>Tweets</h1>
                 {/* <SearchIcon className="!text-3xl text-zinc-500" /> */}
-              </h1>
+              
             </div>
             <hr className="border-t border-zinc-600" />
           </section>
 
           {/* playlists */}
-          <h1 className="my-2 text-xl">Created Playlist</h1>
-          <section className="flex flex-wrap gap-5 my-5">
-            {loading ? (
-              <UserChannelSkeleton number={4} />
-            ) : (
-              userDetail.videos &&
-              userDetail.videos.map((playlist) => (
-                <main key={playlist._id} className="flex gap-5">
-                  <section className="flex flex-col gap-2">
-                    <Link to={`/p/${playlist._id}`} className="w-[20rem] h-[12rem] cursor-pointer border border-[#393939] rounded-xl overflow-hidden">
-                      <img
-                        className="w-full h-full object-cover"
-                        src={playlist.thumbnail}
-                        alt=""
-                      />
-                    </Link>
-                    <div className="flex flex-col gap-1">
-                      <h1 className="text-[15px]">{playlist.title}</h1>
-                      <p className="text-[15px] text-zinc-500">
-                        {playlist.totalViews} views .{" "}
-                        {timeSince(playlist.createdAt)}
-                      </p>
-                    </div>
-                  </section>
-                </main>
-              ))
-            )}
-          </section>
+          {
+            showPlaylists && <Playlists userDetail={userDetail} loading={loading} />
+          }
+          {
+            showTweets && <Tweets userDetail={userDetail} currUser={currUser} />
+          }
         </main>
       </div>
     </SkeletonTheme>

@@ -376,30 +376,6 @@ const getCurrentUser = asyncHandler(async (req, res) => {
       },
     },
     {
-      $lookup: {
-        from: "tweets",
-        localField: "_id",
-        foreignField: "owner",
-        as: "tweets",
-
-        pipeline: [
-          {
-            $lookup: {
-              from: "likes",
-              localField: "_id",
-              foreignField: "tweetLike",
-              as: "tweetLikes",
-            },
-          },
-          {
-            $addFields: {
-              tweetLikes: { $size: "$tweetLikes" },
-            },
-          }, 
-        ],
-      }
-    },
-    {
       // Add lookup for user's videos
       $lookup: {
         from: "videos",
@@ -474,7 +450,6 @@ const getCurrentUser = asyncHandler(async (req, res) => {
         avatar: 1,
         email: 1,
         videos: 1,
-        tweets: 1
         // watchHistory: 1
       },
     },
@@ -624,14 +599,6 @@ const getUserChannelProfile = asyncHandler(async (req, res) => {
       },
     },
     {
-      $lookup: {
-        from: "tweets",
-        localField: "_id",
-        foreignField: "owner",
-        as: "tweets",
-      },
-    },
-    {
       // Add lookup for user's videos
       $lookup: {
         from: "videos",
@@ -701,7 +668,6 @@ const getUserChannelProfile = asyncHandler(async (req, res) => {
         avatar: 1,
         email: 1,
         videos: 1,
-        tweets: 1
 
       },
     },
@@ -727,7 +693,7 @@ const getWatchHistory = asyncHandler(async (req, res) => {
         _id: new mongoose.Types.ObjectId(req.user._id),
       },
     },
-
+    
     {
       // nesting pipeline 1 is for watchHistory, 2 is for video owner
       $lookup: {
@@ -748,19 +714,19 @@ const getWatchHistory = asyncHandler(async (req, res) => {
             }
           },
           {
-
-            $project: {
-              videoFile: 1,
-              watchHistory: 1,
-              owner: 1,
-              title: 1,
-              description: 1,
-              thumbnail: 1,
-              viewsCount: {
-                $size: "$viewsCount"
-              }
-            },
-
+            
+              $project: {
+                videoFile  : 1,
+                watchHistory: 1,
+                owner: 1,
+                title: 1,
+                description: 1,
+                thumbnail: 1,
+                viewsCount: {
+                  $size: "$viewsCount"
+                }
+              },
+            
           },
           {
             $lookup: {
@@ -808,7 +774,7 @@ const getWatchHistory = asyncHandler(async (req, res) => {
         ],
       },
     },
-
+    
   ]);
 
   console.log(user)

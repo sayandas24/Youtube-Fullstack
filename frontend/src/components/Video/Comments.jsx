@@ -67,9 +67,10 @@ function Comments({ getVideo }) {
 
   // Function to delete a comment
   const handleCommentDelete = async (commentOwnerId, commentId) => {
-    NProgress.start();
+    
 
     if (loginUser._id === commentOwnerId) {
+      NProgress.start();
       try {
         // Send the delete request to the server
         await axiosInstance
