@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { FaCloudUploadAlt } from "react-icons/fa";
 import { useNavigate } from "react-router";
+import Sidebar from "../Layout/Sidebar";
 
 function VideoUpload() {
   const [uploadVideo, setUploadVideo] = useState(null);
@@ -16,6 +17,7 @@ function VideoUpload() {
 
   return (
     <div className="relative h-[80vh]">
+      <Sidebar />
       <label
         htmlFor="upload"
         className="cursor-pointer border w-[10rem] h-[10rem] border-zinc-400 rounded-full border-dashed gap-1 flex flex-col items-center justify-center absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2"

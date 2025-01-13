@@ -96,14 +96,12 @@ function Comments({ getVideo }) {
 
   // handleCommentLike
   const handleCommentLike = async (commentId, ownerLiked) => {
-    console.log("ownerLiked", ownerLiked);
     axiosInstance.get("/user/current-user").then((res) => {
       setIsLoginUser(true);
     }).catch((err) => {
       setIsLoginUser(false);
     });
-
-    if (loginUser) {
+    if (loginUser._id) {
       if (ownerLiked === false) {
         axiosInstance
           .get(`/like/video-comment-like/${commentId}`)
@@ -113,7 +111,7 @@ function Comments({ getVideo }) {
                 if (comment._id === commentId) {
                   return {
                     ...comment,
-                    isLiked: true,
+                    isCurrentUserLiked: true,
                     commentLikesCount: comment.commentLikesCount + 1,
                   };
                 }
@@ -132,11 +130,10 @@ function Comments({ getVideo }) {
           .then((res) => {
             setOwnerOfComment((prevComments) =>
               prevComments.map((comment) => {
-                if (comment._id === commentId) {
-                  console.log("comment", comment);
+                if (comment._id === commentId) { 
                   return {
                     ...comment,
-                    isLiked: false,
+                    isCurrentUserLiked: false,
                     commentLikesCount: comment.commentLikesCount - 1,
                   };
                 }
@@ -254,10 +251,10 @@ function Comments({ getVideo }) {
                     <span className="flex items-center gap-1 font-light">
                       <div
                         onClick={() =>
-                          handleCommentLike(user._id, user.isLiked)
+                          handleCommentLike(user._id, user.isCurrentUserLiked)
                         }
                       >
-                        {user.isLiked ? (
+                        {user.isCurrentUserLiked ? (
                           <ThumbUpIcon className="cursor-pointer text-zinc-300 !text-[2rem] hover:bg-zinc-700 p-1 rounded-full" />
                         ) : (
                           <ThumbUpOutlinedIcon className="cursor-pointer text-zinc-300 !text-[2rem] hover:bg-zinc-700 p-1 rounded-full" />

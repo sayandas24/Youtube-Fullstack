@@ -74,8 +74,10 @@ const deleteTweet = asyncHandler(async (req, res) => {
 
 const getAllTweets = asyncHandler(async (req, res) => {
     const id = req.params.id;
-    const currentUserId = req.user._id;
-    console.log(req.user._id)
+    let currentUserId = null;
+    if (req.user?._id) {
+        currentUserId = req.user._id; 
+    }
 
     const allTweets = await Tweet.aggregate([
         { 

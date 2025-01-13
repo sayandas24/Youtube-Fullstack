@@ -5,13 +5,16 @@ import { RiShareForwardLine } from "react-icons/ri";
 import { LiaDownloadSolid } from "react-icons/lia";
 import VideoPlayer from "./VideoPlayer";
 import axiosInstance from "../../utils/axiosInstance";
-import { useParams, useLocation } from "react-router";
+import { useParams, useLocation, Link } from "react-router";
 import Sidebar2 from "../Layout/Sidebar2";
 import { CollapseContext } from "../../contexts/collapseMenu/CollapseContext";
 import { BiLike } from "react-icons/bi";
 import { BsThreeDots } from "react-icons/bs";
 import ThumbUpOutlinedIcon from "@mui/icons-material/ThumbUpOutlined";
 import ThumbUpIcon from "@mui/icons-material/ThumbUp";
+import timeSince from "../../utils/timeSince";
+import { FeatureSoonContext } from "../../contexts/featureSoonContext/UseFeatureSoon";
+import LoginErrorWarn from "../../utils/LoginErrorWarn";
 
 function Video() {
   const [getVideo, setGetVideo] = useState({});
@@ -23,6 +26,7 @@ function Video() {
   const isHomeRoute = location.pathname === `/`;
 
   const { collapse2, setCollapse2 } = useContext(CollapseContext);
+  const { setIsLoginUser } = useContext(FeatureSoonContext); 
 
   // is the class is true then add some class in sidebar,,,
   useEffect(() => {
@@ -52,6 +56,11 @@ function Video() {
 
   // Function to handle subscription
   const handleSubscribe = () => {
+    axiosInstance.get("/user/current-user").then((res) => {
+      setIsLoginUser(true);
+    }).catch((err) => {
+      setIsLoginUser(false);
+    });
     // Check if the user is already subscribed
     if (getVideo.isSubscribed == false) {
       axiosInstance
@@ -81,6 +90,11 @@ function Video() {
 
   // Function to handle like
   const handleLikeVideo = (videoId) => {
+    axiosInstance.get("/user/current-user").then((res) => {
+      setIsLoginUser(true);
+    }).catch((err) => {
+      setIsLoginUser(false);
+    });
     if (getVideo.isLiked === false) {
       axiosInstance
         .get(`/like/like-video/${videoId}`)
@@ -112,26 +126,7 @@ function Video() {
     }
   };
 
-  const timeSince = (date) => {
-    const now = new Date();
-    const postedDate = new Date(date);
-    const seconds = Math.floor((now - postedDate) / 1000);
-
-    let interval = Math.floor(seconds / 31536000);
-    if (interval >= 1) return `${interval} ${interval === 1 ? 'year' : 'years'} ago`;
-    interval = Math.floor(seconds / 2592000);
-    if (interval >= 1) return `${interval} ${interval === 1 ? 'month' : 'months'} ago`;
-    interval = Math.floor(seconds / 604800);
-    if (interval >= 1) return `${interval} ${interval === 1 ? 'week' : 'weeks'} ago`;
-    interval = Math.floor(seconds / 86400);
-    if (interval >= 1) return `${interval} ${interval === 1 ? 'day' : 'days'} ago`;
-    interval = Math.floor(seconds / 3600);
-    if (interval >= 1) return `${interval} ${interval === 1 ? 'hour' : 'hours'} ago`;
-    interval = Math.floor(seconds / 60);
-    if (interval >= 1) return `${interval} ${interval === 1 ? 'minute' : 'minutes'} ago`;
-    return `${Math.floor(seconds)} ${seconds === 1 ? 'second' : 'seconds'} ago`;
-  };
-
+ 
   if (isHomeRoute) {
     setCollapse2(true);
   }
@@ -157,13 +152,13 @@ function Video() {
             {/* video player */}
             <VideoPlayer getVideo={getVideo} />
             {/* video title */}
-            <section className="text-[1.2rem] leading-[1.4rem]">
+            <section  className="text-[1.2rem] leading-[1.4rem]">
               {getVideo?.title} | {getVideo.ownerDetails?.fullName}
             </section>
             {/* channel details, subs */}
             <section className="flex gap-2 items-center">
               {/* Avatar */}
-              <div className="w-[2.4rem]">
+              <Link to={`/channel/${getVideo?.ownerDetails?.username}`} className="w-[2.4rem]">
                 <div className="w-[2.4rem] h-[2.4rem] overflow-hidden rounded-full">
                   <img
                     className="w-full h-full object-cover"
@@ -173,14 +168,14 @@ function Video() {
                     alt="avatar"
                   />
                 </div>
-              </div>
+              </Link>
               {/* Avatar name, description */}
               <div className="flex flex-col text-white text-nowrap">
-                <p className="text-[1.2rem]">
+                <Link to={`/channel/${getVideo?.ownerDetails?.username}`} className="text-[1.2rem]">
                   {getVideo.ownerDetails
                     ? getVideo.ownerDetails.fullName
                     : "N/A"}
-                </p>
+                </Link>
                 <p className="text-[.8rem] text-zinc-500">
                   {getVideo ? getVideo.subscribersCount : 0} Subscribers
                 </p>
@@ -238,7 +233,7 @@ function Video() {
             {/* channel details, subs */}
             <section className="flex gap-2 items-center mt-[10rem]">
               {/* Avatar */}
-              <div className="w-[2.4rem]">
+              <Link to={`/channel/${getVideo?.ownerDetails?.username}`} className="w-[2.4rem]">
                 <div className="w-[2.4rem] h-[2.4rem] overflow-hidden rounded-full">
                   <img
                     className="w-full h-full object-cover"
@@ -248,14 +243,14 @@ function Video() {
                     alt="avatar"
                   />
                 </div>
-              </div>
+              </Link>
               {/* Avatar name, description */}
               <div className="flex flex-col text-white text-nowrap">
-                <p className="text-[1.2rem]">
+                <Link to={`/channel/${getVideo?.ownerDetails?.username}`} className="text-[1.2rem]">
                   {getVideo.ownerDetails
                     ? getVideo.ownerDetails.fullName
                     : "N/A"}
-                </p>
+                </Link>
                 <p className="text-[.8rem] text-zinc-500">
                   {getVideo ? getVideo.subscribersCount : 0} Subscribers
                 </p>
@@ -283,6 +278,7 @@ function Video() {
         {/* right other videos */}
         <RelatedVideos />
       </main>
+      <LoginErrorWarn/>
     </div>
   );
 }

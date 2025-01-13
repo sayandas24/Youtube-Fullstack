@@ -1,7 +1,13 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { FaImages } from "react-icons/fa6";
 import axiosInstance from "../../utils/axiosInstance";
-import nProgress from "nprogress";
+import nProgress, { set } from "nprogress";
+import ThumbUpOutlinedIcon from "@mui/icons-material/ThumbUpOutlined";
+import ThumbUpIcon from "@mui/icons-material/ThumbUp";
+import { FeatureSoonContext } from "../../contexts/featureSoonContext/UseFeatureSoon";
+import LoginErrorWarn from "../../utils/LoginErrorWarn";
+import { BsThreeDots } from "react-icons/bs";
+import { MdDeleteOutline } from "react-icons/md";
 
 function Tweets({ userDetail, currUser }) {
   const [tweetImage, setTweetImage] = useState(null);
@@ -9,6 +15,13 @@ function Tweets({ userDetail, currUser }) {
   const [tweetContent, setTweetContent] = useState("");
   const [showTweetForm, setShowTweetForm] = useState(false);
   const [allTweets, setAllTweets] = useState([]);
+  const [error, setError] = useState(false);
+  const [showDeleteBtn, setShowDeleteBtn] = useState(false);
+  const [showDeleteIcon, setShowDeleteIcon] = useState(false);
+
+  const [hoveredTweetId, setHoveredTweetId] = useState(null);
+
+  const { setIsLoginUser } = useContext(FeatureSoonContext);
 
   // console.log(tweetImage);
 
@@ -35,11 +48,16 @@ function Tweets({ userDetail, currUser }) {
           headers: { "Content-Type": "multipart/form-data" },
         })
         .then((res) => {
+          const newTweet = {
+            ...res.data.data,
+            likesCount: 0,
+            isCurrentUserLiked: false,
+          };
           setTweetContent("");
           setTweetImage(null);
           setTweetPreview(null);
           nProgress.done();
-          setAllTweets((prev) => [...prev, res.data.data]);
+          setAllTweets((prev) => [...prev, newTweet]);
         })
         .catch((err) => {
           console.log(err);
@@ -51,23 +69,37 @@ function Tweets({ userDetail, currUser }) {
   };
 
   useEffect(() => {
-    axiosInstance
-      .get(`/tweet/${userDetail._id}`)
-      .then((res) => {
-        setAllTweets(res.data.data);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    if (currUser._id && userDetail._id === currUser._id) {
+      setShowDeleteBtn(true);
+    }
+    if (userDetail._id) {
+      axiosInstance
+        .get(`/tweet/${userDetail._id}`)
+        .then((res) => {
+          setAllTweets(res.data.data);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
 
-    if (currUser) {
-      if (currUser._id === userDetail._id) {
-        setShowTweetForm(true);
+      if (currUser) {
+        if (currUser._id === userDetail._id) {
+          setShowTweetForm(true);
+        }
       }
     }
   }, []);
 
   const handleDeleteTweet = (id) => {
+    axiosInstance
+      .get("/user/current-user")
+      .then((res) => {
+        setIsLoginUser(true);
+      })
+      .catch((err) => {
+        setIsLoginUser(false);
+      });
+
     nProgress.start();
     axiosInstance
       .delete(`/tweet/delete-tweet/${id}`)
@@ -80,7 +112,56 @@ function Tweets({ userDetail, currUser }) {
         nProgress.done();
       });
   };
-  console.log(allTweets);
+
+  const handleLikeTweet = (id, currUserLiked) => {
+    axiosInstance
+      .get("/user/current-user")
+      .then((res) => {
+        setIsLoginUser(true);
+      })
+      .catch((err) => {
+        setIsLoginUser(false);
+      });
+    if (!currUser._id) {
+      console.log("not logged in");
+      setError(true);
+      return;
+    }
+
+    if (currUserLiked === true) {
+      axiosInstance.get(`/like/dislike-tweet/${id}`).then((res) => {
+        setAllTweets((prev) =>
+          prev.map((tweet) => {
+            if (tweet._id === id) {
+              return {
+                ...tweet,
+                isCurrentUserLiked: false,
+                likesCount: tweet.likesCount - 1,
+              };
+            }
+            return tweet;
+          })
+        );
+      });
+    }
+
+    if (currUserLiked === false) {
+      axiosInstance.get(`/like/like-tweet/${id}`).then((res) => {
+        setAllTweets((prev) =>
+          prev.map((tweet) => {
+            if (tweet._id === id) {
+              return {
+                ...tweet,
+                isCurrentUserLiked: true,
+                likesCount: tweet.likesCount + 1,
+              };
+            }
+            return tweet;
+          })
+        );
+      });
+    }
+  };
 
   // TODO: like count in tweets
   return (
@@ -162,7 +243,7 @@ function Tweets({ userDetail, currUser }) {
       )}
 
       {allTweets &&
-        allTweets.map((tweet) => {
+        allTweets.map((tweet, index) => {
           return (
             <div
               key={tweet._id}
@@ -192,16 +273,52 @@ function Tweets({ userDetail, currUser }) {
                   </div>
                 </div>
 
+                {showDeleteBtn && (
+                  <div
+                    onClick={() => {
+                      setHoveredTweetId(tweet._id);
+                      setShowDeleteIcon(!showDeleteIcon);
+                    }}
+                    className="text-2xl border cursor-pointer relative hover:bg-zinc-800 active:bg-transparent active:border-zinc-800 border-transparent duration-100  rounded-full h-fit w-fit p-2"
+                  >
+                    <BsThreeDots />
+                    {hoveredTweetId === tweet._id && showDeleteIcon && (
+                      <div
+                        onClick={() => handleDeleteTweet(tweet._id)}
+                        className="border rounded-xl absolute top-14 right-0 border-zinc-800 overflow-hidden py-2"
+                      >
+                        <div className="text-xl hover:bg-zinc-800 px-10 py-1 flex gap-2 items-center">
+                          <MdDeleteOutline className="text-2xl text-red-500" />
+                          <span className="text-lg font-semibold">Delete</span>
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                )}
+              </section>
+
+              <section className="flex justify-between w-full mt-5">
                 <div
-                  onClick={() => handleDeleteTweet(tweet._id)}
-                  className="text-zinc-500 cursor-pointer"
+                  onClick={() =>
+                    handleLikeTweet(tweet._id, tweet.isCurrentUserLiked)
+                  }
+                  className="flex gap-3 items-center hover:bg-zinc-800 cursor-pointer rounded-full p-5 py-2"
                 >
-                  Delete
+                  {tweet.isCurrentUserLiked ? (
+                    <ThumbUpIcon />
+                  ) : (
+                    <ThumbUpOutlinedIcon />
+                  )}{" "}
+                  <span className="font-semibold w-3">
+                    {tweet?.likesCount || 0}
+                  </span>
                 </div>
               </section>
             </div>
           );
         })}
+
+      <LoginErrorWarn />
     </main>
   );
 }
