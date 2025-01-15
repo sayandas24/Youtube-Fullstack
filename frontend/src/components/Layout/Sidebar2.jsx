@@ -22,6 +22,7 @@ function Sidebar2() {
 
   const handleMenu = () => {
     setCollapse2(!collapse2);
+    console.log("clicked")
   };
 
   // temp

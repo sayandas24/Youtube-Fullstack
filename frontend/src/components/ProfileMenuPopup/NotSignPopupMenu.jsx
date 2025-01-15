@@ -47,7 +47,7 @@ function NotSignPopupMenu() {
         className={`duration-500 rounded-full border-[#696969] cursor-pointer active:bg-[#282828] text-white p-3 h-fit`}
       >
         <div className="flex gap-1 items-center">
-          <BsThreeDotsVertical className="text-2xl text-[#cacaca]" />
+          <BsThreeDotsVertical className="text-2xl text-[#cacaca] smallIcon" />
         </div>
       </div>
 
@@ -55,7 +55,7 @@ function NotSignPopupMenu() {
       {menuActive && (
         <div
           ref={menuRef} // Attach ref to menu
-          className="absolute top-[3.5rem] z-10 right-[2rem] rounded-xl bg-[#282828] text-white w-[20rem] h-fit py-3"
+          className="absolute top-[3.5rem] z-10 right-[2rem] rounded-xl bg-[#282828] text-white w-[20rem] h-fit py-3 max-[400px]:w-[17rem]"
         >
           <section onClick={() => handleFeatureSoonShow()}   className="p-3 hover:bg-[#383838] cursor-pointer">
             <div className="flex gap-3 items-center">
@@ -94,10 +94,10 @@ function NotSignPopupMenu() {
         </div>
       )}
 
-      <NavLink to="/login" className="rounded-full border border-[#696969] cursor-pointer hover:border-transparent hover:bg-[#282828] text-white p-3 h-fit py-2">
+      <NavLink to="/login" className="hide-item-in-small rounded-full border border-[#696969] cursor-pointer hover:border-transparent hover:bg-[#282828] text-white p-3 h-fit py-2">
         <div className="flex gap-1 items-center">
           <CgProfile className="text-2xl text-[#cacaca]" />
-          <h1 className="text-[1.1rem] font-[440]">Sign In</h1>
+          <h1 className="text-[1.1rem] font-[440] text-nowrap">Sign In</h1>
         </div>
       </NavLink>
     </div>

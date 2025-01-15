@@ -4,6 +4,7 @@ import { Outlet, useParams } from "react-router";
 import Sidebar from "./Sidebar";
 import NewFeatureMSG from "../UI/NewFeatureMSG";
 import axiosInstance from "../../utils/axiosInstance";
+import SidebarMobile from "./SidebarMobile";
 
 function Layout() { 
 
@@ -12,7 +13,8 @@ function Layout() {
        
       <NewFeatureMSG />
       <Navbar />
-      <Outlet />
+      <Outlet /> 
+      <SidebarMobile/> 
     </div>
   );
 }

@@ -13,6 +13,9 @@ import { LuMessageSquareDiff } from "react-icons/lu";
 
 import { SlCloudUpload } from "react-icons/sl"; 
 import { FeatureSoonContext } from "../../contexts/featureSoonContext/UseFeatureSoon";
+import { useScreenWidth } from "../../utils/screenWidth";
+import "../../responsive/navbar.scss"
+ 
 
 
 function Navbar() {
@@ -30,6 +33,8 @@ function Navbar() {
   const profileMenuRef = useRef(null);
   const profileButtonRef = useRef(null);
 
+  const screenWidth = useScreenWidth(); 
+
   // Get current user
   useEffect(() => {
     axiosInstance
@@ -43,9 +48,16 @@ function Navbar() {
       });
   }, []);
 
+
+  if (screenWidth < 1024) {
+    setCollapse(true)
+  }
+
   // Handle menu
-  const handleMenu = () => {
-    setCollapse(!collapse);
+  const handleMenu = () => { 
+    if (screenWidth > 1024) { 
+      setCollapse(!collapse); 
+    }
     setCollapse2(!collapse2);
   };
   // Handle profile menu
@@ -80,16 +92,16 @@ function Navbar() {
     }, []);
 
   return (
-    <nav className="relative top-0 left-0 w-full z-50 bg-[#0f0f0f] min-h-[6rem]">
+    <nav id="nav" className="relative top-0 left-0 w-full z-50 bg-[#0f0f0f] min-h-[6rem]">
       {/* <NewFeatureMSG/>   */}
-      <ul className="flex fixed bg-[#0f0f0f] w-full top-0 text-md text-white  gap-5  p-5 pb-1 px-[1.6rem] justify-between">
+      <ul className="flex fixed bg-[#0f0f0f] w-full top-0 text-md text-white  gap-0  p-5 pb-1 px-[1.6rem] justify-between items-center">
         <section>
-          <div className="flex gap-3 items-center">
+          <div className="flex gap-3 items-center max-[650px]:gap-1">
             <IoMdMenu
               onClick={handleMenu}
-              className="more-options text-[2.6rem] hover:bg-[#252525] duration-75 cursor-pointer active:bg-[#343434] rounded-full p-2"
+              className="hide-item-in-small more-options text-[2.6rem] hover:bg-[#252525] duration-75 cursor-pointer active:bg-[#343434] rounded-full p-2"
             />
-            <div className="flex items-center border-[#555555] p-5 rounded-full py-2">
+            <div id="logo" className="flex items-center border-[#555555] p-5 rounded-full py-2">
               <img className="w-[2rem] invert" src={metube} alt="" />
               <h1 className="font-sacramento font-bold text-[1.5rem]">
                 Metube
@@ -102,16 +114,20 @@ function Navbar() {
           <div className="flex gap-3 items-center">
             <div className="flex items-center ">
               <input
+                id="search"
                 type="text"
-                className="pl-5 h-[2.90rem] w-[30rem] outline-none focus:border-[#0062ff] rounded-full border-[#393939] border bg-[#121212] rounded-r-none"
+                className=" pl-5 h-[2.90rem] w-[30rem]a outline-none focus:border-[#0062ff] rounded-full border-[#393939] border bg-[#121212] rounded-r-none"
                 placeholder="Search"
               />
-              <div onClick={() => handleFeatureSoonShow()} className="flex justify-center items-center rounded-l-none  h-[3rem] px-5 rounded-full bg-[#222222]">
-                <IoIosSearch className="text-[1.4rem]" />
+              <div onClick={() => handleFeatureSoonShow()} 
+              id="search-icon"
+               className="flex  justify-center items-center rounded-l-none  h-[3rem] px-5 rounded-full bg-[#222222]">
+                <IoIosSearch className="text-[1.4rem] smallIcon" />
               </div>
             </div>
-            <div onClick={() => handleFeatureSoonShow()} className="h-[3rem] w-[3rem] flex items-center justify-center rounded-full bg-[#222222] hover:bg-[#2f2f2f]">
-              <IoMdMic className="text-2xl" />
+            <div id="mic-icon"
+             onClick={() => handleFeatureSoonShow()} className="h-[3rem] w-[3rem] flex items-center hide-item-in-small justify-center rounded-full bg-[#222222] hover:bg-[#2f2f2f]">
+              <IoMdMic className="text-2xl smallIcon" />
             </div>
           </div>
         </section>
@@ -119,9 +135,9 @@ function Navbar() {
           {/* <SignPopupMenu/> */}
           {user.data ? (
             <div className="flex items-center gap-4">
-              <section ref={createButtonRef} onClick={onCreateClick} className="cursor-pointer bg-[#272727] hover:bg-[#2f2f2f] active:bg-[#454545] rounded-full h-[2.8rem] gap-1 px-3 flex items-center justify-center">
+              <section ref={createButtonRef} onClick={onCreateClick} className="cursor-pointer bg-[#272727] hover:bg-[#2f2f2f] active:bg-[#454545] rounded-full h-[2.8rem] gap-1 px-3 flex items-center justify-center max-[500px]:h-[2.3rem]">
                 <GoPlus className="text-[1.7rem]" />
-                <h1 className="text-[1rem] font-semibold">Create</h1>
+                <h1 className="text-[1rem] font-semibold max-[500px]:text-[0.8rem]">Create</h1>
               </section>
               {
                 createClick && (
@@ -146,10 +162,10 @@ function Navbar() {
                 ref={profileButtonRef}
                 className={` ${
                   profileClick ? "border-blue-500" : "border-transparent"
-                } border w-[3rem] h-[3rem] rounded-full overflow-hidden`}
+                } border hide-item-in-small w-[3rem] h-[3rem] rounded-full overflow-hidden`}
               >
                 <img
-                  className="w-full h-full object-cover"
+                  className="w-full h-full object-cover "
                   src={profilepic}
                   alt="avatar"
                 />

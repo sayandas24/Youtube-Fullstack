@@ -1,5 +1,9 @@
 import "./App.css";
 import "./script.js";
+import './responsive/home.scss';
+import './responsive/navbar.scss';
+import './responsive/sidebar.scss';
+import './responsive/sidebar1.scss';
 import Home from "./components/Home/Home.jsx";
 import Video from "./components/Video/Video.jsx";
 import { createBrowserRouter, RouterProvider, useLocation } from "react-router";

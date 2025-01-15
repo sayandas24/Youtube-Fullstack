@@ -1,0 +1,50 @@
+#nav {
+  #search {
+    width: 30vw;
+  }
+  @media screen and (max-width: 780px) {
+    ul {
+      padding: 10px;
+    }
+    #search {
+      width: 20vw !important;
+    }
+  }
+  @media screen and (max-width: 650px) {
+    #search {
+      display: none;
+    }
+    #search-icon {
+      border-radius: 500px;
+      padding: 15px;
+      height: auto;
+    }
+    #logo {
+      padding: 5px;
+    }
+  }
+  @media screen and (max-width: 500px) {
+    ul {
+      display: grid;
+      grid-template-columns: 1fr auto auto;
+    }
+
+    #search-icon {
+      border-radius: 500px;
+      padding: 10px;
+      height: auto;
+      margin-right: 10px;
+    }
+    #logo {
+      padding: 5px;
+    }
+    .smallIcon {
+      font-size: 20px;
+    }
+    #mic-icon {
+      width: auto;
+      height: auto;
+      padding: 10px;
+    }
+  }
+}

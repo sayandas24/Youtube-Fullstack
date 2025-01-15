@@ -2,7 +2,7 @@
 
 @import url('https://fonts.googleapis.com/css2?family=Sacramento&display=swap');
 body {
-  background-color: #0f0f0f; 
+  background-color: #0f0f0f;
 }
 .react-player {
   video {
@@ -42,6 +42,11 @@ body {
   background: #97979700; /* Background of the scrollbar track */
   border-radius: 10px; /* Matching round shape for the track */
   cursor: grab;
+}
+@media screen and (max-width: 400px) {
+  ::-webkit-scrollbar {
+    width: 0px;
+  }
 }
 
 /* Svg filter */
@@ -85,20 +90,7 @@ body {
   color: #58a9ff;
 }
 /* Input box */
-
-
-/* Video columns */
-#videoContainer{
-  columns: 350px; 
-  /* overflow: hidden; */
-  
-}
-#eachVideo{
-  min-width: 10rem; 
-  overflow: hidden;
-}
-/* Video columns */
-/* layout */
+ 
 
 /* Customize the progress bar */
 #nprogress .bar {
