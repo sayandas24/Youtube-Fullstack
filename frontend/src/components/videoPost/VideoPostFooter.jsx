@@ -14,7 +14,7 @@ function VideoPostFooter({ loading }) {
     setShowHover(false);
   }
   return (
-    <footer className=" border-zinc-700 w-full sticky bottom-0 left-0 flex justify-between items-center p-4">
+    <footer className=" border-zinc-700 w-full sticky bottom-0 left-0 flex justify-between items-center p-4 max-[500px]:p-0 max-[500px]:py-4">
       <section>details more@</section>
       <section>
         <button

@@ -92,7 +92,7 @@ function Navbar() {
     }, []);
 
   return (
-    <nav id="nav" className="relative top-0 left-0 w-full z-50 bg-[#0f0f0f] min-h-[6rem]">
+    <nav id="nav" className="relative top-0 left-0 w-full z-50 bg-[#0f0f0f] min-h-[6rem] max-[500px]:min-h-[3rem]">
       {/* <NewFeatureMSG/>   */}
       <ul className="flex fixed bg-[#0f0f0f] w-full top-0 text-md text-white  gap-0  p-5 pb-1 px-[1.6rem] justify-between items-center">
         <section>

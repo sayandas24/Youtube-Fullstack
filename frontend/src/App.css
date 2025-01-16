@@ -43,7 +43,7 @@ body {
   border-radius: 10px; /* Matching round shape for the track */
   cursor: grab;
 }
-@media screen and (max-width: 400px) {
+@media screen and (max-width: 500px) {
   ::-webkit-scrollbar {
     width: 0px;
   }

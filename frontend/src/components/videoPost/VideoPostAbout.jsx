@@ -84,8 +84,8 @@ function VideoPostAbout({ file, existingVideo = null }) {
   }, [existingVideo]);
 
   return (
-    <form onSubmit={handleSubmit} className="w-[65%] h-full border-zinc-700 rounded-xl flex flex-col gap-2">
-      <h1 className="text-2xl font-semibold">Details</h1>
+    <form id="upload-video-details-small-form" onSubmit={handleSubmit} className="w-[65%] h-full rounded-xl flex flex-col gap-2 max-[720px]:w-full">
+      <h1 className="text-2xl font-semibold ">Details</h1>
       {/* title */}
       <div className="input-box ">
         <input
@@ -121,11 +121,11 @@ function VideoPostAbout({ file, existingVideo = null }) {
         </p>
       </div>
 
-      <div className="flex gap-5">
+      <div className="flex gap-5 max-[720px]:gap-2">
         <section>
           <label
             htmlFor="thumbnail"
-            className="cursor-pointer  border w-[10rem] h-[5rem] border-zinc-400 rounded-lg border-dashed gap-1 flex-col items-center justify-center flex"
+            className="cursor-pointer  border w-[10rem] h-[5rem] border-zinc-400 rounded-lg border-dashed gap-1 flex-col items-center justify-center flex max-[360px]:w-[45vw]"
           >
             {thumbnailPreview ? (
               <img
@@ -153,7 +153,7 @@ function VideoPostAbout({ file, existingVideo = null }) {
         <section>
           <label
             htmlFor="none"
-            className="   border w-[10rem]  h-[5rem] border-zinc-400 rounded-lg border-dashed gap-1 flex-col items-center justify-center flex cursor-not-allowed"
+            className="max-[360px]:w-[45vw]   border w-[10rem]  h-[5rem] border-zinc-400 rounded-lg border-dashed gap-1 flex-col items-center justify-center flex cursor-not-allowed"
           >
             <RiGeminiFill className="text-xl text-zinc-300" />
             <div className="leading-[12px]">
@@ -175,7 +175,7 @@ function VideoPostAbout({ file, existingVideo = null }) {
 
       {error && <p className="text-red-500">{error}</p>}
 
-      <div className="w-full absolute left-0 bottom-0">
+      <div className="w-full left-0 bottom-0">
         <VideoPostFooter loading={loading} />
       </div>
     </form>

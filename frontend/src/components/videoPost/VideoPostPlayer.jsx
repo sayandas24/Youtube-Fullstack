@@ -13,7 +13,7 @@ function VideoPostRight({ file, videoUrl, fileSizeReadable, removeVideo }) {
   };
 
   return (
-    <section className="sticky top-[7rem] w-[35%] h-[20rem]   rounded-xl">
+    <section className="max-[720px]:relative sticky min-[720px]:top-[7rem] min-w-[17rem] h-[17rem]   rounded-xl max-[720px]:w-full">
       <div className=" absolute top-0 left-0 w-full border-red-300 h-[17rem] rounded-xl flex flex-col overflow-hidden">
         {/* video box */}
         <section className="h-[10rem] w-full rounded-t-xl">
