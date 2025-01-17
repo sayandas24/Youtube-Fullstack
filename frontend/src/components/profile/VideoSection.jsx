@@ -52,8 +52,7 @@ function VideoSection({ videos }) {
       });
       return { ...newState, [index]: !prev[index] };
     });
-  };
-
+  }; 
   const handleClickOutside = (event) => {
     if (
       !event.target.closest(".more-options") &&

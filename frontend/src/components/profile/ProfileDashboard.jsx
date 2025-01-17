@@ -4,12 +4,26 @@ import ProfileDashboardDP from "./profileDashboard/ProfileDashboardDP";
 import ProfileDashboardCover from "./profileDashboard/ProfileDashboardCover";
 import timeSince from "../../utils/timeSince";
 import { Link } from "react-router";
+import Tweets from "./Tweets";
 
-function ProfileDashboard({ user }) {
-  console.log(user);
+function ProfileDashboard({ user }) { 
+  const [showPlaylists, setShowPlaylists] = useState(true);
+  const [showTweets, setShowTweets] = useState(false);
+
+  const handlePlaylistClick = () => {
+    setShowPlaylists(true);
+    setShowTweets(false);
+  };
+
+  const handleTweetsClick = () => {
+    setShowPlaylists(false);
+    setShowTweets(true);
+  };
+
+  console.log(user)
 
   return (
-    <div className="flex w-full text-white min-[1000px]:pl-2  ">
+    <div className="flex w-full text-white min-[1000px]:pl-2">
       {/* <Sidebar /> */}
 
       <main className="flex flex-col w-[85rem] mx-auto max-[1000px]:px-2">
@@ -18,17 +32,28 @@ function ProfileDashboard({ user }) {
         {/* profile */}
         <ProfileDashboardDP user={user} />
         {/* playlists header*/}
-        <section className=" w-full">
-          <div className="flex gap-5 text-xl font-semibold">
-            <h1 className="border-b-2 rounded-[5px] pb-2">Playlists</h1>
-            <h1 className="pb-2">
-              <SearchIcon className="!text-3xl text-zinc-500" />
-            </h1>
-          </div>
-          <hr className="border-t border-zinc-600" />
-        </section>
+        <div className="flex gap-5 text-xl font-semibold pl-2">
+              <h1
+                onClick={handlePlaylistClick}
+                className={`${
+                  showPlaylists ? "border-b-2" : "text-zinc-400"
+                } pb-2 cursor-pointer`}
+              >
+                Playlists
+              </h1>
+              <h1
+                onClick={handleTweetsClick}
+                className={`${
+                  showTweets ? "border-b-2" : "text-zinc-400"
+                } pb-2 cursor-pointer`}
+              >
+                Tweets
+              </h1>
+              {/* <SearchIcon className="!text-3xl text-zinc-500" /> */}
+            </div>
 
         {/* playlists */}
+        {showPlaylists && (
         <section className="my-5">
           <h1 className="my-2 text-xl">Created Playlist</h1>
           <main id="video-in-dashboard" className=" flex-wrap max-[1000px]:mb-[3rem]">
@@ -53,6 +78,12 @@ function ProfileDashboard({ user }) {
               ))}
           </main>
         </section>
+        )}
+
+        {/* tweets */}
+        {showTweets && (
+          <Tweets userDetail={user} currUser={user}/>
+        )}
       </main>
     </div>
   );

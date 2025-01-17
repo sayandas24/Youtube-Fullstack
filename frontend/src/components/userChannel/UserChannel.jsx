@@ -25,10 +25,13 @@ function UserChannel() {
   const location = useLocation();
   const isRouteActive = location.pathname.startsWith(`/channel/`);
 
+  console.log(channel)
+
   useEffect(() => {
     NProgress.start();
     setCollapse2(true);
-    axiosInstance
+    if (channel) {
+      axiosInstance
       .get(`/user/channel/${channel}`)
       .then((res) => {
         NProgress.done();
@@ -36,12 +39,15 @@ function UserChannel() {
         setLoading(false);
       })
       .catch((err) => {
-        console.log(err);
+        console.log("cannot get channel: ",err);
         NProgress.done();
         setLoading(false);
       });
+    }
   }, []);
+ 
 
+  // fetch current user
   useEffect(() => {
     axiosInstance
       .get("/user/current-user")
@@ -55,8 +61,7 @@ function UserChannel() {
     if (!currUser._id) {
       console.log("not logged in");
       setError(true);
-    }
-    console.log(userDetail);
+    } 
     if (userDetail.isSubscribed == false) {
       axiosInstance
         .get(`/subscription/subscribe/${userDetail._id}`)
@@ -81,21 +86,17 @@ function UserChannel() {
           }));
         });
     }
-  }; 
+  };
 
   const handlePlaylistClick = () => {
     setShowPlaylists(true);
     setShowTweets(false);
-  }
+  };
 
   const handleTweetsClick = () => {
-    
-    
     setShowPlaylists(false);
     setShowTweets(true);
-  }
-
-  
+  };
 
   return (
     <SkeletonTheme baseColor="#202020" highlightColor="#333">
@@ -118,7 +119,7 @@ function UserChannel() {
                 className="w-full relative group border border-[#191919] h-[15rem] overflow-hidden"
               />
             ) : (
-              <div className="w-full relative rounded-xl group border border-[#191919] h-[15rem] overflow-hidden">
+              <div className="w-full relative rounded-xl group border-blue-500 h-[13rem] overflow-hidden max-[500px]:h-[10rem]">
                 <img
                   className="w-full h-full object-cover"
                   src={userDetail ? userDetail.coverImage : ""}
@@ -128,12 +129,12 @@ function UserChannel() {
             )}
           </section>
           {/* profile */}
-          <section className="my-5 ">
+          <section className="my-5 ml-2 max-[500px]:my-0 max-[500px]:mb-3">
             <div className=" flex gap-3">
               {loading ? (
                 <Skeleton circle width={"10rem"} height={"10rem"} />
               ) : (
-                <section className=" border border-[#191919] relative left w-[10rem] h-[10rem] rounded-full overflow-hidden">
+                <section className=" group relative left w-[10rem] h-[10rem] rounded-full overflow-hidden max-[500px]:w-[7rem] max-[500px]:h-[7rem] flex-shrink-0">
                   <img
                     className="w-full h-full object-cover"
                     src={userDetail ? userDetail.avatar : ""}
@@ -160,6 +161,16 @@ function UserChannel() {
                     <p className="text-zinc-100">
                       @{userDetail ? userDetail.username : ""}
                     </p>
+                    <p className="max-[500px]:hidden">
+                      {userDetail ? userDetail.subscribersCount : "0"}{" "}
+                      subscribers
+                    </p>
+                    <p className="max-[500px]:hidden">
+                      {userDetail ? userDetail.videosCount : "0"} videos
+                    </p>
+                  </div>
+
+                  <div className="min-[500px]:hidden text-[16px] text-zinc-500 pl-1 flex gap-2">
                     <p className="">
                       {userDetail ? userDetail.subscribersCount : "0"}{" "}
                       subscribers
@@ -178,7 +189,7 @@ function UserChannel() {
                   >
                     {userDetail.isSubscribed ? "Unsubscribe" : "Subscribe"}
                   </button>
-                  <p className={`${error ? "visible" : "invisible"} `}>
+                  <p className={`${error ? "block" : "hidden"} `}>
                     Login to subscribe to this channel
                     <NavLink
                       className="ml-2 text-blue-400 font-semibold"
@@ -194,22 +205,33 @@ function UserChannel() {
 
           {/* playlists header*/}
           <section className=" w-full">
-            <div className="flex gap-5 text-xl font-semibold">
-              <h1 onClick={handlePlaylistClick} className={`${showPlaylists ? "border-b-2" : "text-zinc-400"} pb-2 cursor-pointer`}>Playlists</h1>
-              <h1  onClick={handleTweetsClick} className={`${showTweets ? "border-b-2" : "text-zinc-400"} pb-2 cursor-pointer`}>Tweets</h1>
-                {/* <SearchIcon className="!text-3xl text-zinc-500" /> */}
-              
+            <div className="flex gap-5 text-xl font-semibold pl-2">
+              <h1
+                onClick={handlePlaylistClick}
+                className={`${
+                  showPlaylists ? "border-b-2" : "text-zinc-400"
+                } pb-2 cursor-pointer`}
+              >
+                Playlists
+              </h1>
+              <h1
+                onClick={handleTweetsClick}
+                className={`${
+                  showTweets ? "border-b-2" : "text-zinc-400"
+                } pb-2 cursor-pointer`}
+              >
+                Tweets
+              </h1>
+              {/* <SearchIcon className="!text-3xl text-zinc-500" /> */}
             </div>
             <hr className="border-t border-zinc-600" />
           </section>
 
           {/* playlists */}
-          {
-            showPlaylists && <Playlists userDetail={userDetail} loading={loading} />
-          }
-          {
-            showTweets && <Tweets userDetail={userDetail} currUser={currUser} />
-          }
+          {showPlaylists && (
+            <Playlists userDetail={userDetail} loading={loading} />
+          )}
+          {showTweets && <Tweets userDetail={userDetail} currUser={currUser} />}
         </main>
       </div>
     </SkeletonTheme>

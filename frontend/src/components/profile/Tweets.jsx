@@ -165,11 +165,11 @@ function Tweets({ userDetail, currUser }) {
 
   // TODO: like count in tweets
   return (
-    <main>
+    <main className="p-3 max-[500px]:p-2">
       {showTweetForm && (
         <form
           onSubmit={handleForm}
-          className="border border-zinc-700 rounded-xl p-5 min-h-[10rem] w-[55rem] mt-10"
+          className="border border-zinc-700 rounded-xl max-[500px]:p-2 p-5 min-h-[10rem] w-[55rem] mt-10 max-[1000px]:w-[100%]"
         >
           <section className="flex justify-between items-center">
             <div className="flex gap-3 items-center">
@@ -193,10 +193,11 @@ function Tweets({ userDetail, currUser }) {
               value={tweetContent}
               placeholder="What's happening?"
               className="mt-2  w-full min-h-[5rem] py-5 bg-transparent outline-none"
+              required
             />
           </section>
 
-          <section className="flex justify-between items-center">
+          <section className="flex justify-between items-center max-[360px]:flex-wrap">
             <label
               htmlFor="tweetImage"
               className="flex gap-3 items-center cursor-pointer hover:bg-zinc-800 p-2 px-4 rounded-full"
@@ -228,9 +229,9 @@ function Tweets({ userDetail, currUser }) {
             </div>
           </section>
 
-          <section>
+          <section className="max-[500px]:p-2">
             {tweetPreview && (
-              <div className="mt-2 w-[45rem] h-[20rem] rounded-xl overflow-hidden">
+              <div className="mt-2 max-w-[45rem] h-[20rem] rounded-xl overflow-hidden max-[350px]:mt-5 ">
                 <img
                   className="w-full h-full object-cover"
                   src={tweetPreview}
@@ -242,81 +243,85 @@ function Tweets({ userDetail, currUser }) {
         </form>
       )}
 
-      {allTweets &&
-        allTweets.map((tweet, index) => {
-          return (
-            <div
-              key={tweet._id}
-              className="border border-zinc-700 rounded-xl p-5 min-h-[10rem] w-[55rem] mt-10"
-            >
-              <section className="flex justify-between ">
-                <div className="flex gap-3 ">
-                  <div className="rounded-full w-[3rem] h-[3rem] overflow-hidden">
-                    <img
-                      className="w-full h-full object-cover"
-                      src={userDetail?.avatar}
-                      alt=""
-                    />
-                  </div>
-                  <div className="flex flex-col flex-1">
-                    <h1>{userDetail?.username}</h1>
-                    <h2 className="text-lg mt-3">{tweet?.content}</h2>
-                    <div className="mt-1 w-[40rem] rounded-xl overflow-hidden">
-                      {tweet?.contentImage && (
-                        <img
-                          className="w-full h-full object-cover"
-                          src={tweet?.contentImage || ""}
-                          alt=""
-                        />
-                      )}
+      <section className="max-[500px]:mb-[3rem] flex flex-col gap-2 mt-10">
+        {allTweets &&
+          allTweets.map((tweet, index) => {
+            return (
+              <div
+                key={tweet._id}
+                className="border border-zinc-700 rounded-xl p-5 min-h-[10rem] w-[55rem] max-[1000px]:w-[100%]"
+              >
+                <section className="flex justify-between">
+                  <div className="flex gap-3 ">
+                    <div className="rounded-full w-[3rem] h-[3rem] overflow-hidden">
+                      <img
+                        className="w-full h-full object-cover"
+                        src={userDetail?.avatar}
+                        alt=""
+                      />
+                    </div>
+                    <div className="flex flex-col flex-1">
+                      <h1>{userDetail?.username}</h1>
+                      <h2 className="text-lg mt-3">{tweet?.content}</h2>
+                      <div className="mt-1 max-w-[40rem] rounded-xl overflow-hidden">
+                        {tweet?.contentImage && (
+                          <img
+                            className="w-full h-full object-cover"
+                            src={tweet?.contentImage || ""}
+                            alt=""
+                          />
+                        )}
+                      </div>
                     </div>
                   </div>
-                </div>
 
-                {showDeleteBtn && (
-                  <div
-                    onClick={() => {
-                      setHoveredTweetId(tweet._id);
-                      setShowDeleteIcon(!showDeleteIcon);
-                    }}
-                    className="text-2xl border cursor-pointer relative hover:bg-zinc-800 active:bg-transparent active:border-zinc-800 border-transparent duration-100  rounded-full h-fit w-fit p-2"
-                  >
-                    <BsThreeDots />
-                    {hoveredTweetId === tweet._id && showDeleteIcon && (
-                      <div
-                        onClick={() => handleDeleteTweet(tweet._id)}
-                        className="border rounded-xl absolute top-14 right-0 border-zinc-800 overflow-hidden py-2"
-                      >
-                        <div className="text-xl hover:bg-zinc-800 px-10 py-1 flex gap-2 items-center">
-                          <MdDeleteOutline className="text-2xl text-red-500" />
-                          <span className="text-lg font-semibold">Delete</span>
+                  {showDeleteBtn && (
+                    <div
+                      onClick={() => {
+                        setHoveredTweetId(tweet._id);
+                        setShowDeleteIcon(!showDeleteIcon);
+                      }}
+                      className="text-2xl border cursor-pointer relative hover:bg-zinc-800 active:bg-transparent active:border-zinc-800 border-transparent duration-100  rounded-full h-fit w-fit p-2"
+                    >
+                      <BsThreeDots />
+                      {hoveredTweetId === tweet._id && showDeleteIcon && (
+                        <div
+                          onClick={() => handleDeleteTweet(tweet._id)}
+                          className="border bg-[#410101] rounded-xl absolute top-14 right-0 border-red-800 overflow-hidden py-2"
+                        >
+                          <div className="text-xl  px-10 py-1 flex gap-2 items-center">
+                            <MdDeleteOutline className="text-2xl text-red-500" />
+                            <span className="text-lg font-semibold">
+                              Delete
+                            </span>
+                          </div>
                         </div>
-                      </div>
-                    )}
-                  </div>
-                )}
-              </section>
+                      )}
+                    </div>
+                  )}
+                </section>
 
-              <section className="flex justify-between w-full mt-5">
-                <div
-                  onClick={() =>
-                    handleLikeTweet(tweet._id, tweet.isCurrentUserLiked)
-                  }
-                  className="flex gap-3 items-center hover:bg-zinc-800 cursor-pointer rounded-full p-5 py-2"
-                >
-                  {tweet.isCurrentUserLiked ? (
-                    <ThumbUpIcon />
-                  ) : (
-                    <ThumbUpOutlinedIcon />
-                  )}{" "}
-                  <span className="font-semibold w-3">
-                    {tweet?.likesCount || 0}
-                  </span>
-                </div>
-              </section>
-            </div>
-          );
-        })}
+                <section className="flex justify-between w-full mt-5">
+                  <div
+                    onClick={() =>
+                      handleLikeTweet(tweet._id, tweet.isCurrentUserLiked)
+                    }
+                    className="flex gap-3 items-center hover:bg-zinc-800 cursor-pointer rounded-full p-5 py-2"
+                  >
+                    {tweet.isCurrentUserLiked ? (
+                      <ThumbUpIcon />
+                    ) : (
+                      <ThumbUpOutlinedIcon />
+                    )}{" "}
+                    <span className="font-semibold w-3">
+                      {tweet?.likesCount || 0}
+                    </span>
+                  </div>
+                </section>
+              </div>
+            );
+          })}
+      </section>
 
       <LoginErrorWarn />
     </main>
