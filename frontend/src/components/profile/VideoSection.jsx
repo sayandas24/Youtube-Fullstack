@@ -4,23 +4,43 @@ import { MdOutlineEdit } from "react-icons/md";
 import { PiYoutubeLogo } from "react-icons/pi";
 import { IoMdMore } from "react-icons/io";
 import { MdDelete } from "react-icons/md";
-import ThreeDot from "./ThreeDot"; 
+import ThreeDot from "./ThreeDot";
 import DeleteMenu from "../UI/DeleteMenu";
 import { ProfileContext } from "../../contexts/profileContext/profileContext";
+import { useScreenWidth } from "../../utils/screenWidth";
 
 function VideoSection({ videos }) {
   const [optionShow, setOptionShow] = useState({});
+  const [optionShowMobile, setOptionShowMobile] = useState({});
   const [moreFunctionShow, setMoreFunctionShow] = useState({});
 
-  const {deleteClick} = useContext(ProfileContext)
-  
+  const { deleteClick } = useContext(ProfileContext);
+
+  const screenWidth = useScreenWidth();
 
   const handleMouseEnter = (index) => {
-    setOptionShow((prev) => ({ ...prev, [index]: true }));
+    if (screenWidth > 500) {
+      setOptionShow((prev) => ({ ...prev, [index]: true }));
+    }
   };
 
   const handleMouseLeave = (index) => {
-    setOptionShow((prev) => ({ ...prev, [index]: false }));
+    if (screenWidth > 500) {
+      setOptionShow((prev) => ({ ...prev, [index]: false }));
+    }
+  }; 
+ 
+
+  const handleMouseClickMobile = (index) => {
+    if (screenWidth <= 500) {
+      setOptionShowMobile((prev) => {
+        const newState = {};
+        Object.keys(prev).forEach((key) => {
+          newState[key] = false;
+        });
+        return { ...newState, [index]: !prev[index] };
+      });
+    }
   };
 
   // more options
@@ -48,7 +68,7 @@ function VideoSection({ videos }) {
     return () => {
       document.removeEventListener("click", handleClickOutside);
     };
-  }, []); 
+  }, []);
 
   return (
     <div>
@@ -58,8 +78,8 @@ function VideoSection({ videos }) {
             <th className="p-2 px-8 text-left ">Video</th>
             <th className="p-2 px-8 text-center">Views</th>
             <th className="p-2 px-8 text-center">Likes</th>
-            <th className="p-2 px-8 text-center">Modified date</th>
-            <th className="p-2 px-8 text-right">More Options</th>
+            <th className="p-2 px-8 text-center text-nowrap">Modified date</th>
+            <th className="p-2 px-8 text-right text-nowrap">More Options</th>
           </tr>
         </thead>
         <tbody>
@@ -69,11 +89,12 @@ function VideoSection({ videos }) {
               key={index}
               onMouseEnter={() => handleMouseEnter(index)}
               onMouseLeave={() => handleMouseLeave(index)}
+              onClick={() => handleMouseClickMobile(index)}
               className="border-b border-[#434343]"
             >
               <td className="p-2 px-8 ">
                 <section className="flex gap-2 ">
-                  <div className="border overflow-hidden border-[#434343] rounded-lg w-[7.5rem] h-[4.5rem]">
+                  <div className="border overflow-hidden border-[#434343] rounded-lg min-w-[7.5rem] max-w-[7.5rem] h-[4.5rem] ">
                     {/* thumbnail */}
                     <img
                       className="w-full h-full object-cover"
@@ -83,11 +104,16 @@ function VideoSection({ videos }) {
                   </div>
 
                   <div className="text-[.75rem] text-zinc-300 mt-3 relative flex-grow">
-                    <h1 className="text-[.75rem]">{video?.title}</h1>
+                    <h1 className="text-[.75rem] line-clamp-1 max-w-[6rem]">
+                      {video?.title}
+                    </h1>
                     <section
                       className={`${
-                        optionShow[index] ? "block" : "hidden"
-                      } absolute left-0 flex  bottom-0  rounded-full`}
+                        optionShow[index] || optionShowMobile[index]
+                          ? "block"
+                          : "hidden"
+                      } 
+                      absolute left-0 flex  bottom-0  rounded-full`}
                     >
                       <NavLink
                         to={`/video-update/${video?._id}`}
@@ -95,7 +121,10 @@ function VideoSection({ videos }) {
                       >
                         <MdOutlineEdit />
                       </NavLink>
-                      <NavLink to={`/p/${video?._id}`} className=" p-2 cursor-pointer rounded-full text-xl hover:bg-[#353535]">
+                      <NavLink
+                        to={`/p/${video?._id}`}
+                        className=" p-2 cursor-pointer rounded-full text-xl hover:bg-[#353535]"
+                      >
                         <PiYoutubeLogo />
                       </NavLink>
 
@@ -111,15 +140,19 @@ function VideoSection({ videos }) {
                   </div>
                 </section>
               </td>
-              <td className="p-2 px-8 align-text-top pt-3 text-center">{video?.viewsCount}</td>
-              <td className="p-2 px-8 align-text-top pt-3 text-center">{video?.likesCount}</td> 
               <td className="p-2 px-8 align-text-top pt-3 text-center">
+                {video?.viewsCount}
+              </td>
+              <td className="p-2 px-8 align-text-top pt-3 text-center">
+                {video?.likesCount}
+              </td>
+              <td className="p-2 px-8 align-text-top pt-3 text-center text-nowrap">
                 {video?.createdAt.slice(0, 10).split("-").reverse().join("-")}
               </td>
-              <td className="p-2 px-8 text-right align-text-top pt-3 text-center">
+              <td className="p-2 px-8 text-right align-text-top pt-3 ">
                 <NavLink
                   to={`/video-update/${video?._id}`}
-                  className="ml-auto p-[.5rem] px-3 hover:bg-[#535353] bg-[#343434] rounded-full font-[500] text-[.8rem]"
+                  className="ml-auto p-[.5rem] px-3 hover:bg-[#535353] bg-[#343434] rounded-full font-[500] text-[.8rem] text-nowrap"
                 >
                   Edit Video
                 </NavLink>
@@ -130,10 +163,7 @@ function VideoSection({ videos }) {
       </table>
 
       {/* temp */}
-      {
-        deleteClick && <DeleteMenu />
-      }
-      
+      {deleteClick && <DeleteMenu />}
     </div>
   );
 }

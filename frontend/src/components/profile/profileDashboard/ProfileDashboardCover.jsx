@@ -45,12 +45,12 @@ function ProfileDashboardCover({ user }) {
     setBannerPreview(URL.createObjectURL(file));
   };
   return (
-    <section className="w-full my-5">
+    <section className="w-full my-5 max-[500px]:mb-0">
           {/* banner pending work */}
           <form
             encType="multipart/form-data"
             onSubmit={handleBannerSubmit}
-            className="w-full relative rounded-xl group border-blue-500 h-[15rem] overflow-hidden"
+            className="w-full relative rounded-xl group border-blue-500 h-[13rem] overflow-hidden max-[500px]:h-[10rem]"
           >
             <img
               className="w-full h-full object-cover"

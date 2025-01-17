@@ -23,17 +23,20 @@ function ProfilePage() {
   const [user, setUser] = useState({});
   const [showDashboard, setShowDashboard] = useState(false);
   const [showUserContent, setShowUserContent] = useState(true);
+  const [smallProfile, setSmallProfile] = useState(true);
+  const [sidebarMobile, setSidebarMobile] = useState(false);
 
   const navigate = useNavigate();
 
   useEffect(() => {
     setCollapse2(true);
+    setSidebarMobile(true);
 
     if (window.location.pathname === "/profile") {
       axiosInstance
         .get("/user/current-user")
         .then((res) => {
-          setUser(res.data.data); 
+          setUser(res.data.data);
           setLoading(false);
         })
         .catch((err) => {
@@ -66,6 +69,22 @@ function ProfilePage() {
     }
   }, [profileContent]);
 
+  const handleClickOutsideSidebar = (event) => {
+    if (
+      !event.target.closest(".small-profile-btn") &&
+      !event.target.closest(".dashboard-options")
+    ) {
+      setSidebarMobile(true);
+    }
+  };
+  useEffect(() => {
+    document.addEventListener("click", handleClickOutsideSidebar);
+
+    return () => {
+      document.removeEventListener("click", handleClickOutsideSidebar);
+    };
+  }, []);
+
   return (
     <main className="flex gap-2 overflow-hidden w-full flex-grow text-white bg-gradient-to-b from-[#0f0f0f] to-[#1b1b1b] border-t border-[#434343]">
       <div
@@ -77,8 +96,33 @@ function ProfilePage() {
       </div>
 
       {/* left */}
-      <div className="w-[18rem] mt-5 mb-5">
-        <ProfileSection user={user} showDashboard={showDashboard} showUserContent={showUserContent}/>
+      {smallProfile && (
+        <div
+          onClick={() => setSidebarMobile(!sidebarMobile)}
+          className={`${
+            !sidebarMobile ? "border border-red-500" : ""
+          } small-profile-btn w-[3rem] h-[3rem] rounded-full overflow-hidden absolute left-4 mt-2 bottom-4 cursor-pointer max-[500px]:bottom-[4rem] min-[1000px]:hidden`}
+        >
+          <img
+            className="w-full h-full object-cover"
+            src={user.avatar}
+            alt=""
+          />
+        </div>
+      )}
+      <div
+        id="small-screen-left"
+        className={`${
+          sidebarMobile
+            ? "max-[1000px]:scale-0 max-[1000px]:translate-x-[-7rem] max-[1000px]:translate-y-[15rem] max-[500px]:translate-y-[15rem]"
+            : "max-[1000px]:motion-scale-in-100 "
+        } dashboard-options w-[18rem] ml-2 min-[1000px]:mt-2`}
+      >
+        <ProfileSection
+          user={user}
+          showDashboard={showDashboard}
+          showUserContent={showUserContent}
+        />
       </div>
       {/* right */}
       {showDashboard && (

@@ -85,12 +85,12 @@ function ProfileDashboardDP({ user }) {
   };
 
   return (
-    <section className="my-5">
+    <section className="my-5  ">
       <div className="flex gap-3">
         <form
           encType="multipart/form-data"
           onSubmit={handleAvatarSubmit}
-          className="group relative left w-[10rem] h-[10rem] rounded-full overflow-hidden"
+          className="group relative left w-[10rem] h-[10rem] rounded-full overflow-hidden max-[500px]:w-[7rem] max-[500px]:h-[7rem] flex-shrink-0"
         >
           <img
             className="w-full h-full object-cover"
@@ -100,9 +100,9 @@ function ProfileDashboardDP({ user }) {
           {!loadingIcon && (
             <label
               htmlFor="avatar"
-              className="invisible opacity-0 group-hover:visible group-hover:opacity-100 cursor-pointer duration-300 ease-in-out absolute z-10 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-zinc-800 text-white p-3 rounded-full"
+              className={`${avatarPreview? "max-[500px]:mt-5 max-[500px]:p-2": ""} invisible opacity-0 group-hover:visible group-hover:opacity-100 cursor-pointer duration-300 ease-in-out absolute z-10 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-zinc-800 text-white p-3 rounded-full`}
             >
-              <AddAPhotoIcon />
+              <AddAPhotoIcon className=""/>
             </label>
           )}
           {loadingIcon && (
@@ -178,9 +178,10 @@ function ProfileDashboardDP({ user }) {
               onChange={(e) => setUsername(e.target.value)}
               className={`${!editOpen ? "border-b-zinc-500" : ""} bg-transparent border-b border-b-transparent outline-none text-zinc-300`}
             />
-            <span className="mx-2 text-zinc-500 font-[400]">
+            <span className="max-[400px]:hidden mx-2 text-zinc-500 font-[400]">
               | &nbsp; {user?.subscribersCount} subscribers
             </span>
+            <div className={`min-[400px]:hidden text-zinc-500 font-[400]`}>{user?.subscribersCount} subscribers </div>
           </p>
 
           {/* Buttons */}

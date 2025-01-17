@@ -1,0 +1,33 @@
+@media screen and (max-width: 1000px) {
+  #small-screen-left {
+    position: absolute;
+    bottom: 5rem;
+    background-color: black;
+    @media screen and (max-width: 500px) {
+      bottom: 7.5rem;
+    }
+    // min-height: 30rem;
+    padding: 1rem 0.3rem;
+    border-radius: 10px;
+    transition: all 0.3s ease-in-out;
+    z-index: 999999;
+    // display: none;
+  }
+} 
+
+// 
+
+#video-in-dashboard{
+  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+  gap: .5rem;
+  
+
+  @media screen and (max-width: 720px) {
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    #each-video-in-dashboard{
+      height: 12rem;
+    }
+  }
+}

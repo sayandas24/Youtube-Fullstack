@@ -9,10 +9,10 @@ function ProfileDashboard({ user }) {
   console.log(user);
 
   return (
-    <div className="flex w-full text-white">
+    <div className="flex w-full text-white min-[1000px]:pl-2  ">
       {/* <Sidebar /> */}
 
-      <main className="flex flex-col w-[85rem] mx-auto">
+      <main className="flex flex-col w-[85rem] mx-auto max-[1000px]:px-2">
         {/* banner */}
         <ProfileDashboardCover user={user} />
         {/* profile */}
@@ -31,12 +31,12 @@ function ProfileDashboard({ user }) {
         {/* playlists */}
         <section className="my-5">
           <h1 className="my-2 text-xl">Created Playlist</h1>
-          <main className="flex gap-4">
+          <main id="video-in-dashboard" className=" flex-wrap max-[1000px]:mb-[3rem]">
             {user &&
               user.videos.map((video) => (
 
-                <Link to={`/p/${video._id}`} key={video._id} className=" p-3 rounded-xl hover:shadow-[0px_3px_5px_3px_#2e2e2e] w-[15.5rem]">
-                  <div className="w-[14rem] h-[8.5rem] rounded-xl overflow-hidden">
+                <Link to={`/p/${video._id}`} key={video._id} className=" p-3 rounded-xl hover:shadow-[0px_3px_5px_3px_#2e2e2e] w-full ">
+                  <div id="each-video-in-dashboard" className="w-full h-[15rem] rounded-xl overflow-hidden">
                     <img
                       className="w-full h-full object-cover"
                       src={video.thumbnail}
