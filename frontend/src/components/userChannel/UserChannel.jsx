@@ -25,8 +25,6 @@ function UserChannel() {
   const location = useLocation();
   const isRouteActive = location.pathname.startsWith(`/channel/`);
 
-  console.log(channel)
-
   useEffect(() => {
     NProgress.start();
     setCollapse2(true);
@@ -45,7 +43,6 @@ function UserChannel() {
       });
     }
   }, []);
- 
 
   // fetch current user
   useEffect(() => {

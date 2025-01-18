@@ -4,10 +4,14 @@ import { Link } from "react-router-dom";
 import timeSince from "../../utils/timeSince";
 
 function Playlists({ userDetail, loading }) {
+  
   return (
     <div>
-      <h1 className="my-2 text-xl ml-2">Created Playlist</h1>
-      <section id="video-in-dashboard" className="flex flex-wrap gap-5 my-5 max-[500px]:mb-[5rem]">
+      <h1 className="my-2 text-xl ml-2 max-[485px]:mt-5"> All Videos</h1>
+      <section
+        id="video-in-dashboard"
+        className="flex flex-wrap gap-5 my-5 max-[500px]:mb-[5rem]"
+      >
         {loading ? (
           <UserChannelSkeleton number={4} />
         ) : (
@@ -16,11 +20,11 @@ function Playlists({ userDetail, loading }) {
             <Link
               to={`/p/${playlist._id}`}
               key={playlist._id}
-              className=" p-3 rounded-xl hover:shadow-[0px_3px_5px_3px_#2e2e2e] w-full "
+              className=" p-3 rounded-xl  max-[485px]:flex max-[485px]:hover:shadow-none hover:shadow-[0px_3px_5px_3px_#2e2e2e] w-full max-[485px]:gap-2"
             >
               <div
                 id="each-video-in-dashboard"
-                className="w-full h-[15rem] rounded-xl overflow-hidden"
+                className="w-full h-[15rem] rounded-xl overflow-hidden max-[485px]:w-[12rem] max-[485px]:!h-[7rem] flex-shrink-0 max-[365px]:w-[10rem] max-[365px]:!h-[6rem]"
               >
                 <img
                   className="w-full h-full object-cover"
@@ -29,12 +33,14 @@ function Playlists({ userDetail, loading }) {
                 />
               </div>
               <div className="flex flex-col gap-1">
-                <h1 className="text-[15px] mt-1 line-clamp-1">
-                  {playlist.title}
+                <h1 className="text-[15px] mt-1 line-clamp-2">
+                  {playlist.title} 
                 </h1>
-                <p className="text-[15px] text-zinc-500 line-clamp-1">
-                  {playlist.viewsCount} views . uploaded{" "}
-                  {timeSince(playlist.createdAt)}
+                <p className="text-[15px] text-zinc-500 line-clamp-1 max-[485px]:flex flex-col">
+                  <span>{playlist.totalViews} views</span> <span className="max-[485px]:hidden">| </span>
+                  <span>
+                    {timeSince(playlist.createdAt)}
+                  </span>
                 </p>
               </div>
             </Link>

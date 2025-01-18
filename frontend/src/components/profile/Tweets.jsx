@@ -38,8 +38,7 @@ function Tweets({ userDetail, currUser }) {
     formData.append("content", tweetContent);
     if (tweetImage) {
       formData.append("tweetImage", tweetImage);
-    }
-    console.log(tweetImage);
+    } 
 
     if (!tweetContent == " ") {
       nProgress.start();
@@ -60,7 +59,7 @@ function Tweets({ userDetail, currUser }) {
           setAllTweets((prev) => [...prev, newTweet]);
         })
         .catch((err) => {
-          console.log(err);
+          console.log("error in tweet", err);
           setTweetContent("");
           setTweetImage(null);
           nProgress.done();
@@ -79,7 +78,7 @@ function Tweets({ userDetail, currUser }) {
           setAllTweets(res.data.data);
         })
         .catch((err) => {
-          console.log(err);
+          console.log("cannot get tweets", err);
         });
 
       if (currUser) {
@@ -108,7 +107,7 @@ function Tweets({ userDetail, currUser }) {
         setAllTweets((prev) => prev.filter((tweet) => tweet._id !== id));
       })
       .catch((err) => {
-        console.log(err);
+        console.log("cannot delete tweet", err);
         nProgress.done();
       });
   };

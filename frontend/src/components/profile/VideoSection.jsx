@@ -15,6 +15,7 @@ function VideoSection({ videos }) {
   const [moreFunctionShow, setMoreFunctionShow] = useState({});
 
   const { deleteClick } = useContext(ProfileContext);
+  const { videoSectionShow } = useContext(ProfileContext);
 
   const screenWidth = useScreenWidth();
 
@@ -28,8 +29,7 @@ function VideoSection({ videos }) {
     if (screenWidth > 500) {
       setOptionShow((prev) => ({ ...prev, [index]: false }));
     }
-  }; 
- 
+  };
 
   const handleMouseClickMobile = (index) => {
     if (screenWidth <= 500) {
@@ -52,7 +52,7 @@ function VideoSection({ videos }) {
       });
       return { ...newState, [index]: !prev[index] };
     });
-  }; 
+  };
   const handleClickOutside = (event) => {
     if (
       !event.target.closest(".more-options") &&
@@ -71,98 +71,110 @@ function VideoSection({ videos }) {
 
   return (
     <div>
-      <table className="w-full">
-        <thead className="">
-          <tr className="border-b border-[#434343]">
-            <th className="p-2 px-8 text-left ">Video</th>
-            <th className="p-2 px-8 text-center">Views</th>
-            <th className="p-2 px-8 text-center">Likes</th>
-            <th className="p-2 px-8 text-center text-nowrap">Modified date</th>
-            <th className="p-2 px-8 text-right text-nowrap">More Options</th>
-          </tr>
-        </thead>
-        <tbody>
-          {/* video table */}
-          {videos?.map((video, index) => (
-            <tr
-              key={index}
-              onMouseEnter={() => handleMouseEnter(index)}
-              onMouseLeave={() => handleMouseLeave(index)}
-              onClick={() => handleMouseClickMobile(index)}
-              className="border-b border-[#434343]"
-            >
-              <td className="p-2 px-8 ">
-                <section className="flex gap-2 ">
-                  <div className="border overflow-hidden border-[#434343] rounded-lg min-w-[7.5rem] max-w-[7.5rem] h-[4.5rem] ">
-                    {/* thumbnail */}
-                    <img
-                      className="w-full h-full object-cover"
-                      src={video?.thumbnail}
-                      alt=""
-                    />
-                  </div>
+      {videoSectionShow && (
+        <div>
+          <table className="w-full ">
+            <thead className="">
+              <tr className="border-b border-[#434343]">
+                <th className="p-2 px-8 text-left ">Video</th>
+                <th className="p-2 px-8 text-center">Views</th>
+                <th className="p-2 px-8 text-center">Likes</th>
+                <th className="p-2 px-8 text-center text-nowrap">
+                  Modified date
+                </th>
+                <th className="p-2 px-8 text-right text-nowrap">
+                  More Options
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              {/* video table */}
+              {videos?.map((video, index) => (
+                <tr
+                  key={index}
+                  onMouseEnter={() => handleMouseEnter(index)}
+                  onMouseLeave={() => handleMouseLeave(index)}
+                  onClick={() => handleMouseClickMobile(index)}
+                  className="border-b border-[#434343]"
+                >
+                  <td className="p-2 px-8 ">
+                    <section className="flex gap-2 ">
+                      <div className="border overflow-hidden border-[#434343] rounded-lg min-w-[7.5rem] max-w-[7.5rem] h-[4.5rem] ">
+                        {/* thumbnail */}
+                        <img
+                          className="w-full h-full object-cover"
+                          src={video?.thumbnail}
+                          alt=""
+                        />
+                      </div>
 
-                  <div className="text-[.75rem] text-zinc-300 mt-3 relative flex-grow">
-                    <h1 className="text-[.75rem] line-clamp-1 max-w-[6rem]">
-                      {video?.title}
-                    </h1>
-                    <section
-                      className={`${
-                        optionShow[index] || optionShowMobile[index]
-                          ? "block"
-                          : "hidden"
-                      } 
+                      <div className="text-[.75rem] text-zinc-300 mt-3 relative flex-grow">
+                        <h1 className="text-[.75rem] line-clamp-1 max-w-[6rem]">
+                          {video?.title}
+                        </h1>
+                        <section
+                          className={`${
+                            optionShow[index] || optionShowMobile[index]
+                              ? "block"
+                              : "hidden"
+                          } 
                       absolute left-0 flex  bottom-0  rounded-full`}
-                    >
-                      <NavLink
-                        to={`/video-update/${video?._id}`}
-                        className=" p-2 cursor-pointer rounded-full text-xl hover:bg-[#353535]"
-                      >
-                        <MdOutlineEdit />
-                      </NavLink>
-                      <NavLink
-                        to={`/p/${video?._id}`}
-                        className=" p-2 cursor-pointer rounded-full text-xl hover:bg-[#353535]"
-                      >
-                        <PiYoutubeLogo />
-                      </NavLink>
+                        >
+                          <NavLink
+                            to={`/video-update/${video?._id}`}
+                            className=" p-2 cursor-pointer rounded-full text-xl hover:bg-[#353535]"
+                          >
+                            <MdOutlineEdit />
+                          </NavLink>
+                          <NavLink
+                            to={`/p/${video?._id}`}
+                            className=" p-2 cursor-pointer rounded-full text-xl hover:bg-[#353535]"
+                          >
+                            <PiYoutubeLogo />
+                          </NavLink>
 
-                      <div
-                        onClick={() => handleMoreClick(index)}
-                        className="more-options p-2 cursor-pointer rounded-full text-xl hover:bg-[#353535]"
-                      >
-                        <IoMdMore />
+                          <div
+                            onClick={() => handleMoreClick(index)}
+                            className="more-options p-2 cursor-pointer rounded-full text-xl hover:bg-[#353535]"
+                          >
+                            <IoMdMore />
+                          </div>
+                        </section>
+                        {/* more options functionality */}
+                        {moreFunctionShow[index] && <ThreeDot video={video} />}
                       </div>
                     </section>
-                    {/* more options functionality */}
-                    {moreFunctionShow[index] && <ThreeDot video={video} />}
-                  </div>
-                </section>
-              </td>
-              <td className="p-2 px-8 align-text-top pt-3 text-center">
-                {video?.viewsCount}
-              </td>
-              <td className="p-2 px-8 align-text-top pt-3 text-center">
-                {video?.likesCount}
-              </td>
-              <td className="p-2 px-8 align-text-top pt-3 text-center text-nowrap">
-                {video?.createdAt.slice(0, 10).split("-").reverse().join("-")}
-              </td>
-              <td className="p-2 px-8 text-right align-text-top pt-3 ">
-                <NavLink
-                  to={`/video-update/${video?._id}`}
-                  className="ml-auto p-[.5rem] px-3 hover:bg-[#535353] bg-[#343434] rounded-full font-[500] text-[.8rem] text-nowrap"
-                >
-                  Edit Video
-                </NavLink>
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
+                  </td>
+                  <td className="p-2 px-8 align-text-top pt-3 text-center">
+                    {video?.viewsCount}
+                  </td>
+                  <td className="p-2 px-8 align-text-top pt-3 text-center">
+                    {video?.likesCount}
+                  </td>
+                  <td className="p-2 px-8 align-text-top pt-3 text-center text-nowrap">
+                    {video?.createdAt
+                      .slice(0, 10)
+                      .split("-")
+                      .reverse()
+                      .join("-")}
+                  </td>
+                  <td className="p-2 px-8 text-right align-text-top pt-3 ">
+                    <NavLink
+                      to={`/video-update/${video?._id}`}
+                      className="ml-auto p-[.5rem] px-3 hover:bg-[#535353] bg-[#343434] rounded-full font-[500] text-[.8rem] text-nowrap"
+                    >
+                      Edit Video
+                    </NavLink>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
 
-      {/* temp */}
-      {deleteClick && <DeleteMenu />}
+          {/* temp */}
+          {deleteClick && <DeleteMenu />}
+        </div>
+      )}
     </div>
   );
 }

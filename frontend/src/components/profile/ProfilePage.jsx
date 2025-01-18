@@ -11,12 +11,14 @@ import { FeatureSoonContext } from "../../contexts/featureSoonContext/UseFeature
 import ProfileDashboard from "./ProfileDashboard";
 import { ProfileContext } from "../../contexts/profileContext/profileContext";
 import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
+import TweetsSection from "./TweetsSection";
 
 function ProfilePage() {
   const isRouteActive = location.pathname.startsWith(`/profile`);
 
   const { collapse2, setCollapse2 } = useContext(CollapseContext);
   const { handleFeatureSoonShow } = useContext(FeatureSoonContext);
+  const { videoSectionShow } = useContext(ProfileContext);
 
   const [loading, setLoading] = useState(true);
   const [haveVideo, setHaveVideo] = useState(false);
@@ -25,6 +27,7 @@ function ProfilePage() {
   const [showUserContent, setShowUserContent] = useState(true);
   const [smallProfile, setSmallProfile] = useState(true);
   const [sidebarMobile, setSidebarMobile] = useState(false);
+  const [tweets, setTweets] = useState([]);
 
   const navigate = useNavigate();
 
@@ -55,6 +58,19 @@ function ProfilePage() {
       setHaveVideo(true);
     }
   }, [user]);
+
+  // tweets
+  useEffect(() => {
+    axiosInstance.get(`/tweet/${user._id}`).then((res) => {
+      setTweets(res.data.data);
+      setLoading(false);
+    }).catch((err) => {
+      setTweets([]);
+      console.log("Unable to fetch tweets", err);
+      setLoading(false);
+    });
+  }, [user])
+  
 
   const { profileContent } = useContext(ProfileContext);
 
@@ -158,6 +174,8 @@ function ProfilePage() {
 
           {/* Video section */}
           {!haveVideo && <VideoSection videos={user?.videos} />}
+          {/* tweet section */}
+          <TweetsSection tweets={tweets} user={user} />
         </section>
       )}
     </main>
