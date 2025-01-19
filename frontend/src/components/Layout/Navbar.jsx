@@ -73,6 +73,8 @@ function Navbar() {
     setShowUserVideo(false); 
   };
 
+
+  
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (
