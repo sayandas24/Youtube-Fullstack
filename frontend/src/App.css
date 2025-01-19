@@ -9,6 +9,9 @@ body {
     object-fit: cover;
   }
 }
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
 .playerTrue {
   opacity: 0;
   visibility: hidden;

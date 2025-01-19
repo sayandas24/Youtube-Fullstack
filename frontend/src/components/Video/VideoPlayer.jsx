@@ -34,11 +34,7 @@ function VideoPlayer( {getVideo} ) {
   };
 
   const togglePlayPause = () => {
-    setPlaying(!playing);
-    // Show controls when clicked
-    // setTimeout(() => {
-    //   setShowControls(false); // Hide controls after 3 seconds
-    // }, 3000);
+    setPlaying(!playing); 
   };
 
   const handleVolumeChange = (event) => {
@@ -82,11 +78,12 @@ function VideoPlayer( {getVideo} ) {
   
 
   return (
-    <section className="w-[75rem] text-white flex flex-col gap-3">
+    <section className="w-full max-w-[75rem] text-white flex flex-col gap-3">
       <section
         onMouseEnter={hoverEnter}
         onMouseLeave={hoverLeave}
-        className="border border-zinc-600 rounded-2xl overflow-hidden h-[40rem] w-[75rem] relative"
+        id="video-player"
+        className="border border-zinc-600 min-[700px]:rounded-2xl overflow-hidden h-[40rem] w-full max-w-[75rem] relative"
       >
         <ReactPlayer
           ref={playerRef}

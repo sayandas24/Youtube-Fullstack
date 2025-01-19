@@ -788,7 +788,23 @@ const getWatchHistory = asyncHandler(async (req, res) => {
     .json(new ApiResponse(200, user[0].watchHistory, "Watch history fetched"));
 });
 
+const removeVideoFromWatchHistory = asyncHandler(async (req, res) => {
+  const { videoId } = req.params;
 
+  const user = await User.findByIdAndUpdate(
+    req.user._id,
+    { $pull: { watchHistory: videoId } },
+    { new: true }
+  );
+
+  if (!user) {
+    throw new ApiError(404, "User not found");
+  }
+
+  return res
+    .status(200)
+    .json(new ApiResponse(200, user.watchHistory, "Video removed from watch history"));
+});
 
 export {
   registerUser,
@@ -803,4 +819,5 @@ export {
   getUserChannelProfile,
   getWatchHistory,
   authentication,
+  removeVideoFromWatchHistory,
 };

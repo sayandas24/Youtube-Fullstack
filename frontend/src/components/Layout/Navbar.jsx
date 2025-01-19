@@ -148,10 +148,10 @@ function Navbar() {
                         <SlCloudUpload className="text-[1.3rem]"/>
                         <h1 className="text-[1rem] ">Upload Video</h1>
                      </NavLink>
-                     <div onClick={() => handleFeatureSoonShow()} className="flex items-center gap-4 p-3 px-4 hover:bg-[#3b3b3b] cursor-pointer">
+                     <NavLink to={`/channel/${user.data.username}`} className="flex items-center gap-4 p-3 px-4 hover:bg-[#3b3b3b] cursor-pointer">
                         <LuMessageSquareDiff className="text-[1.3rem]"/>
                         <h1 className="text-[1rem] ">Create Tweet</h1>
-                     </div> 
+                     </NavLink> 
                   </section>
                 </div>
                 )

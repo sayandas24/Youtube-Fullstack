@@ -8,13 +8,15 @@ import axiosInstance from "../../utils/axiosInstance";
 import { useParams, useLocation, Link } from "react-router";
 import Sidebar2 from "../Layout/Sidebar2";
 import { CollapseContext } from "../../contexts/collapseMenu/CollapseContext";
-import { BiLike } from "react-icons/bi";
 import { BsThreeDots } from "react-icons/bs";
 import ThumbUpOutlinedIcon from "@mui/icons-material/ThumbUpOutlined";
 import ThumbUpIcon from "@mui/icons-material/ThumbUp";
 import timeSince from "../../utils/timeSince";
 import { FeatureSoonContext } from "../../contexts/featureSoonContext/UseFeatureSoon";
 import LoginErrorWarn from "../../utils/LoginErrorWarn";
+import { BsFacebook } from "react-icons/bs";
+import { FaInstagram } from "react-icons/fa";
+import { FaSquareXTwitter } from "react-icons/fa6";
 
 function Video() {
   const [getVideo, setGetVideo] = useState({});
@@ -26,7 +28,7 @@ function Video() {
   const isHomeRoute = location.pathname === `/`;
 
   const { collapse2, setCollapse2 } = useContext(CollapseContext);
-  const { setIsLoginUser } = useContext(FeatureSoonContext); 
+  const { setIsLoginUser } = useContext(FeatureSoonContext);
 
   // is the class is true then add some class in sidebar,,,
   useEffect(() => {
@@ -45,7 +47,7 @@ function Video() {
         console.log(res, "in views");
         setGetVideo((prev) => ({
           ...prev,
-          viewsCount: prev.viewsCount + 1
+          viewsCount: prev.viewsCount + 1,
         }));
         setViewsCount((prev) => prev + 1); // Update views count state
       })
@@ -56,11 +58,14 @@ function Video() {
 
   // Function to handle subscription
   const handleSubscribe = () => {
-    axiosInstance.get("/user/current-user").then((res) => {
-      setIsLoginUser(true);
-    }).catch((err) => {
-      setIsLoginUser(false);
-    });
+    axiosInstance
+      .get("/user/current-user")
+      .then((res) => {
+        setIsLoginUser(true);
+      })
+      .catch((err) => {
+        setIsLoginUser(false);
+      });
     // Check if the user is already subscribed
     if (getVideo.isSubscribed == false) {
       axiosInstance
@@ -90,11 +95,14 @@ function Video() {
 
   // Function to handle like
   const handleLikeVideo = (videoId) => {
-    axiosInstance.get("/user/current-user").then((res) => {
-      setIsLoginUser(true);
-    }).catch((err) => {
-      setIsLoginUser(false);
-    });
+    axiosInstance
+      .get("/user/current-user")
+      .then((res) => {
+        setIsLoginUser(true);
+      })
+      .catch((err) => {
+        setIsLoginUser(false);
+      });
     if (getVideo.isLiked === false) {
       axiosInstance
         .get(`/like/like-video/${videoId}`)
@@ -126,13 +134,12 @@ function Video() {
     }
   };
 
- 
   if (isHomeRoute) {
     setCollapse2(true);
   }
 
   return (
-    <div className="p-10 py-14 flex relative overflow-x-hidden">
+    <div className=" py-10 flex relative ">
       <div
         className={`${
           isRouteActive && collapse2 ? "-translate-x-[18rem]  " : ""
@@ -143,85 +150,97 @@ function Video() {
       <main
         className={`${
           collapse2 ? "" : "opacity-50 blur-[2px]"
-        } flex gap-5 transition-all duration-150`}
+        } flex gap-5 transition-all duration-150 w-full max-[1000px]:flex-col `}
       >
         {/* left video */}
-        <section className="w-[75rem] text-white flex flex-col gap-3">
+        <section className="w-[70%] max-[1000px]:w-full text-white flex flex-col gap-3  pl-5 max-[1000px]:p-5 max-[700px]:p-0">
           {/* video player, channel details */}
           <div className="flex flex-col gap-3">
             {/* video player */}
             <VideoPlayer getVideo={getVideo} />
             {/* video title */}
-            <section  className="text-[1.2rem] leading-[1.4rem]">
+            <section className="text-[1.2rem] leading-[1.4rem] max-[700px]:p-2 max-[500px]:text-[1.1rem]">
               {getVideo?.title} | {getVideo.ownerDetails?.fullName}
             </section>
             {/* channel details, subs */}
-            <section className="flex gap-2 items-center">
+            <section className="flex min-[700px]:items-center max-[700px]:flex-col max-[700px]:p-2">
               {/* Avatar */}
-              <Link to={`/channel/${getVideo?.ownerDetails?.username}`} className="w-[2.4rem]">
-                <div className="w-[2.4rem] h-[2.4rem] overflow-hidden rounded-full">
-                  <img
-                    className="w-full h-full object-cover"
-                    src={
-                      getVideo.ownerDetails ? getVideo.ownerDetails.avatar : ""
-                    }
-                    alt="avatar"
-                  />
-                </div>
-              </Link>
-              {/* Avatar name, description */}
-              <div className="flex flex-col text-white text-nowrap">
-                <Link to={`/channel/${getVideo?.ownerDetails?.username}`} className="text-[1.2rem]">
-                  {getVideo.ownerDetails
-                    ? getVideo.ownerDetails.fullName
-                    : "N/A"}
+              <div className="flex gap-2 items-center">
+                <Link
+                  to={`/channel/${getVideo?.ownerDetails?.username}`}
+                  className="w-[2.4rem] "
+                >
+                  <div className="w-[2.4rem] h-[2.4rem] overflow-hidden rounded-full">
+                    <img
+                      className="w-full h-full object-cover"
+                      src={
+                        getVideo.ownerDetails
+                          ? getVideo.ownerDetails.avatar
+                          : ""
+                      }
+                      alt="avatar"
+                    />
+                  </div>
                 </Link>
-                <p className="text-[.8rem] text-zinc-500">
-                  {getVideo ? getVideo.subscribersCount : 0} Subscribers
-                </p>
-              </div>
-              {/* Subscribe and other buttons */}
-              <div className="flex justify-between w-full">
+                {/* Avatar name, description */}
+                <div className="flex flex-col text-white text-nowrap">
+                  <Link
+                    to={`/channel/${getVideo?.ownerDetails?.username}`}
+                    className="text-[1.2rem] max-[500px]:text-[.9rem]"
+                  >
+                    {getVideo.ownerDetails
+                      ? getVideo.ownerDetails.fullName
+                      : "N/A"}
+                  </Link>
+                  <p className="text-[.8rem] text-zinc-500 max-[500px]:text-[.7rem]">
+                    {getVideo ? getVideo.subscribersCount : 0} Subscribers
+                  </p>
+                </div>
+                {/* Subscribe and other buttons */}
                 <button
                   onClick={handleSubscribe}
                   className={`${
                     getVideo.isSubscribed
                       ? ""
                       : "!bg-white hover:!bg-[#d6d6d6] !text-black"
-                  }  p-[.4rem] px-5 basicButton1  rounded-full text-sm font-semibold`}
+                  }  p-[.4rem] px-5 basicButton1  rounded-full text-sm font-[500] max-[500px]:text-[.8rem]`}
                 >
                   {getVideo.isSubscribed ? "Unsubscribe" : "Subscribe"}
                 </button>
+              </div>
 
-                <div className="flex gap-2 ">
-                  <button
-                    onClick={() => handleLikeVideo(getVideo._id)}
-                    className="p-[.4rem]  basicButton1 px-5 flex gap-1 items-center  rounded-full text-sm font-semibold"
-                  >
-                    {getVideo.isLiked ? (
-                      <ThumbUpIcon className="text-xl" />
-                    ) : (
-                      <ThumbUpOutlinedIcon className="text-xl" />
-                    )}
-                    <span className="like text-lg font-semibold w-5">
-                      {getVideo.videoLikes}
-                    </span>
-                  </button>
-                  <button className="p-[.4rem] basicButton1  px-5 rounded-full text-sm font-semibold">
-                    <RiShareForwardLine />
-                  </button>
-                  <button className="p-[.4rem] basicButton1 px-5  rounded-full text-sm font-semibold">
-                    <LiaDownloadSolid />
-                  </button>
-                  <button className="p-[.4rem] basicButton1 px-5  rounded-full text-sm font-semibold">
-                    <BsThreeDots />
-                  </button>
-                </div>
+              {/* like, share, download */}
+              <div className="flex gap-2 min-[700px]:ml-auto max-[700px]:mt-3 overflow-auto scrollbar-hide">
+                <button
+                  onClick={() => handleLikeVideo(getVideo._id)}
+                  className="p-[.3rem]  basicButton1 px-5 flex gap-1 items-center  rounded-full text-sm "
+                >
+                  {getVideo.isLiked ? (
+                    <ThumbUpIcon className="text-xl max-[500px]:!text-lg" />
+                  ) : (
+                    <ThumbUpOutlinedIcon className="text-xl max-[500px]:!text-lg" />
+                  )}
+                  <span className="like text-lg  w-3 max-[500px]:text-[13px]">
+                    {getVideo.videoLikes}
+                  </span>
+                  <span className="max-[500px]:text-[13px]">likes</span>
+                </button>
+                <button className="p-[.4rem] basicButton1  px-5 rounded-full text-sm  flex items-center gap-2 flex-nowrap">
+                  <RiShareForwardLine className="text-xl max-[500px]:text-lg" />{" "}
+                  <span className="max-[500px]:text-[13px]">share</span>
+                </button>
+                <button className="p-[.4rem] basicButton1 px-5  rounded-full text-sm   flex items-center gap-2 flex-nowrap">
+                  <LiaDownloadSolid className="text-xl max-[500px]:text-lg" />{" "}
+                  <span className="max-[500px]:text-[13px]">download</span>
+                </button>
+                <button className="p-[.4rem] basicButton1 px-5  rounded-full text-sm  flex items-center gap-2 flex-nowrap">
+                  <BsThreeDots className="text-xl max-[500px]:text-lg" />
+                </button>
               </div>
             </section>
           </div>
           {/* video description */}
-          <div className="flex gap-2 w-full  bg-[#262626]  px-3 py-5 rounded-2xl flex-col">
+          <div className="max-[500px]:text-[.9rem] flex gap-2 min-[700px]:w-full  bg-[#262626]  px-3 py-5 rounded-2xl flex-col max-[700px]:m-2 ">
             {/* video description */}
             <div>
               <h1>
@@ -233,7 +252,10 @@ function Video() {
             {/* channel details, subs */}
             <section className="flex gap-2 items-center mt-[10rem]">
               {/* Avatar */}
-              <Link to={`/channel/${getVideo?.ownerDetails?.username}`} className="w-[2.4rem]">
+              <Link
+                to={`/channel/${getVideo?.ownerDetails?.username}`}
+                className="w-[2.4rem]"
+              >
                 <div className="w-[2.4rem] h-[2.4rem] overflow-hidden rounded-full">
                   <img
                     className="w-full h-full object-cover"
@@ -246,39 +268,51 @@ function Video() {
               </Link>
               {/* Avatar name, description */}
               <div className="flex flex-col text-white text-nowrap">
-                <Link to={`/channel/${getVideo?.ownerDetails?.username}`} className="text-[1.2rem]">
+                <Link
+                  to={`/channel/${getVideo?.ownerDetails?.username}`}
+                  className="text-[1.2rem] max-[500px]:text-[.9rem]"
+                >
                   {getVideo.ownerDetails
                     ? getVideo.ownerDetails.fullName
                     : "N/A"}
                 </Link>
-                <p className="text-[.8rem] text-zinc-500">
+                <p className="text-[.8rem] text-zinc-500 max-[500px]:text-[.7rem]">
                   {getVideo ? getVideo.subscribersCount : 0} Subscribers
                 </p>
               </div>
             </section>
 
             {/* social media handles */}
-            <section className="flex gap-2">
-              <button className="p-[.4rem] px-5 border border-zinc-600 rounded-full text-sm font-semibold">
-                Facebook
+            <section className="flex gap-2 flex-wrap">
+              <button className="max-[500px]:py-1 max-[500px]:px-3 p-[.4rem] px-5 border border-zinc-600 rounded-full text-sm  flex  items-center gap-2 flex-nowrap ">
+                <BsFacebook className="text-blue-500 text-xl max-[500px]:text-[.9rem]" />
+                <span className="max-[500px]:text-[.7rem]">Facebook</span>
               </button>
-              <button className="p-[.4rem] px-5 border border-zinc-600 rounded-full text-sm font-semibold">
-                Facebook
-              </button>
-              <button className="p-[.4rem] px-5 border border-zinc-600 rounded-full text-sm font-semibold">
-                Facebook
+              <Link
+                to={"https://www.instagram.com/im_sayan22"}
+                className="max-[500px]:py-1 max-[500px]:px-3 p-[.4rem] px-5 border border-zinc-600 rounded-full text-sm  flex  items-center gap-2 flex-nowrap "
+              >
+                <FaInstagram className="text-red-500 text-xl max-[500px]:text-[.9rem]" />{" "}
+                <span className="max-[500px]:text-[.7rem]">Instagram</span>
+              </Link>
+              <button className="max-[500px]:py-1 max-[500px]:px-3 p-[.4rem] px-5 border border-zinc-600 rounded-full text-sm  flex  items-center gap-2 flex-nowrap ">
+                <FaSquareXTwitter className="text-xl max-[500px]:text-[.9rem]" /> <span className="max-[500px]:text-[.7rem]">Twitter</span>
               </button>
             </section>
           </div>
 
           {/* comments */}
-          <Comments getVideo={getVideo} />
+          <div className="max-[700px]:p-2">
+            <Comments getVideo={getVideo} />
+          </div>
         </section>
 
         {/* right other videos */}
-        <RelatedVideos />
+        <section className=" w-[25rem] max-[1000px]:w-full">
+          <RelatedVideos />
+        </section>
       </main>
-      <LoginErrorWarn/>
+      <LoginErrorWarn />
     </div>
   );
 }

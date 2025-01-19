@@ -1,0 +1,67 @@
+#related-video-thumbnail{
+    @media screen and (max-width: 1250px) {
+        width: 12rem;
+        height: 7.5rem;
+    }
+    @media screen and (max-width: 1150px) {
+        width: 11rem;
+        height: 6.5rem;
+
+        
+    }
+}
+@media screen and (max-width: 1150px) {
+    #related-video-title{
+        font-size: 1rem !important;
+    }
+    #related-video-info{
+        font-size: .8rem !important;
+    }
+}
+#video-player{
+    @media screen and (max-width: 1400px) {
+        height: 34rem;
+    }
+    @media screen and (max-width: 1300px) {
+        height: 31rem;
+    }
+    @media screen and (max-width: 1200px) {
+        height: 28rem;
+    }
+    @media screen and (max-width: 1150px) {
+        height: 25rem;
+    }
+    @media screen and (max-width: 1100px) {
+        height: 23rem;
+    }
+    @media screen and (max-width: 1000px) {
+        height: 34rem;
+    }
+    @media screen and (max-width: 900px) {
+        height: 29rem;
+    }
+    @media screen and (max-width: 800px) {
+        height: 27rem;
+    }
+    @media screen and (max-width: 700px) {
+        height: 22rem;
+    }
+    @media screen and (max-width: 600px) {
+        height: 19rem;
+    }
+    @media screen and (max-width: 500px) {
+        height: 17rem;
+    }
+    @media screen and (max-width: 450px) {
+        height: 15rem;
+    }
+    @media screen and (max-width: 400px) {
+        height: 13rem;
+    }
+    @media screen and (max-width: 350px) {
+        height: 12rem;
+    }
+    @media screen and (max-width: 300px) {
+        height: 10rem;
+    }
+}

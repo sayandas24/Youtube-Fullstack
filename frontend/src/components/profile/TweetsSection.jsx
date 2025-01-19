@@ -6,6 +6,8 @@ import { PiYoutubeLogo } from "react-icons/pi";
 import { IoMdMore } from "react-icons/io";
 import ThreeDot from "./ThreeDot";
 import { useEffect } from "react";
+import { GoPlusCircle } from "react-icons/go";
+
 
 function TweetsSection({ tweets, user }) {
   const { tweetsSectionShow } = useContext(ProfileContext); 
@@ -15,9 +17,13 @@ function TweetsSection({ tweets, user }) {
   return (
     <div className="">
       {
-        tweets.length == 0 && (
-          <div className="flex justify-center items-center py-5">
+        tweetsSectionShow  && tweets.length == 0 &&  (
+          <div className="flex justify-center items-center py-5 flex-col">
             <h1 className="text-2xl font-semibold">No tweets yet</h1>
+            <NavLink  to={`/channel/${user?.username}`} className="flex gap-2 items-center mt-10 cursor-pointer animate-pulse">
+              <GoPlusCircle className="text-xl  " />
+              <h1 className="">Create a tweet</h1>
+            </NavLink>
           </div>
         )
       }

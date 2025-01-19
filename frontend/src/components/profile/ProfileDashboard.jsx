@@ -19,8 +19,7 @@ function ProfileDashboard({ user }) {
     setShowPlaylists(false);
     setShowTweets(true);
   };
-
-  console.log(user)
+ 
 
   return (
     <div className="flex w-full text-white min-[1000px]:pl-2">

@@ -149,7 +149,7 @@ function Comments({ getVideo }) {
   };
 
   return (
-    <div className="flex gap-2 w-full h-[20rem]  border-zinc-600 p-2 py-5 rounded-2xl flex-col">
+    <div className="flex gap-2 w-full h-full  border-zinc-600 p-2 py-5  flex-col max-[1000px]:border-b">
       <LoginErrorWarn />
       {/* video description */}
       <div className="flex flex-col gap-2">

@@ -3,24 +3,21 @@ import { NavLink } from "react-router-dom";
 import { FeatureSoonContext } from "../../contexts/featureSoonContext/UseFeatureSoon";
 import { ProfileContext } from "../../contexts/profileContext/profileContext";
 function ProfileHeader() {
-  const [videoActive, setVideoActive] = useState(true);
-  const [tweetsActive, setTweetsActive] = useState(false);
-
   const { handleFeatureSoonShow } = useContext(FeatureSoonContext);
-  const { setVideoSectionShow, setTweetsSectionShow } =
-    useContext(ProfileContext);
+  const {
+    setVideoSectionShow,
+    setTweetsSectionShow,
+    tweetsSectionShow,
+    videoSectionShow,
+  } = useContext(ProfileContext);
 
   const handleVideoShow = () => {
     setVideoSectionShow(true);
     setTweetsSectionShow(false);
-    setVideoActive(true);
-    setTweetsActive(false);
   };
   const handleTweetsShow = () => {
     setVideoSectionShow(false);
     setTweetsSectionShow(true);
-    setVideoActive(false);
-    setTweetsActive(true);
   };
 
   return (
@@ -30,7 +27,9 @@ function ProfileHeader() {
         <section
           onClick={handleVideoShow}
           className={`hover:border-b text-[.9rem] text-zinc-400 font-[500] hover:border-zinc-500 p-2 px-1 flex items-center gap-2 ${
-            videoActive ? "!font-[800] border-b !border-white !text-white" : ""
+            videoSectionShow
+              ? "!font-[800] border-b !border-white !text-white"
+              : ""
           }`}
         >
           <h1>Videos</h1>
@@ -38,7 +37,9 @@ function ProfileHeader() {
         <section
           onClick={handleTweetsShow}
           className={`hover:border-b text-[.9rem] text-zinc-400 font-[500] hover:border-zinc-500 p-2 px-1 flex items-center gap-2 ${
-            tweetsActive ? "!font-[800] border-b !border-white !text-white" : ""
+            tweetsSectionShow
+              ? "!font-[800] border-b !border-white !text-white"
+              : ""
           }`}
         >
           <h1>Tweets</h1>

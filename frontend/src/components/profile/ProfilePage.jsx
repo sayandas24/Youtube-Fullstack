@@ -18,7 +18,7 @@ function ProfilePage() {
 
   const { collapse2, setCollapse2 } = useContext(CollapseContext);
   const { handleFeatureSoonShow } = useContext(FeatureSoonContext);
-  const { videoSectionShow } = useContext(ProfileContext);
+  const { videoSectionShow, profileContent, tweetsSectionShow } = useContext(ProfileContext); 
 
   const [loading, setLoading] = useState(true);
   const [haveVideo, setHaveVideo] = useState(false);
@@ -69,10 +69,7 @@ function ProfilePage() {
       console.log("Unable to fetch tweets", err);
       setLoading(false);
     });
-  }, [user])
-  
-
-  const { profileContent } = useContext(ProfileContext);
+  }, [user])  
 
   useEffect(() => {
     if (profileContent === "dashboard") {
@@ -175,7 +172,9 @@ function ProfilePage() {
           {/* Video section */}
           {!haveVideo && <VideoSection videos={user?.videos} />}
           {/* tweet section */}
-          <TweetsSection tweets={tweets} user={user} />
+          {
+            tweetsSectionShow && <TweetsSection tweets={tweets} user={user} />
+          } 
         </section>
       )}
     </main>

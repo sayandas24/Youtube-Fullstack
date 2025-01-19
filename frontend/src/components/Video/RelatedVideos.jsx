@@ -54,7 +54,7 @@ function RelatedVideos() {
     <section
       className={`${
         loading ? "!overflow-hidden" : ""
-      } w-[28rem] rounded-2xl flex text-white flex-col gap-3`}
+      } w-full rounded-2xl flex text-white flex-col gap-3 max-[1000px]:p-5 max-[700px]:p-2`}
     >
       {loading && <RelatedVideoSkeleton number={8} />}
       {videos.map((video) => (
@@ -63,7 +63,7 @@ function RelatedVideos() {
           <section
             onClick={() => handleNavigation(`/p/${video._id}`, video._id)}
           >
-            <div className="w-[13rem] h-[8rem] cursor-pointer border-zinc-600 rounded-2xl overflow-hidden">
+            <div id="related-video-thumbnail" className="w-[13rem] h-[8rem] cursor-pointer border-zinc-600 rounded-2xl overflow-hidden">
               <img
                 className="h-full w-full object-cover"
                 src={video.thumbnail}
@@ -73,12 +73,12 @@ function RelatedVideos() {
           </section>
 
           {/* thumbnail details */}
-          <div className="flex flex-col py-2 gap-1 w-[25rem]">
-            <h1 className="text-[1.2rem] font-semibold text-wrap">
+          <div className="flex flex-col py-2 gap-1 w-full">
+            <h1 id="related-video-title" className="text-[1.1rem]  text-wrap line-clamp-1">
               {video.title}
             </h1>
 
-            <div className="flex flex-col text-zinc-400 text-[1rem]">
+            <div id="related-video-info" className="flex flex-col text-zinc-400 text-[1rem]">
               <Link
                 to={`/channel/${video.owner.username}`}
                 className="text-zinc-300 hover:text-zinc-100"

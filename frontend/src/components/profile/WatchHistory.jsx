@@ -7,20 +7,32 @@ import { NavLink } from "react-router";
 
 function WatchHistory() {
   const [data, setData] = useState([]);
-
+ 
   useEffect(() => {
     axiosInstance
       .get("/user/history")
       .then((res) => {
-        setData(res.data.data); 
+        setData(res.data.data);
       })
-    .catch((err) => {
-      console.log("WatchHistory not found", err);
-    });
+      .catch((err) => {
+        console.log("WatchHistory not found", err);
+      });
   }, []);
 
+  // delete watch history video 
+  const handleDelete = (id) => {
+    axiosInstance
+      .delete(`/user/history/${id}`)
+      .then((res) => {
+        setData((prev) => prev.filter((video) => video._id !== id)); 
+      })
+      .catch((err) => {
+        console.log("WatchHistory not found", err);
+      });
+  };
+
   return (
-    <div className="overflow-x-hiddena flex">
+    <div className="flex">
       <section className="max-[500px]:hidden">
         <Sidebar />
       </section>
@@ -32,10 +44,17 @@ function WatchHistory() {
               key={data._id}
               className=" rounded-xl min-[500px]:h-[11rem] flex p-2"
             >
-              <NavLink to={`/p/${video._id}`} className="h-full w-[18rem]  overflow-hidden rounded-xl max-[600px]:w-[12rem] max-[500px]:h-[7.5rem] max-[750px]:w-[14rem] max-[750px]:h-[8.5rem]
+              <NavLink
+                to={`/p/${video._id}`}
+                className="h-full w-[18rem]  overflow-hidden rounded-xl max-[600px]:w-[12rem] max-[500px]:h-[7.5rem] max-[750px]:w-[14rem] max-[750px]:h-[8.5rem]
 
-               flex-shrink-0 max-[450px]:!h-[6.5rem] max-[450px]:!w-[10rem] max-[350px]:!h-[5.5rem] max-[350px]:!w-[8.5rem]">
-                <img className="w-full h-full object-cover" src={video.thumbnail} alt="" />
+               flex-shrink-0 max-[450px]:!h-[6.5rem] max-[450px]:!w-[10rem] max-[350px]:!h-[5.5rem] max-[350px]:!w-[8.5rem]"
+              >
+                <img
+                  className="w-full h-full object-cover"
+                  src={video.thumbnail}
+                  alt=""
+                />
               </NavLink>
 
               <section className="w-full  flex-1">
@@ -44,7 +63,7 @@ function WatchHistory() {
                     {video.title}
                   </h1>
                   <div className="ml-auto flex  gap-5 max-[600px]:gap-1">
-                    <RxCross1 className="cursor-pointer max-[600px]:p-2 max-[600px]:text-[2rem] text-[3rem] p-3 rounded-full hover:bg-[#2c2c2c]" />
+                    <RxCross1 onClick={() => handleDelete(video._id)} className="cursor-pointer max-[600px]:p-2 max-[600px]:text-[2rem] text-[3rem] p-3 rounded-full hover:bg-[#2c2c2c]" />
                     <BsThreeDotsVertical className="cursor-pointer max-[600px]:p-2 max-[600px]:text-[2rem] text-[3rem] p-3 rounded-full active:bg-[#2c2c2c]" />
                   </div>
                 </div>
@@ -53,8 +72,6 @@ function WatchHistory() {
                   <span>{video.owner.fullName}</span>
                   <span>|&nbsp;{video.viewsCount} Views</span>
                 </div>
-
-                
               </section>
             </div>
           ))}

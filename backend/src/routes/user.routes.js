@@ -11,8 +11,8 @@ import {
     updateAccountDetails,
     getUserChannelProfile,
     getWatchHistory,
-    authentication
-    
+    authentication,
+    removeVideoFromWatchHistory
 } from "../controllers/user.controller.js";
 import { upload } from "../middlewares/multer.middleware.js"
 import { verifyJWT } from "../middlewares/auth.middleware.js";
@@ -52,5 +52,6 @@ router.route("/cover-new").patch(verifyJWT, upload.single("coverImage"), updateU
 
 router.route("/channel/:username").get(optionalVerifyJWT ,getUserChannelProfile)
 router.route("/history").get(verifyJWT, getWatchHistory)
+router.route("/history/:videoId").delete(verifyJWT, removeVideoFromWatchHistory)
 
 export default router;
