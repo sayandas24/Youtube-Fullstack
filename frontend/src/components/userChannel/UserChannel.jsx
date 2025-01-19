@@ -9,18 +9,17 @@ import { CollapseContext } from "../../contexts/collapseMenu/CollapseContext";
 import NProgress from "nprogress";
 import Playlists from "./Playlists";
 import Tweets from "../profile/Tweets";
+import { ProfileContext } from "../../contexts/profileContext/profileContext";
 
 function UserChannel() {
   const { channel } = useParams();
   const [userDetail, setUserDetail] = useState({});
   const [currUser, setCurrUser] = useState({});
   const [error, setError] = useState(false);
-  const [loading, setLoading] = useState(true);
-  const [showPlaylists, setShowPlaylists] = useState(true);
-  const [showTweets, setShowTweets] = useState(false);
-  const [allTweets, setAllTweets] = useState([]);
+  const [loading, setLoading] = useState(true); 
 
   const { collapse2, setCollapse2 } = useContext(CollapseContext);
+  const { showUserTweet, setShowUserTweet, showUserVideo, setShowUserVideo } = useContext(ProfileContext);
 
   const location = useLocation();
   const isRouteActive = location.pathname.startsWith(`/channel/`);
@@ -30,17 +29,17 @@ function UserChannel() {
     setCollapse2(true);
     if (channel) {
       axiosInstance
-      .get(`/user/channel/${channel}`)
-      .then((res) => {
-        NProgress.done();
-        setUserDetail(res.data.data);
-        setLoading(false);
-      })
-      .catch((err) => {
-        console.log("cannot get channel: ",err);
-        NProgress.done();
-        setLoading(false);
-      });
+        .get(`/user/channel/${channel}`)
+        .then((res) => {
+          NProgress.done();
+          setUserDetail(res.data.data);
+          setLoading(false);
+        })
+        .catch((err) => {
+          console.log("cannot get channel: ", err);
+          NProgress.done();
+          setLoading(false);
+        });
     }
   }, []);
 
@@ -58,7 +57,7 @@ function UserChannel() {
     if (!currUser._id) {
       console.log("not logged in");
       setError(true);
-    } 
+    }
     if (userDetail.isSubscribed == false) {
       axiosInstance
         .get(`/subscription/subscribe/${userDetail._id}`)
@@ -86,13 +85,19 @@ function UserChannel() {
   };
 
   const handlePlaylistClick = () => {
-    setShowPlaylists(true);
-    setShowTweets(false);
+    setShowUserVideo(true);
+    setShowUserTweet(false);
+
+    setShowUserTweet(false)
+    setShowUserVideo(true)
   };
 
   const handleTweetsClick = () => {
-    setShowPlaylists(false);
-    setShowTweets(true);
+    setShowUserVideo(false);
+    setShowUserTweet(true);
+
+    setShowUserTweet(true)
+    setShowUserVideo(false)
   };
 
   return (
@@ -206,7 +211,7 @@ function UserChannel() {
               <h1
                 onClick={handlePlaylistClick}
                 className={`${
-                  showPlaylists ? "border-b-2" : "text-zinc-400"
+                  showUserVideo ? "border-b-2" : "text-zinc-400"
                 } pb-2 cursor-pointer`}
               >
                 Playlists
@@ -214,7 +219,7 @@ function UserChannel() {
               <h1
                 onClick={handleTweetsClick}
                 className={`${
-                  showTweets ? "border-b-2" : "text-zinc-400"
+                  showUserTweet ? "border-b-2" : "text-zinc-400"
                 } pb-2 cursor-pointer`}
               >
                 Tweets
@@ -225,10 +230,10 @@ function UserChannel() {
           </section>
 
           {/* playlists */}
-          {showPlaylists && (
+          {showUserVideo && (
             <Playlists userDetail={userDetail} loading={loading} />
           )}
-          {showTweets && <Tweets userDetail={userDetail} currUser={currUser} />}
+          {showUserTweet && <Tweets userDetail={userDetail} currUser={currUser} />}
         </main>
       </div>
     </SkeletonTheme>

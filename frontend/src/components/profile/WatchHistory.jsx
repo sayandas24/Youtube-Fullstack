@@ -3,10 +3,14 @@ import Sidebar from "../Layout/Sidebar";
 import { RxCross1 } from "react-icons/rx";
 import { BsThreeDotsVertical } from "react-icons/bs";
 import axiosInstance from "../../utils/axiosInstance";
-import { NavLink } from "react-router";
+import { NavLink, useNavigate } from "react-router";
+import { FeatureSoonContext } from "../../contexts/featureSoonContext/UseFeatureSoon";
 
 function WatchHistory() {
   const [data, setData] = useState([]);
+  const [user, setUser] = useState({}); 
+  const navigate = useNavigate();
+  const { handleFeatureSoonShow } = useContext(FeatureSoonContext);
  
   useEffect(() => {
     axiosInstance
@@ -18,6 +22,25 @@ function WatchHistory() {
         console.log("WatchHistory not found", err);
       });
   }, []);
+ 
+  
+  useEffect(() => { 
+
+    if (window.location.pathname === "/user/history") {
+      axiosInstance
+        .get("/user/current-user")
+        .then((res) => {
+          setUser(res.data.data); 
+        })
+        .catch((err) => {
+          handleFeatureSoonShow("Login to show watch history");
+          console.log(err); 
+          navigate("/login");
+        });
+    }
+  }, []);
+  
+
 
   // delete watch history video 
   const handleDelete = (id) => {
@@ -38,6 +61,13 @@ function WatchHistory() {
       </section>
 
       <section className="min-[500px]:w-[60rem] mx-auto flex justify-center text-white flex-col gap-1 max-[500px]:mb-[3rem] max-[500px]:mt-5">
+        {
+          data.length == 0 && (
+            <div className="flex items-center justify-center">
+              <h1 className="text-xl mt-5">No video in watch history</h1>
+            </div>
+          )
+        }
         {data &&
           data.map((video) => (
             <div

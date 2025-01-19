@@ -21,6 +21,17 @@
   z-index: 999999;
   padding: 0 1rem;
 }
+
+@media screen and (max-width: 500px) {
+  .new-feature-msg{
+    font-size: .8rem;
+    min-width: fit-content;
+    padding: 10px 15px;
+    height: fit-content;
+    text-wrap: nowrap;
+  }
+}
+
 @keyframes glow {
   0% {
     box-shadow: 0 0 5px #fff;

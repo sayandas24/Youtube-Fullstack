@@ -9,7 +9,6 @@ import { CollapseContext } from "../../contexts/collapseMenu/CollapseContext";
 import { IoSettingsOutline } from "react-icons/io5";
 import { CgProfile } from "react-icons/cg";
 
-
 import metube from "../../assets/metube.svg";
 
 import { IoMdMenu } from "react-icons/io";
@@ -18,17 +17,20 @@ import { FeatureSoonContext } from "../../contexts/featureSoonContext/UseFeature
 
 function Sidebar2() {
   const { collapse2, setCollapse2 } = useContext(CollapseContext);
-  const { handleFeatureSoonShow } = useContext(FeatureSoonContext)
+  const { handleFeatureSoonShow } = useContext(FeatureSoonContext);
 
   const handleMenu = () => {
     setCollapse2(!collapse2);
-    console.log("clicked")
+    console.log("clicked");
   };
 
   // temp
   const handleClickOutsideSidebar = (event) => {
-    if (!event.target.closest(".sidebar") && !event.target.closest(".more-options")) {
-      setCollapse2(true); 
+    if (
+      !event.target.closest(".sidebar") &&
+      !event.target.closest(".more-options")
+    ) {
+      setCollapse2(true);
     }
   };
   useEffect(() => {
@@ -37,8 +39,7 @@ function Sidebar2() {
     return () => {
       document.removeEventListener("click", handleClickOutsideSidebar);
     };
-  }, [])
-  
+  }, []);
 
   return (
     <div
@@ -80,7 +81,8 @@ function Sidebar2() {
 
       <hr className="border-zinc-600 my-1" />
 
-      <NavLink to="/user/history"
+      <NavLink
+        to="/user/history"
         // onClick={() => handleFeatureSoonShow("History working on it")}
         className={`flex gap-5 p-3 px-5 hover:bg-[#2c2c2c] duration-75 cursor-pointer rounded-xl`}
       >
@@ -91,7 +93,7 @@ function Sidebar2() {
       </NavLink>
 
       <section
-      onClick={() => handleFeatureSoonShow("Feature coming soon")}
+        onClick={() => handleFeatureSoonShow("Feature coming soon")}
         className={`flex gap-5 p-3 px-5 hover:bg-[#2c2c2c] duration-75 cursor-pointer rounded-xl`}
       >
         <div className="">
@@ -102,7 +104,7 @@ function Sidebar2() {
       <hr className="border-zinc-600 my-1" />
 
       <section
-      onClick={() => handleFeatureSoonShow("Feature coming soon")}
+        onClick={() => handleFeatureSoonShow("Feature coming soon")}
         className={`flex gap-5 p-3 px-5 hover:bg-[#2c2c2c] duration-75 cursor-pointer rounded-xl`}
       >
         <div className="">
@@ -111,7 +113,8 @@ function Sidebar2() {
         <div className={` text-[1.1rem] font-[420] `}>Settings</div>
       </section>
 
-      <NavLink to="/profile" 
+      <NavLink
+        to="/profile"
         className={`flex gap-5 p-3 px-5 hover:bg-[#2c2c2c] duration-75 cursor-pointer rounded-xl`}
       >
         <div className="">

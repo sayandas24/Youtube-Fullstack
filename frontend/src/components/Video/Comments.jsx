@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { useEffect, useState } from "react"; 
+import { useEffect, useState } from "react";
 import { BsThreeDotsVertical } from "react-icons/bs";
 import axiosInstance from "../../utils/axiosInstance";
 import { NavLink } from "react-router";
@@ -15,7 +15,7 @@ function Comments({ getVideo }) {
   const [OwnerOfComment, setOwnerOfComment] = useState([]);
   const [loginUser, setLoginUser] = useState({});
 
-  const { setIsLoginUser } = useContext(FeatureSoonContext); 
+  const { setIsLoginUser } = useContext(FeatureSoonContext);
 
   useEffect(() => {
     if (getVideo?.comments) {
@@ -67,8 +67,6 @@ function Comments({ getVideo }) {
 
   // Function to delete a comment
   const handleCommentDelete = async (commentOwnerId, commentId) => {
-    
-
     if (loginUser._id === commentOwnerId) {
       NProgress.start();
       try {
@@ -96,11 +94,14 @@ function Comments({ getVideo }) {
 
   // handleCommentLike
   const handleCommentLike = async (commentId, ownerLiked) => {
-    axiosInstance.get("/user/current-user").then((res) => {
-      setIsLoginUser(true);
-    }).catch((err) => {
-      setIsLoginUser(false);
-    });
+    axiosInstance
+      .get("/user/current-user")
+      .then((res) => {
+        setIsLoginUser(true);
+      })
+      .catch((err) => {
+        setIsLoginUser(false);
+      });
     if (loginUser._id) {
       if (ownerLiked === false) {
         axiosInstance
@@ -130,7 +131,7 @@ function Comments({ getVideo }) {
           .then((res) => {
             setOwnerOfComment((prevComments) =>
               prevComments.map((comment) => {
-                if (comment._id === commentId) { 
+                if (comment._id === commentId) {
                   return {
                     ...comment,
                     isCurrentUserLiked: false,
@@ -225,7 +226,13 @@ function Comments({ getVideo }) {
             OwnerOfComment.map((user, idx) => (
               <div key={user._id || idx} className="flex gap-2">
                 {/* Profile pic */}
-                <div className="w-[3rem]">
+                <NavLink
+                  to={`/channel/${user.commentOwner.username}`}
+                  onClick={() =>
+                    window.scrollTo({ top: 0, behavior: "smooth" })
+                  }
+                  className="w-[3rem]"
+                >
                   <div className="w-[45px] h-[45px] overflow-hidden rounded-full">
                     <img
                       className="w-full h-full object-cover"
@@ -233,13 +240,19 @@ function Comments({ getVideo }) {
                       alt="Profile"
                     />
                   </div>
-                </div>
+                </NavLink>
                 {/* Profile name, comment */}
                 <div className="flex flex-col gap-1">
                   <h1 className="text-[1rem] flex gap-2 items-center">
-                    <span className="cursor-pointer">
+                    <NavLink
+                      to={`/channel/${user.commentOwner.username}`}
+                      onClick={() =>
+                        window.scrollTo({ top: 0, behavior: "smooth" })
+                      }
+                      className="cursor-pointer"
+                    >
                       @{user.commentOwner.username || "Anonymous"}
-                    </span>
+                    </NavLink>
                     <span className="text-zinc-500 text-[.7rem]">
                       {user.timestamp || "Just now"}
                     </span>

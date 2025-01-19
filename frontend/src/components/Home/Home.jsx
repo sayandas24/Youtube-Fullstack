@@ -70,7 +70,7 @@ function Home() {
         id="videoContainer"
         className={`${
           loading ? "overflow-y-hidden" : ""
-        } px-5 w-full gap-5 flex-wrap overflow-y-auto`}
+        } px-5 w-full gap-5 flex-wrap overflow-y-auto max-[500px]:mb-[3rem]`}
       >
         {loading ? (
           <VideoHomeSkeleton number={12} />
@@ -87,6 +87,7 @@ function Home() {
                 >
                   <NavLink
                     to={`/p/${file._id}`}
+                    onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })} 
                     className="videoParent relative border h-[18rem]   border-black bg-zinc-600 rounded-3xl overflow-hidden"
                   >
                     <div className="absolute top-0 left-0 w-full h-full bg-transparent duration-200 hover:bg-[#f0f0f010]"></div>
@@ -99,6 +100,7 @@ function Home() {
 
                   <NavLink
                     to={`/channel/${file.owner.username}`}
+                    onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })} 
                     className="flex gap-2"
                   >
                     {/* Avatar */}

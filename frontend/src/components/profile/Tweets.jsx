@@ -10,6 +10,7 @@ import { BsThreeDots } from "react-icons/bs";
 import { MdDeleteOutline } from "react-icons/md";
 
 function Tweets({ userDetail, currUser }) {
+  
   const [tweetImage, setTweetImage] = useState(null);
   const [tweetPreview, setTweetPreview] = useState(null);
   const [tweetContent, setTweetContent] = useState("");
@@ -67,6 +68,7 @@ function Tweets({ userDetail, currUser }) {
     }
   };
 
+  // get tweets
   useEffect(() => {
     if (currUser._id && userDetail._id === currUser._id) {
       setShowDeleteBtn(true);
@@ -75,7 +77,7 @@ function Tweets({ userDetail, currUser }) {
       axiosInstance
         .get(`/tweet/${userDetail._id}`)
         .then((res) => {
-          setAllTweets(res.data.data);
+          setAllTweets(res.data.data); 
         })
         .catch((err) => {
           console.log("cannot get tweets", err);
@@ -87,7 +89,7 @@ function Tweets({ userDetail, currUser }) {
         }
       }
     }
-  }, []);
+  }, [userDetail]);
 
   const handleDeleteTweet = (id) => {
     axiosInstance
@@ -165,6 +167,7 @@ function Tweets({ userDetail, currUser }) {
   // TODO: like count in tweets
   return (
     <main className="p-3 max-[500px]:p-2">
+      
       {showTweetForm && (
         <form
           onSubmit={handleForm}
@@ -243,6 +246,13 @@ function Tweets({ userDetail, currUser }) {
       )}
 
       <section className="max-[500px]:mb-[3rem] flex flex-col gap-2 mt-10">
+      {
+        allTweets && allTweets.length === 0 && (
+          <div className="flex items-center justify-center">
+            <h1 className="text-2xl max-[500px]:text-lg">No tweets posted</h1>
+          </div>
+        )
+      }
         {allTweets &&
           allTweets.map((tweet, index) => {
             return (
@@ -250,6 +260,7 @@ function Tweets({ userDetail, currUser }) {
                 key={tweet._id}
                 className="border border-zinc-700 rounded-xl p-5 min-h-[10rem] w-[55rem] max-[1000px]:w-[100%]"
               >
+                
                 <section className="flex justify-between">
                   <div className="flex gap-3 ">
                     <div className="rounded-full w-[3rem] h-[3rem] overflow-hidden">

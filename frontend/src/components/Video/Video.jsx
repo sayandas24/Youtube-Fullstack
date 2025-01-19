@@ -139,7 +139,7 @@ function Video() {
   }
 
   return (
-    <div className=" py-10 flex relative ">
+    <div className=" py-10 flex relative">
       <div
         className={`${
           isRouteActive && collapse2 ? "-translate-x-[18rem]  " : ""
@@ -150,7 +150,7 @@ function Video() {
       <main
         className={`${
           collapse2 ? "" : "opacity-50 blur-[2px]"
-        } flex gap-5 transition-all duration-150 w-full max-[1000px]:flex-col `}
+        } flex gap-5 transition-all duration-150 w-full max-[1000px]:flex-col overflow-x-hidden`}
       >
         {/* left video */}
         <section className="w-[70%] max-[1000px]:w-full text-white flex flex-col gap-3  pl-5 max-[1000px]:p-5 max-[700px]:p-0">
@@ -309,6 +309,7 @@ function Video() {
 
         {/* right other videos */}
         <section className=" w-[25rem] max-[1000px]:w-full">
+          <h1 className="my-2 text-lg ml-2 text-white min-[1000px]:hidden">Related videos</h1>
           <RelatedVideos />
         </section>
       </main>

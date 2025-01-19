@@ -48,6 +48,7 @@ function RelatedVideos() {
         NProgress.done(); // Complete progress bar on error
       });
     navigate(path); // Perform navigation
+    window.scrollTo({ top: 0, behavior: 'smooth' }); // Smooth scroll to top
   };
 
   return (
@@ -56,12 +57,18 @@ function RelatedVideos() {
         loading ? "!overflow-hidden" : ""
       } w-full rounded-2xl flex text-white flex-col gap-3 max-[1000px]:p-5 max-[700px]:p-2`}
     >
+
       {loading && <RelatedVideoSkeleton number={8} />}
+      
       {videos.map((video) => (
         <div key={video._id} className="flex  gap-2 w-full">
           {/* thumbnail */}
           <section
-            onClick={() => handleNavigation(`/p/${video._id}`, video._id)}
+            onClick={() => {
+              handleNavigation(`/p/${video._id}`, video._id);
+              window.scrollTo({ top: 0, behavior: 'smooth' });
+            }}
+            
           >
             <div id="related-video-thumbnail" className="w-[13rem] h-[8rem] cursor-pointer border-zinc-600 rounded-2xl overflow-hidden">
               <img
@@ -82,6 +89,7 @@ function RelatedVideos() {
               <Link
                 to={`/channel/${video.owner.username}`}
                 className="text-zinc-300 hover:text-zinc-100"
+                onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })} // Smooth scroll to top
               >
                 {video.owner.fullName}
               </Link>

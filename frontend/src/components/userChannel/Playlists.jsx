@@ -7,7 +7,16 @@ function Playlists({ userDetail, loading }) {
   
   return (
     <div>
-      <h1 className="my-2 text-xl ml-2 max-[485px]:mt-5"> All Videos</h1>
+      {userDetail && userDetail?.videos?.length == 0 ? (
+        <div className="flex items-center justify-center">
+          <h1 className=" max-[500px]:text-lg my-2 text-2xl ml-2 max-[485px]:mt-5">
+            No video posted
+          </h1>
+        </div>
+      ) : (
+        <h1 className="my-2 text-xl ml-2 max-[485px]:mt-5"> All Videos</h1>
+      )}
+
       <section
         id="video-in-dashboard"
         className="flex flex-wrap gap-5 my-5 max-[500px]:mb-[5rem]"
@@ -34,13 +43,12 @@ function Playlists({ userDetail, loading }) {
               </div>
               <div className="flex flex-col gap-1">
                 <h1 className="text-[15px] mt-1 line-clamp-2">
-                  {playlist.title} 
+                  {playlist.title}
                 </h1>
                 <p className="text-[15px] text-zinc-500 line-clamp-1 max-[485px]:flex flex-col">
-                  <span>{playlist.totalViews} views</span> <span className="max-[485px]:hidden">| </span>
-                  <span>
-                    {timeSince(playlist.createdAt)}
-                  </span>
+                  <span>{playlist.totalViews} views</span>{" "}
+                  <span className="max-[485px]:hidden">| </span>
+                  <span>{timeSince(playlist.createdAt)}</span>
                 </p>
               </div>
             </Link>
