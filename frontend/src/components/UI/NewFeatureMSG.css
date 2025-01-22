@@ -11,8 +11,7 @@
   align-items: center;
   justify-content: center;
   color: white;
-  font-weight: bold;
-
+  font-weight: bold; 
   animation: slideDown .3s ease-out forwards, glow 1.5s infinite alternate , fadeOut 0.8s ease-out 0.5s forwards;;
   /* animation: ; */
 

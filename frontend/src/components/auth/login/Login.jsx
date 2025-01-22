@@ -61,7 +61,7 @@ const Login = () => {
 
       <div id="right-section" className="w-1/2 fixed right-0 top-0 z-[99999] bg-white h-screen flex flex-col justify-center items-center">
 
-      <NavLink id="home-btn" className="flex gap-1 items-center font-semibold justify-center hidden" to="/">
+      <NavLink id="home-btn" className="gap-1 items-center font-semibold justify-center hidden" to="/">
           <MdArrowBackIos/>
           <span>Home</span>
       </NavLink>

@@ -84,7 +84,7 @@ const Register = () => {
       >
         <NavLink
           id="home-btn"
-          className="flex gap-1 items-center font-semibold justify-center hidden"
+          className="gap-1 items-center font-semibold justify-center hidden"
           to="/"
         >
           <MdArrowBackIos />
