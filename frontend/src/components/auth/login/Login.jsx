@@ -4,7 +4,9 @@ import { TbLogin2 } from "react-icons/tb";
 import { NavLink, useNavigate } from "react-router";
 import GoogleLogin from "../googleLogin/GoogleLogin";
 import axiosInstance from "../../../utils/axiosInstance";
-import { ClipLoader } from "react-spinners"; // Example of a spinner component  
+import { ClipLoader } from "react-spinners"; // Example of a spinner component 
+import { MdArrowBackIos } from "react-icons/md";
+
 
 const Login = () => {
   const [processing, setProcessing] = useState(false);
@@ -48,16 +50,23 @@ const Login = () => {
   }, [email, password]);
 
   return (
-    <div className="flex">
-      <div className="w-1/2 fixed left-0 top-0 z-[99999] h-screen bg-gradient-to-r from-blue-500 to-purple-600">
+    <div id="loginPage" className="flex">
+      <div id="left-section" className="w-1/2 fixed left-0 top-0 z-[99999] h-screen bg-gradient-to-r from-blue-500 to-purple-600">
         <NavLink to="/">
           <button className="text-white font-bold py-2 px-4 rounded-xl mt-5 ml-5 hover:bg-blue-700 transition duration-300">
             Home
           </button>
         </NavLink>
       </div>
-      <div className="w-1/2 fixed right-0 top-0 z-[99999] bg-white h-screen flex flex-col justify-center items-center">
-        <h1 className="text-[2.5rem] text-center font-semibold mb-5 text-transparent bg-clip-text bg-gradient-to-r from-blue-500 to-purple-600">
+
+      <div id="right-section" className="w-1/2 fixed right-0 top-0 z-[99999] bg-white h-screen flex flex-col justify-center items-center">
+
+      <NavLink id="home-btn" className="flex gap-1 items-center font-semibold justify-center hidden" to="/">
+          <MdArrowBackIos/>
+          <span>Home</span>
+      </NavLink>
+
+        <h1 id="login-title" className="text-[2.5rem] text-center font-semibold mb-5 text-transparent bg-clip-text bg-gradient-to-r from-blue-500 to-purple-600">
           Login to your account
         </h1>
         <form className="w-[30rem] mx-auto rounded flex flex-col gap-3 p-5 shadow-lg">
@@ -81,7 +90,7 @@ const Login = () => {
 
           <div className="flex gap-2 items-center">
             <input type="checkbox" name="terms" id="terms" />
-            <label htmlFor="terms">
+            <label id="terms" htmlFor="terms">
               I accept the <b>Terms and Condition</b>
             </label>
           </div>
@@ -94,7 +103,7 @@ const Login = () => {
               buttonDisabled || processing
                 ? "bg-gray-600 hover:bg-gray-600"
                 : "bg-blue-500 hover:bg-blue-700"
-            } text-white font-bold py-2 px-4 rounded-xl transition duration-300`}
+            } text-white font-bold py-2 px-4 rounded-xl transition duration-300 max-[500px]:text-[0.9rem]`}
           >
             {processing ? (
               <ClipLoader color="#ffffff" loading={true} size={16} />
@@ -114,7 +123,7 @@ const Login = () => {
             user not found
           </h1>
         </form>
-        <div className="flex items-center justify-center gap-4 mt-[10rem]">
+        <div className="flex items-center justify-center gap-4 mt-[10rem] max-[500px]:mt-5">
           Don`t have an account?
           <NavLink to="/register">
             <span className="flex items-center gap-2 text-xl cursor-pointer text-blue-500 hover:text-blue-700 transition duration-300">

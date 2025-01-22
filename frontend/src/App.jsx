@@ -6,6 +6,7 @@ import './responsive/sidebar.scss';
 import './responsive/sidebar1.scss';
 import './responsive/profile.scss';
 import './responsive/videoPlayer.scss';
+import './responsive/login.scss';
 import Home from "./components/Home/Home.jsx";
 import Video from "./components/Video/Video.jsx";
 import { createBrowserRouter, RouterProvider, useLocation } from "react-router";

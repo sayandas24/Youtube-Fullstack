@@ -56,9 +56,9 @@ function GoogleLogin() {
   return (
     <button
       onClick={(e) => onGoogleSignIn(e)}
-      className="mt-5 hover:bg-[#d7e4eb] bg-[#ddecf5] border px-5 p-2 rounded-xl flex gap-3 items-center justify-center"
+      className="mt-2 hover:bg-[#d7e4eb] bg-[#ddecf5] border px-5 p-2 rounded-xl flex gap-3 items-center justify-center"
     >
-      <h2 className="font-semibold text-[1rem]">Sign in with google</h2>
+      <h2 className="font-semibold text-[1rem] max-[500px]:text-[0.9rem]">Sign in with google</h2>
       <svg
         className="w-[1.6rem] h-fit"
         xmlns="http://www.w3.org/2000/svg"

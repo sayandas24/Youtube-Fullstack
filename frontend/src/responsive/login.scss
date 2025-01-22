@@ -1,0 +1,94 @@
+#loginPage {
+  @media screen and (max-width: 1100px) {
+    #right-section {
+      form {
+        width: 90% !important;
+      }
+    }
+  }
+
+  @media screen and (max-width: 1000px) {
+    #left-section {
+      display: none;
+    }
+    #right-section {
+      left: 0;
+      width: 100%;
+
+      form {
+        width: 30rem !important;
+      }
+    }
+    #home-btn{
+        display: flex !important;
+        position: absolute ;
+        top: 20px ;
+        left: 20px ;
+    }
+   
+  }
+  @media screen and (max-width: 500px) {
+    #right-section {
+      #login-title {
+        font-size: 1.8rem !important;
+      }
+      form {
+        width: 90% !important;
+      }
+    }
+  }
+  @media screen and (max-width: 400px) {
+    #terms {
+      font-size: 0.8rem !important;
+    }
+  }
+}
+
+#registerPage{
+    
+
+    @media screen and (max-width: 1100px) {
+        #right-section {
+          form {
+            width: 90% !important;
+          }
+        }
+      }
+    
+      @media screen and (max-width: 1000px) {
+        #left-section {
+          display: none;
+        }
+        #right-section {
+          left: 0;
+          width: 100%; 
+    
+          form {
+            width: 30rem !important;
+          }
+        }
+        #home-btn{
+            display: flex !important;
+            position: fixed ;
+            top: 20px ;
+            left: 20px ;
+        }
+       
+      }
+      @media screen and (max-width: 500px) {
+        #right-section {
+          #register-title {
+            font-size: 1.8rem !important;
+            margin: 0;
+          }
+          form {
+            width: 90% !important;
+          }
+        }
+      }
+      @media screen and (max-width: 400px) {
+        #terms {
+          font-size: 0.8rem !important;
+        }
+      }
+}
