@@ -8,14 +8,27 @@ import ThumbUpOutlinedIcon from "@mui/icons-material/ThumbUpOutlined";
 import ThumbUpIcon from "@mui/icons-material/ThumbUp";
 import LoginErrorWarn from "../../utils/LoginErrorWarn";
 import { FeatureSoonContext } from "../../contexts/featureSoonContext/UseFeatureSoon";
+import { MdDeleteOutline } from "react-icons/md";
+import UseClickOutside from "../../utils/UseClickOutside";
 
 function Comments({ getVideo }) {
+  // TODO: comments delete popup
+
   const [content, setContent] = useState("");
   const [commentNumber, setCommentNumber] = useState(null);
   const [OwnerOfComment, setOwnerOfComment] = useState([]);
   const [loginUser, setLoginUser] = useState({});
 
+  const [showDeleteIcon, setShowDeleteIcon] = useState(false);
+  const [hoveredTweetId, setHoveredTweetId] = useState(null);
+
   const { setIsLoginUser } = useContext(FeatureSoonContext);
+
+  UseClickOutside(
+    () => setShowDeleteIcon(false),
+    ".comment-delete",
+    ".dontClose"
+  );
 
   useEffect(() => {
     if (getVideo?.comments) {
@@ -283,11 +296,30 @@ function Comments({ getVideo }) {
                   </div>
                 </div>
                 {/* More button */}
-                <div className="self-center ml-auto">
+                <div className="self-center ml-auto comment-delete">
                   <BsThreeDotsVertical
-                    onClick={() => handleCommentDelete(user.owner, user._id)}
+                    onClick={() => {
+                      setHoveredTweetId(user._id);
+                      setShowDeleteIcon(!showDeleteIcon);
+                    }}
                     className="text-[1.8rem] rounded-full border-zinc-600 active:border p-1 cursor-pointer"
                   />
+                </div>
+
+                <div className="relative ">
+                  {hoveredTweetId === user._id && showDeleteIcon && (
+                    <div className="dontClose border bg-[#4101017b] rounded-xl absolute top-5 right-14 border-red-800 overflow-hidden py-2 z-50">
+                      <div
+                        onClick={() => {
+                          handleCommentDelete(user.owner, user._id);
+                        }}
+                        className="text-xl cursor-pointer hover:bg-red-700/20 px-10 py-1 flex gap-2 items-center"
+                      >
+                        <MdDeleteOutline className="text-2xl text-red-500" />
+                        <span className="text-lg font-semibold">Delete</span>
+                      </div>
+                    </div>
+                  )}
                 </div>
               </div>
             ))

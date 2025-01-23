@@ -8,9 +8,9 @@ import { FeatureSoonContext } from "../../contexts/featureSoonContext/UseFeature
 import LoginErrorWarn from "../../utils/LoginErrorWarn";
 import { BsThreeDots } from "react-icons/bs";
 import { MdDeleteOutline } from "react-icons/md";
+import UseClickOutside from "../../utils/UseClickOutside";
 
 function Tweets({ userDetail, currUser }) {
-  
   const [tweetImage, setTweetImage] = useState(null);
   const [tweetPreview, setTweetPreview] = useState(null);
   const [tweetContent, setTweetContent] = useState("");
@@ -23,6 +23,8 @@ function Tweets({ userDetail, currUser }) {
   const [hoveredTweetId, setHoveredTweetId] = useState(null);
 
   const { setIsLoginUser } = useContext(FeatureSoonContext);
+
+  UseClickOutside(() => setShowDeleteIcon(false), ".threeDot", ".dontClick");
 
   // console.log(tweetImage);
 
@@ -39,7 +41,7 @@ function Tweets({ userDetail, currUser }) {
     formData.append("content", tweetContent);
     if (tweetImage) {
       formData.append("tweetImage", tweetImage);
-    } 
+    }
 
     if (!tweetContent == " ") {
       nProgress.start();
@@ -77,7 +79,7 @@ function Tweets({ userDetail, currUser }) {
       axiosInstance
         .get(`/tweet/${userDetail._id}`)
         .then((res) => {
-          setAllTweets(res.data.data); 
+          setAllTweets(res.data.data);
         })
         .catch((err) => {
           console.log("cannot get tweets", err);
@@ -167,7 +169,6 @@ function Tweets({ userDetail, currUser }) {
   // TODO: like count in tweets
   return (
     <main className="p-3 max-[500px]:p-2">
-      
       {showTweetForm && (
         <form
           onSubmit={handleForm}
@@ -246,13 +247,11 @@ function Tweets({ userDetail, currUser }) {
       )}
 
       <section className="max-[500px]:mb-[3rem] flex flex-col gap-2 mt-10">
-      {
-        allTweets && allTweets.length === 0 && (
+        {allTweets && allTweets.length === 0 && (
           <div className="flex items-center justify-center">
             <h1 className="text-2xl max-[500px]:text-lg">No tweets posted</h1>
           </div>
-        )
-      }
+        )}
         {allTweets &&
           allTweets.map((tweet, index) => {
             return (
@@ -260,8 +259,7 @@ function Tweets({ userDetail, currUser }) {
                 key={tweet._id}
                 className="border border-zinc-700 rounded-xl p-5 min-h-[10rem] w-[55rem] max-[1000px]:w-[100%]"
               >
-                
-                <section className="flex justify-between">
+                <section className="flex justify-between relative">
                   <div className="flex gap-3 ">
                     <div className="rounded-full w-[3rem] h-[3rem] overflow-hidden">
                       <img
@@ -291,22 +289,20 @@ function Tweets({ userDetail, currUser }) {
                         setHoveredTweetId(tweet._id);
                         setShowDeleteIcon(!showDeleteIcon);
                       }}
-                      className="text-2xl border cursor-pointer relative hover:bg-zinc-800 active:bg-transparent active:border-zinc-800 border-transparent duration-100  rounded-full h-fit w-fit p-2"
+                      className="threeDot text-2xl border cursor-pointer relative hover:bg-zinc-800 active:bg-transparent active:border-zinc-800 border-transparent duration-100  rounded-full h-fit w-fit p-2"
                     >
                       <BsThreeDots />
-                      {hoveredTweetId === tweet._id && showDeleteIcon && (
-                        <div
-                          onClick={() => handleDeleteTweet(tweet._id)}
-                          className="border bg-[#410101] rounded-xl absolute top-14 right-0 border-red-800 overflow-hidden py-2"
-                        >
-                          <div className="text-xl  px-10 py-1 flex gap-2 items-center">
-                            <MdDeleteOutline className="text-2xl text-red-500" />
-                            <span className="text-lg font-semibold">
-                              Delete
-                            </span>
-                          </div>
-                        </div>
-                      )}
+                    </div>
+                  )}
+                  {hoveredTweetId === tweet._id && showDeleteIcon && (
+                    <div className="dontClick border bg-[#4101017b] rounded-xl absolute top-12 right-5 border-red-800 overflow-hidden py-2">
+                      <div
+                        onClick={() => handleDeleteTweet(tweet._id)}
+                        className="text-xl cursor-pointer hover:bg-red-700/20 px-10 py-1 flex gap-2 items-center"
+                      >
+                        <MdDeleteOutline className="text-2xl text-red-500" />
+                        <span className="text-lg font-semibold">Delete</span>
+                      </div>
                     </div>
                   )}
                 </section>

@@ -16,6 +16,7 @@ import { FeatureSoonContext } from "../../contexts/featureSoonContext/UseFeature
 import { useScreenWidth } from "../../utils/screenWidth";
 import "../../responsive/navbar.scss";
 import { ProfileContext } from "../../contexts/profileContext/profileContext";
+import { SparklesText } from "@/components/magicui/sparkles-text";
 
 function Navbar() {
   const { collapse, setCollapse } = useContext(CollapseContext);
@@ -119,9 +120,7 @@ function Navbar() {
               className="flex items-center border-[#555555] p-5 rounded-full py-2"
             >
               <img className="w-[2rem] invert" src={metube} alt="" />
-              <h1 className="font-sacramento font-bold text-[1.5rem]">
-                Metube
-              </h1>
+              <SparklesText className="font-sacramento font-bold text-[1.5rem]" text="Metube" /> 
             </div>
           </div>
         </section>
@@ -217,8 +216,11 @@ function Navbar() {
             </div>
           ) : (
             <NotSignPopupMenu />
+            
           )}
         </section>
+
+        
       </ul>
     </nav>
   );

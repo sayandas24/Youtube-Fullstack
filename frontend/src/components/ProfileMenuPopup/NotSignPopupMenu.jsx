@@ -7,6 +7,7 @@ import { CgProfile } from "react-icons/cg";
 import { BsThreeDotsVertical } from "react-icons/bs";
 import { NavLink } from "react-router"; 
 import { FeatureSoonContext } from "../../contexts/featureSoonContext/UseFeatureSoon";
+import { AnimatedButton } from "../UI/AnimatedButton";
 
 
 function NotSignPopupMenu() {
@@ -94,11 +95,8 @@ function NotSignPopupMenu() {
         </div>
       )}
 
-      <NavLink to="/login" className="hide-item-in-small rounded-full border border-[#696969] cursor-pointer hover:border-transparent hover:bg-[#282828] text-white p-3 h-fit py-2">
-        <div className="flex gap-1 items-center">
-          <CgProfile className="text-2xl text-[#cacaca]" />
-          <h1 className="text-[1.1rem] font-[440] text-nowrap">Sign In</h1>
-        </div>
+      <NavLink to="/login">
+        <AnimatedButton text="✨ Login" />
       </NavLink>
     </div>
   );

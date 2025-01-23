@@ -4,22 +4,28 @@ import { TbLogin2 } from "react-icons/tb";
 import { NavLink, useNavigate } from "react-router";
 import GoogleLogin from "../googleLogin/GoogleLogin";
 import axiosInstance from "../../../utils/axiosInstance";
-import { ClipLoader } from "react-spinners"; // Example of a spinner component 
+import { ClipLoader } from "react-spinners"; // Example of a spinner component
 import { MdArrowBackIos } from "react-icons/md";
 
+import { useTheme } from "next-themes";
+
+import { MagicCard } from "@/components/magicui/magic-card";
+import { RetroGridDemo } from "../../UI/RetroGridDemo";
 
 const Login = () => {
+  const { theme } = useTheme();
+
   const [processing, setProcessing] = useState(false);
   const [error, setError] = useState(false);
   const [email, setEmail] = useState("");
-  const [password, setPassword] = useState(""); 
+  const [password, setPassword] = useState("");
   const [buttonDisabled, setButtonDisabled] = useState(true);
 
-  const navigate = useNavigate();  
+  const navigate = useNavigate();
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    setProcessing(true); // spinner 
+    setProcessing(true); // spinner
 
     axiosInstance
       .post("/user/login", { email, password })
@@ -29,13 +35,11 @@ const Login = () => {
         localStorage.setItem("accessToken", token);
         navigate("/");
         window.location.reload();
-
-
-        console.log(res);
+ 
       })
       .catch((err) => {
         // if err, then show user not found in frontend ui
-        console.log(err);
+        console.log("Error in login", err);
         setError(true);
       })
       .finally(() => {
@@ -51,78 +55,88 @@ const Login = () => {
 
   return (
     <div id="loginPage" className="flex">
-      <div id="left-section" className="w-1/2 fixed left-0 top-0 z-[99999] h-screen bg-gradient-to-r from-blue-500 to-purple-600">
-        <NavLink to="/">
-          <button className="text-white font-bold py-2 px-4 rounded-xl mt-5 ml-5 hover:bg-blue-700 transition duration-300">
-            Home
-          </button>
-        </NavLink>
-      </div>
+      <RetroGridDemo />
 
-      <div id="right-section" className="w-1/2 fixed right-0 top-0 z-[99999] bg-white h-screen flex flex-col justify-center items-center">
-
-      <NavLink id="home-btn" className="gap-1 items-center font-semibold justify-center hidden" to="/">
-          <MdArrowBackIos/>
+      <div
+        id="right-section"
+        className="w-1/2 fixed right-0 top-0 z-[99999] bg-zinc-900 h-screen flex flex-col justify-center items-center text-white"
+      >
+        <NavLink
+          id="home-btn"
+          className="gap-1 items-center font-semibold justify-center hidden"
+          to="/"
+        >
+          <MdArrowBackIos />
           <span>Home</span>
-      </NavLink>
+        </NavLink>
 
-        <h1 id="login-title" className="text-[2.5rem] text-center font-semibold mb-5 text-transparent bg-clip-text bg-gradient-to-r from-blue-500 to-purple-600">
+        <h1
+          id="login-title"
+          className="text-[2.5rem] text-center font-semibold mb-5 text-transparent bg-clip-text bg-gradient-to-r from-blue-500 to-purple-600"
+        >
           Login to your account
         </h1>
-        <form className="w-[30rem] mx-auto rounded flex flex-col gap-3 p-5 shadow-lg">
-          <input
-            type="email"
-            value={email}
-            onChange={(event) => setEmail(event.target.value)}
-            className="w-full p-2 border text-gray-700 rounded-xl bg-[#f3f7f9] focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-300"
-            placeholder="email"
-            required
-          />
 
-          <input
-            type="password"
-            value={password}
-            placeholder="password"
-            onChange={(event) => setPassword(event.target.value)}
-            className="w-full p-2 border text-gray-700 rounded-xl bg-[#f3f7f9] focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-300"
-            required={true}
-          />
+        <MagicCard
+          className="cursor-pointer flex-col items-center justify-center whitespace-nowrap shadow-2xl text-white w-[30rem] py-16 !h-fit max-[500px]:w-[90%]"
+          gradientColor={theme === "dark" ? "#262626" : "#D9D9D955"}
+        >
+          <form className=" mx-auto rounded flex flex-col gap-3  w-[90%]">
+            <input
+              type="email" 
+              value={email}
+              onChange={(event) => setEmail(event.target.value)}
+              className="w-full p-2 border text-gray-700 rounded-xl bg-[#f3f7f9] focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-300"
+              placeholder="email"
+              required
+            />
 
-          <div className="flex gap-2 items-center">
-            <input type="checkbox" name="terms" id="terms" />
-            <label id="terms" htmlFor="terms">
-              I accept the <b>Terms and Condition</b>
-            </label>
-          </div>
+            <input
+              type="password"
+              value={password}
+              placeholder="password"
+              onChange={(event) => setPassword(event.target.value)}
+              className="w-full p-2 border text-gray-700 rounded-xl bg-[#f3f7f9] focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-300"
+              required={true}
+            />
 
-          <button
-            onClick={handleSubmit}
-            type="submit"
-            disabled={buttonDisabled || processing}
-            className={`${
-              buttonDisabled || processing
-                ? "bg-gray-600 hover:bg-gray-600"
-                : "bg-blue-500 hover:bg-blue-700"
-            } text-white font-bold py-2 px-4 rounded-xl transition duration-300 max-[500px]:text-[0.9rem]`}
-          >
-            {processing ? (
-              <ClipLoader color="#ffffff" loading={true} size={16} />
-            ) : (
-              "Login"
-            )}
-          </button>
+            <div className="flex gap-2 items-center">
+              <input type="checkbox" name="terms" id="terms" />
+              <label id="terms" htmlFor="terms">
+                I accept the <b>Terms and Condition</b>
+              </label>
+            </div>
 
-          {/* Google button */}
-          <GoogleLogin />
+            <button
+              onClick={handleSubmit}
+              type="submit"
+              disabled={buttonDisabled || processing}
+              className={`${
+                buttonDisabled || processing
+                  ? "bg-gray-600 hover:bg-gray-600"
+                  : "bg-blue-500 hover:bg-blue-700"
+              } text-white font-bold py-2 px-4 rounded-xl transition duration-300 max-[500px]:text-[0.9rem]`}
+            >
+              {processing ? (
+                <ClipLoader color="#ffffff" loading={true} size={16} />
+              ) : (
+                "Login"
+              )}
+            </button>
 
-          <h1
-            className={`${
-              error ? "visible" : "invisible"
-            } mt-3 rounded-xl mx-auto w-full flex items-center justify-center p-2 text-red-600 border border-red-600 transition duration-300`}
-          >
-            user not found
-          </h1>
-        </form>
+            {/* Google button */}
+            <GoogleLogin />
+
+            <h1
+              className={`${
+                error ? "visible" : "invisible"
+              } mt-3 rounded-xl mx-auto w-full flex items-center justify-center p-2 text-red-600 border border-red-600 transition duration-300`}
+            >
+              user not found
+            </h1>
+          </form>
+        </MagicCard>
+
         <div className="flex items-center justify-center gap-4 mt-[10rem] max-[500px]:mt-5">
           Don`t have an account?
           <NavLink to="/register">

@@ -2,22 +2,11 @@ import React, { useContext, useEffect } from "react";
 import { Link } from "react-router";
 import { RxCross2 } from "react-icons/rx";
 import { FeatureSoonContext } from "../contexts/featureSoonContext/UseFeatureSoon";
+import UseClickOutside from "./UseClickOutside";
 
 function LoginErrorWarn() {
   const { isLoginUser, setIsLoginUser } = useContext(FeatureSoonContext);
-
-  const handleClickOutsideLoginWarn = (event) => {
-    if (!event.target.closest(".warningPopup")) {
-      setIsLoginUser(true);
-    }
-  };
-  useEffect(() => {
-    document.addEventListener("click", handleClickOutsideLoginWarn);
-
-    return () => {
-      document.removeEventListener("click", handleClickOutsideLoginWarn);
-    };
-  }, []);
+  UseClickOutside(() => setIsLoginUser(true), ".warningPopup");
 
   return (
     <section
