@@ -18,7 +18,8 @@ function ProfilePage() {
 
   const { collapse2, setCollapse2 } = useContext(CollapseContext);
   const { handleFeatureSoonShow } = useContext(FeatureSoonContext);
-  const { videoSectionShow, profileContent, tweetsSectionShow } = useContext(ProfileContext); 
+  const { videoSectionShow, profileContent, tweetsSectionShow } =
+    useContext(ProfileContext);
 
   const [loading, setLoading] = useState(true);
   const [haveVideo, setHaveVideo] = useState(false);
@@ -61,15 +62,18 @@ function ProfilePage() {
 
   // tweets
   useEffect(() => {
-    axiosInstance.get(`/tweet/${user._id}`).then((res) => {
-      setTweets(res.data.data);
-      setLoading(false);
-    }).catch((err) => {
-      setTweets([]);
-      console.log("Unable to fetch tweets", err);
-      setLoading(false);
-    });
-  }, [user])  
+    axiosInstance
+      .get(`/tweet/${user._id}`)
+      .then((res) => {
+        setTweets(res.data.data);
+        setLoading(false);
+      })
+      .catch((err) => {
+        setTweets([]);
+        console.log("Unable to fetch tweets", err);
+        setLoading(false);
+      });
+  }, [user]);
 
   useEffect(() => {
     if (profileContent === "dashboard") {
@@ -129,7 +133,7 @@ function ProfilePage() {
           sidebarMobile
             ? "max-[1000px]:scale-0 max-[1000px]:translate-x-[-7rem] max-[1000px]:translate-y-[15rem] max-[500px]:translate-y-[15rem]"
             : "max-[1000px]:motion-scale-in-100 "
-        } dashboard-options w-[18rem] ml-2 min-[1000px]:mt-2`}
+        } dashboard-options w-[18rem] !p-0 left-5 max-[350px]:w-[15rem]`}
       >
         <ProfileSection
           user={user}
@@ -139,7 +143,7 @@ function ProfilePage() {
       </div>
       {/* right */}
       {showDashboard && (
-        <section className="w-[100%] border-l border-[#434343] overflow-y-auto">
+        <section className="w-[100%] border-[#434343] overflow-y-auto">
           {/* <ProfileDashboard user={user} /> */}
           {loading && (
             <SkeletonTheme baseColor="#202020" highlightColor="#333">
@@ -162,7 +166,7 @@ function ProfilePage() {
       )}
 
       {showUserContent && (
-        <section className="w-[100%] border-l border-[#434343] overflow-y-auto">
+        <section className="w-[100%] border-l border-l-transparent border-[#434343] overflow-y-auto">
           <ProfileHeader />
           {haveVideo && !loading && (
             <h1 className=" text-zinc-400 p-10">You have no video posted</h1>
@@ -172,9 +176,7 @@ function ProfilePage() {
           {/* Video section */}
           {!haveVideo && <VideoSection videos={user?.videos} />}
           {/* tweet section */}
-          {
-            tweetsSectionShow && <TweetsSection tweets={tweets} user={user} />
-          } 
+          {tweetsSectionShow && <TweetsSection tweets={tweets} user={user} />}
         </section>
       )}
     </main>

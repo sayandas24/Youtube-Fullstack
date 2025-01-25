@@ -6,6 +6,7 @@ import GoogleLogin from "../googleLogin/GoogleLogin";
 import axiosInstance from "../../../utils/axiosInstance";
 import { ClipLoader } from "react-spinners"; // Example of a spinner component
 import { MdArrowBackIos } from "react-icons/md";
+import { ShineBorder } from "@/components/magicui/shine-border";
 
 import { useTheme } from "next-themes";
 
@@ -35,7 +36,6 @@ const Login = () => {
         localStorage.setItem("accessToken", token);
         navigate("/");
         window.location.reload();
- 
       })
       .catch((err) => {
         // if err, then show user not found in frontend ui
@@ -70,20 +70,18 @@ const Login = () => {
           <span>Home</span>
         </NavLink>
 
-        <h1
-          id="login-title"
-          className="text-[2.5rem] text-center font-semibold mb-5 text-transparent bg-clip-text bg-gradient-to-r from-blue-500 to-purple-600"
-        >
+        <span id="login-title" className="pointer-events-none whitespace-pre-wrap bg-gradient-to-b from-black to-gray-300/80 bg-clip-text text-center text-5xl font-semibold  mb-5 leading-none text-transparent dark:from-white dark:to-slate-900/10">
           Login to your account
-        </h1>
+        </span>
 
+        {/* Before 1000px */}
         <MagicCard
-          className="cursor-pointer flex-col items-center justify-center whitespace-nowrap shadow-2xl text-white w-[30rem] py-16 !h-fit max-[500px]:w-[90%]"
+          className="cursor-pointer flex-col items-center justify-center whitespace-nowrap shadow-2xl text-white w-[30rem] py-16 !h-fit max-[500px]:w-[90%] max-[1000px]:hidden"
           gradientColor={theme === "dark" ? "#262626" : "#D9D9D955"}
         >
           <form className=" mx-auto rounded flex flex-col gap-3  w-[90%]">
             <input
-              type="email" 
+              type="email"
               value={email}
               onChange={(event) => setEmail(event.target.value)}
               className="w-full p-2 border text-gray-700 rounded-xl bg-[#f3f7f9] focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-300"
@@ -136,6 +134,67 @@ const Login = () => {
             </h1>
           </form>
         </MagicCard>
+        
+        {/* After 1000px */}
+        <ShineBorder
+          className="loginForm cursor-pointer flex-col items-center justify-center whitespace-nowrap shadow-2xl text-white w-[30rem] py-16 !h-fit max-[500px]:w-[90%] min-[1000px]:hidden"
+          color={["#A07CFE", "#FE8FB5", "#FFBE7B"]}
+        >
+          <form className=" mx-auto rounded flex flex-col gap-3  w-[90%]">
+            <input
+              type="email"
+              value={email}
+              onChange={(event) => setEmail(event.target.value)}
+              className="w-full p-2 border text-gray-700 rounded-xl bg-[#f3f7f9] focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-300"
+              placeholder="email"
+              required
+            />
+
+            <input
+              type="password"
+              value={password}
+              placeholder="password"
+              onChange={(event) => setPassword(event.target.value)}
+              className="w-full p-2 border text-gray-700 rounded-xl bg-[#f3f7f9] focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-300"
+              required={true}
+            />
+
+            <div className="flex gap-2 items-center">
+              <input type="checkbox" name="terms" id="terms" />
+              <label id="terms" htmlFor="terms">
+                I accept the <b>Terms and Condition</b>
+              </label>
+            </div>
+
+            <button
+              onClick={handleSubmit}
+              type="submit"
+              disabled={buttonDisabled || processing}
+              className={`${
+                buttonDisabled || processing
+                  ? "bg-gray-600 hover:bg-gray-600"
+                  : "bg-blue-500 hover:bg-blue-700"
+              } text-white font-bold py-2 px-4 rounded-xl transition duration-300 max-[500px]:text-[0.9rem]`}
+            >
+              {processing ? (
+                <ClipLoader color="#ffffff" loading={true} size={16} />
+              ) : (
+                "Login"
+              )}
+            </button>
+
+            {/* Google button */}
+            <GoogleLogin />
+
+            <h1
+              className={`${
+                error ? "visible" : "invisible"
+              } mt-3 rounded-xl mx-auto w-full flex items-center justify-center p-2 text-red-600 border border-red-600 transition duration-300`}
+            >
+              user not found
+            </h1>
+          </form>
+        </ShineBorder>
 
         <div className="flex items-center justify-center gap-4 mt-[10rem] max-[500px]:mt-5">
           Don`t have an account?

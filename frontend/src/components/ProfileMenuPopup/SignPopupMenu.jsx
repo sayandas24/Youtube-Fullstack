@@ -7,6 +7,8 @@ import axiosInstance from "../../utils/axiosInstance";
 import { NavLink } from "react-router";
 import { FeatureSoonContext } from "../../contexts/featureSoonContext/UseFeatureSoon";
 import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
+import { GoSignOut } from "react-icons/go";
+
 
 function SignPopupMenu() {
   const [user, setUser] = useState({});
@@ -99,7 +101,7 @@ function SignPopupMenu() {
 
         <section className="p-3 hover:bg-[#383838] cursor-pointer" onClick={logout}>
           <div className="flex gap-3 items-center">
-            <IoSettingsOutline className="text-2xl text-[#cacaca]" />
+            <GoSignOut className="text-2xl text-[#cacaca]" />
             <h1 className="text-[1rem] font-[320]">Sign out</h1>
           </div>
         </section> 

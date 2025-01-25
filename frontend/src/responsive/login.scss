@@ -6,7 +6,6 @@
       }
     }
   }
-
   @media screen and (max-width: 1000px) {
     #left-section {
       display: none;
@@ -35,6 +34,12 @@
   @media screen and (max-width: 400px) {
     #terms {
       font-size: 0.8rem !important;
+    }
+  }
+  @media screen and (max-height: 650px) {
+    .loginForm{
+      padding-top: 20px !important;
+      padding-bottom: 20px !important;
     }
   }
 }

@@ -2,7 +2,8 @@
   #small-screen-left {
     position: absolute;
     bottom: 5rem;
-    background-color: black;
+    background-color: rgba(21, 21, 21, 0.6);
+    backdrop-filter: blur(30px);
     @media screen and (max-width: 500px) {
       bottom: 7.5rem;
     }
