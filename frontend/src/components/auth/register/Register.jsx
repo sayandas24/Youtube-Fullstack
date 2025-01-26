@@ -5,12 +5,10 @@ import { NavLink, useNavigate } from "react-router";
 import GoogleLogin from "../googleLogin/GoogleLogin";
 import axiosInstance from "../../../utils/axiosInstance";
 import { ClipLoader } from "react-spinners"; // Example of a spinner component
-import { MdArrowBackIos } from "react-icons/md";
-import { RetroGridDemo } from "../../UI/RetroGridDemo";
+import { MdArrowBackIos } from "react-icons/md"; 
 import RegisterPageUi from "../../UI/RegisterPageUi";
 import { useTheme } from "next-themes";
 import { ShineBorder } from "@/components/magicui/shine-border";
-
 import { MagicCard } from "@/components/magicui/magic-card";
 
 const Register = () => {
@@ -92,18 +90,15 @@ const Register = () => {
       >
         <NavLink
           id="home-btn"
-          className="gap-1 text-white items-center font-semibold justify-center hidden"
+          className="gap-1 min-[1000px]:bg-zinc-800 rounded-full py-2 text-white min-[1000px]:text-zinc-400 items-center font-semibold justify-center mr-auto flex px-[20px] min-[1000px]:ml-10 min-[1000px]:hover:bg-zinc-700 transition duration-300 min-[1000px]:hover:text-zinc-200 "
           to="/"
         >
           <MdArrowBackIos />
           <span>Home</span>
         </NavLink>
-        <h1
-          id="register-title"
-          className="text-[2.5rem] text-center font-semibold mb-5 text-transparent bg-clip-text bg-gradient-to-r from-blue-500 to-purple-600"
-        >
-          Create An Account
-        </h1>
+        <span id="register-title" className="pointer-events-none whitespace-pre-wrap bg-gradient-to-b from-black to-gray-300/80 bg-clip-text text-center text-5xl font-semibold  mb-5 leading-none text-transparent dark:from-white dark:to-slate-900/10 py-2">
+          Register Account
+        </span>
 
         <MagicCard
           className="cursor-pointer flex-col items-center justify-center whitespace-nowrap shadow-2xl text-white w-[30rem] py-16 !h-fit max-[500px]:w-[90%] max-[1000px]:hidden"
@@ -166,7 +161,7 @@ const Register = () => {
               onChange={(event) => setPassword(event.target.value)}
               className="w-full p-2 border text-gray-700 rounded-xl bg-[#292929] focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-300 shadow-md"
             />
-            <label className="w-full h-24 border rounded-xl bg-[#292929] flex items-center justify-center cursor-pointer shadow-md">
+            <label className="w-full h-20 border  rounded-xl bg-[#292929] flex items-center justify-center cursor-pointer shadow-md">
               <input
                 type="file"
                 accept="image/*"
@@ -180,7 +175,7 @@ const Register = () => {
                   className="w-full h-full object-cover rounded-xl"
                 />
               ) : (
-                <span className="text-gray-700">Upload Cover Image</span>
+                <span className="text-gray-400">Upload Cover Image</span>
               )}
             </label>
 
@@ -251,7 +246,7 @@ const Register = () => {
                   type="text"
                   value={fullName}
                   onChange={(event) => setFullname(event.target.value)}
-                  className="w- p-2 border text-gray-700 rounded-xl bg-[#292929] focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-300 shadow-md"
+                  className="w-full p-2 border text-gray-700 rounded-xl bg-[#292929] focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-300 shadow-md"
                   placeholder="Full Name"
                 />
                 <input
@@ -293,13 +288,13 @@ const Register = () => {
                   className="w-full h-full object-cover rounded-xl"
                 />
               ) : (
-                <span className="text-gray-700">Upload Cover Image</span>
+                <span className="text-gray-400">Upload Cover Image</span>
               )}
             </label>
 
             <div className="flex gap-2 items-center">
-              <input type="checkbox" name="terms" id="terms" />
-              <label htmlFor="terms">
+              <input type="checkbox" name="term" id="term" />
+              <label htmlFor="term">
                 I accept the <b>Terms and Condition</b>
               </label>
             </div>

@@ -1,4 +1,3 @@
-// src/components/RegisterForm.js
 import React, { useContext, useEffect, useState } from "react";
 import { TbLogin2 } from "react-icons/tb";
 import { NavLink, useNavigate } from "react-router";
@@ -70,7 +69,10 @@ const Login = () => {
           <span>Home</span>
         </NavLink>
 
-        <span id="login-title" className="pointer-events-none whitespace-pre-wrap bg-gradient-to-b from-black to-gray-300/80 bg-clip-text text-center text-5xl font-semibold  mb-5 leading-none text-transparent dark:from-white dark:to-slate-900/10">
+        <span
+          id="login-title"
+          className="pointer-events-none whitespace-pre-wrap bg-gradient-to-b from-black to-gray-300/80 bg-clip-text text-center text-5xl font-semibold  mb-5 leading-none text-transparent dark:from-white dark:to-slate-900/10"
+        >
           Login to your account
         </span>
 
@@ -84,7 +86,7 @@ const Login = () => {
               type="email"
               value={email}
               onChange={(event) => setEmail(event.target.value)}
-              className="w-full p-2 border text-gray-700 rounded-xl bg-[#f3f7f9] focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-300"
+              className="w-full p-2 border text-gray-700 rounded-xl bg-[#292929] focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-300"
               placeholder="email"
               required
             />
@@ -94,7 +96,7 @@ const Login = () => {
               value={password}
               placeholder="password"
               onChange={(event) => setPassword(event.target.value)}
-              className="w-full p-2 border text-gray-700 rounded-xl bg-[#f3f7f9] focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-300"
+              className="w-full p-2 border text-gray-700 rounded-xl bg-[#292929] focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-300"
               required={true}
             />
 
@@ -134,7 +136,7 @@ const Login = () => {
             </h1>
           </form>
         </MagicCard>
-        
+
         {/* After 1000px */}
         <ShineBorder
           className="loginForm cursor-pointer flex-col items-center justify-center whitespace-nowrap shadow-2xl text-white w-[30rem] py-16 !h-fit max-[500px]:w-[90%] min-[1000px]:hidden"
@@ -145,7 +147,7 @@ const Login = () => {
               type="email"
               value={email}
               onChange={(event) => setEmail(event.target.value)}
-              className="w-full p-2 border text-gray-700 rounded-xl bg-[#f3f7f9] focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-300"
+              className="w-full p-2 border text-gray-700 rounded-xl bg-[#343434] focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-300"
               placeholder="email"
               required
             />
@@ -155,13 +157,13 @@ const Login = () => {
               value={password}
               placeholder="password"
               onChange={(event) => setPassword(event.target.value)}
-              className="w-full p-2 border text-gray-700 rounded-xl bg-[#f3f7f9] focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-300"
+              className="w-full p-2 border text-gray-700 rounded-xl bg-[#343434] focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-300"
               required={true}
             />
 
             <div className="flex gap-2 items-center">
-              <input type="checkbox" name="terms" id="terms" />
-              <label id="terms" htmlFor="terms">
+              <input type="checkbox" name="term" id="term" />
+              <label id="terms" htmlFor="term">
                 I accept the <b>Terms and Condition</b>
               </label>
             </div>

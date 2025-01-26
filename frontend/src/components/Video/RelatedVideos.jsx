@@ -57,9 +57,7 @@ function RelatedVideos() {
         loading ? "!overflow-hidden" : ""
       } w-full rounded-2xl flex text-white flex-col gap-3 max-[1000px]:p-5 max-[700px]:p-2`}
     >
-
       {loading && <RelatedVideoSkeleton number={8} />}
-      
       {videos.map((video) => (
         <div key={video._id} className="flex  gap-2 w-full">
           {/* thumbnail */}
