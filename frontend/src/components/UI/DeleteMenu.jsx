@@ -27,10 +27,10 @@ function DeleteMenu() {
 
   return (
     <div className="w-full h-screen bg-[rgba(0,0,0,0.76)] fixed top-0 left-0">
-      <div className="max-h-[20rem] w-[35rem] rounded-2xl bg-[#282828] fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 p-5 flex flex-col gap-3 px-7">
-        <h1 className="text-2xl">Permanently delete this video?</h1>
+      <div className="max-h-[20rem] w-[35rem] max-[600px]:w-[90%] rounded-2xl bg-[#282828] fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 p-5 flex flex-col gap-3 px-7 max-[600px]:px-2">
+        <h1 className="text-2xl max-[600px]:text-lg">Permanently delete this video?</h1>
 
-        <section className="flex border border-zinc-700 p-3 gap-4 rounded-xl bg-[#171717]">
+        <section className="flex border border-zinc-700 p-3 gap-4 rounded-xl bg-[#171717] max-[600px]:p-2 max-[600px]:gap-2">
           <div className="h-[5rem] w-[8rem]  rounded-xl overflow-hidden">
             <img
               className="h-full w-full object-cover"

@@ -29,7 +29,7 @@ const generateAccessAndRefreshToken = async (userId) => {
 };
 
 const authentication = asyncHandler(async (req, res, next) => {
-  console.log("Request body:", req.body); // Log the incoming data
+  
   const { data } = req.body;
 
   if (!data || !data.email) {
@@ -328,7 +328,7 @@ const refreshAccessToken = asyncHandler(async (req, res) => {
 const changeCurrentPassword = asyncHandler(async (req, res) => {
   const { oldPassword, newPassword } = req.body; // getting passW from frontend
 
-  // console.log(req.user.id) // req.user is getting from middleware
+  
 
   const user = await User.findById(req.user?._id);
 
@@ -466,7 +466,7 @@ const getCurrentUser = asyncHandler(async (req, res) => {
 // update account details Name and email
 const updateAccountDetails = asyncHandler(async (req, res) => {
   const { fullName, username } = req.body;
-  console.log(fullName, username);
+  
 
   if (!fullName || !username) {
     throw new ApiError(400, "All fields are required");
@@ -562,9 +562,9 @@ const updateUserCoverImage = asyncHandler(async (req, res) => {
 
 // finding channel by username from req.params
 const getUserChannelProfile = asyncHandler(async (req, res) => {
-  // console.log('ok')
+  
   const { username } = req.params;
-  // console.log(username)
+  
 
   if (!username?.trim()) {
     throw new ApiError(400, "channel name is missing");
@@ -675,7 +675,7 @@ const getUserChannelProfile = asyncHandler(async (req, res) => {
   if (!channel?.length) {
     throw new ApiError(404, "Channel not found");
   }
-  // console.log(channel)
+  
 
   return res
     .status(200)
@@ -776,8 +776,7 @@ const getWatchHistory = asyncHandler(async (req, res) => {
     },
     
   ]);
-
-  console.log(user)
+ 
 
   if (!user?.length) {
     throw new ApiError(404, "User not found");

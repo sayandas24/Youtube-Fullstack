@@ -38,7 +38,7 @@ const deleteCommentVideo = asyncHandler(async (req, res) => {
         _id: commentId,
         owner: owner,
     });
-    console.log(deletedComment)
+    
 
     if (!deletedComment) {
         throw new ApiError(404, "Comment not found or you're not authorized to delete this comment");

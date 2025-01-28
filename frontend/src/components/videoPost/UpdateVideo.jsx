@@ -10,25 +10,23 @@ function UpdateVideo() {
   const location = useLocation();
   const file = location.state?.file;
   const videoUrl = location.state?.videoUrl;
-  let fileSizeReadable = null;  
+  let fileSizeReadable = null;
 
   const [video, setVideo] = useState({});
   const [remove, setRemove] = useState(false);
 
   // axiosInstance.patch("/video/update/:id", {})
-  
+
   const videoId = useParams();
 
   useEffect(() => {
     axiosInstance
-    .get(`/video/p/${videoId.id}`)
-    .then((res) => {
-      setVideo(res.data.message);
-       
-    })
-    .catch((err) => console.log(err)); 
-  },  [videoId.id]);  
-  
+      .get(`/video/p/${videoId.id}`)
+      .then((res) => {
+        setVideo(res.data.message);
+      })
+      .catch((err) => console.log(err));
+  }, [videoId.id]);
 
   if (file) {
     const formatFileSize = (sizeInBytes) => {
@@ -43,15 +41,15 @@ function UpdateVideo() {
       return `${sizeInBytes.toFixed(2)} ${units[index]}`;
     };
     fileSizeReadable = formatFileSize(file.size);
-  } 
+  }
 
   return (
     <div className="border bg-[#282828] border-zinc-800 text-white h-[48rem] w-[95vw] max-w-[55rem] mx-auto mt-5 rounded-xl relative overflow-x-auto max-[500px]:mb-[4rem] max-[500px]:h-[100vh]">
-      <VideoPostHeader/>
+      <VideoPostHeader />
 
       <main className="flex  px-[2rem] gap-5 max-[720px]:flex-col-reverse max-[720px]:items-center max-[720px]:gap-3 max-[720px]:px-[1rem] max-[500px]:px-1">
         {/* left about section*/}
-        <VideoPostAbout file={file} existingVideo={video}/>
+        <VideoPostAbout file={file} existingVideo={video} />
 
         {/* right */}
         <VideoPostRight
@@ -62,7 +60,7 @@ function UpdateVideo() {
         />
       </main>
 
-      {/* <VideoPostFooter/> */}
+      <VideoPostFooter />
     </div>
   );
 }

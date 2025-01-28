@@ -6,6 +6,8 @@ import "../../script.js";
 import axiosInstance from "../../utils/axiosInstance.js";
 import { useNavigate } from "react-router-dom";
 
+// FIXME: bottom right upload button is not allign
+
 function VideoPostAbout({ file, existingVideo = null }) {
   const [title, setTitle] = useState(existingVideo?.title || "");
   const [description, setDescription] = useState(
