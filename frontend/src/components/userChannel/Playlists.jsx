@@ -1,17 +1,26 @@
 import React from "react";
 import UserChannelSkeleton from "../UI/skeleton/UserChannelSkeleton";
-import { Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import timeSince from "../../utils/timeSince";
+import { GoPlusCircle } from "react-icons/go";
+import AnimationLoader from "../UI/AnimationLoader";
 
-function Playlists({ userDetail, loading }) {
-  
+function Playlists({ userDetail, loading, currUser }) {
+   
   return (
     <div>
       {userDetail && userDetail?.videos?.length == 0 ? (
-        <div className="flex items-center justify-center">
-          <h1 className=" max-[500px]:text-lg my-2 text-2xl ml-2 max-[485px]:mt-5">
-            No video posted
-          </h1>
+        <div className="flex justify-center items-center  flex-col mt-10">
+          <h1 className="text-2xl max-[500px]:text-lg">No video posted</h1>
+          {currUser?._id == userDetail?._id && (
+            <NavLink
+              to={`/upload/`}
+              className="flex gap-2 items-center mt-10 cursor-pointer animate-pulse"
+            >
+              <GoPlusCircle className="text-xl  " />
+              <h1 className="">Post a video</h1>
+            </NavLink>
+          )}
         </div>
       ) : (
         <h1 className="my-2 text-xl ml-2 max-[485px]:mt-5"> All Videos</h1>
@@ -20,7 +29,7 @@ function Playlists({ userDetail, loading }) {
       <section
         id="video-in-dashboard"
         className="flex flex-wrap gap-5 my-5 max-[500px]:mb-[5rem]"
-      >
+      > 
         {loading ? (
           <UserChannelSkeleton number={4} />
         ) : (

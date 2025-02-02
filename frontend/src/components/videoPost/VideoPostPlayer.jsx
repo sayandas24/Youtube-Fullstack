@@ -12,6 +12,9 @@ function VideoPostRight({ file, videoUrl, fileSizeReadable, removeVideo }) {
     }
   };
 
+// FIXME: bottom right upload button is not allign
+
+
   return (
     <section className="max-[720px]:relative sticky min-[720px]:top-[7rem] min-w-[17rem] h-[17rem]   rounded-xl max-[720px]:w-full">
       <div className=" absolute top-0 left-0 w-full border-red-300 h-[17rem] rounded-xl flex flex-col overflow-hidden">
@@ -30,7 +33,7 @@ function VideoPostRight({ file, videoUrl, fileSizeReadable, removeVideo }) {
           <div className="flex justify-between items-center">
             <section className="flex leading-[15px]  flex-col w-[80%] overflow-hidden">
               <h1 className="text-sm text-zinc-600">video name</h1>
-              <h1 className="text-blue-400 truncate">{file?.name || file.title}</h1>
+              <h1 className="text-blue-400 truncate">{file?.name || file?.title}</h1>
             </section>
             <div
               className={`rounded-full p-1 ${removeVideo? "cursor-pointer" : "cursor-not-allowed"}`}

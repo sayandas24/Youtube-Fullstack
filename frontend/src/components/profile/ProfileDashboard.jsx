@@ -3,8 +3,10 @@ import SearchIcon from "@mui/icons-material/Search";
 import ProfileDashboardDP from "./profileDashboard/ProfileDashboardDP";
 import ProfileDashboardCover from "./profileDashboard/ProfileDashboardCover";
 import timeSince from "../../utils/timeSince";
-import { Link } from "react-router";
+import { Link, NavLink } from "react-router";
 import Tweets from "./Tweets";
+import { GoPlusCircle } from "react-icons/go";
+
 
 function ProfileDashboard({ user }) {
   const [showPlaylists, setShowPlaylists] = useState(true);
@@ -19,6 +21,7 @@ function ProfileDashboard({ user }) {
     setShowPlaylists(false);
     setShowTweets(true);
   };
+  
 
   return (
     <div className="flex w-full text-white min-[1000px]:pl-2">
@@ -53,13 +56,27 @@ function ProfileDashboard({ user }) {
         {/* playlists */}
         {showPlaylists && (
           <section className="my-5">
-            <h1 className="my-2 text-xl">Created Playlist</h1>
+            {user?.videos?.length == 0 ? (
+              <div className="flex justify-center items-center py-5 flex-col">
+                <h1 className="text-2xl font-semibold">No video posted</h1>
+                <NavLink
+                  to={`/upload/`}
+                  className="flex gap-2 items-center mt-10 cursor-pointer animate-pulse"
+                >
+                  <GoPlusCircle className="text-xl  " />
+                  <h1 className="">Post a video</h1>
+                </NavLink>
+              </div>
+            ) : (
+              <h1 className="my-2 text-xl">Created Playlist</h1>
+            )}
+
             <main
               id="video-in-dashboard"
               className=" flex-wrap max-[1000px]:mb-[3rem]"
             >
               {user &&
-                user.videos.map((video) => (
+                user?.videos?.map((video) => (
                   <Link
                     to={`/p/${video._id}`}
                     key={video._id}

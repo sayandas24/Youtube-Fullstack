@@ -5,7 +5,7 @@ import { NavLink, useNavigate } from "react-router";
 import GoogleLogin from "../googleLogin/GoogleLogin";
 import axiosInstance from "../../../utils/axiosInstance";
 import { ClipLoader } from "react-spinners"; // Example of a spinner component
-import { MdArrowBackIos } from "react-icons/md"; 
+import { MdArrowBackIos } from "react-icons/md";
 import RegisterPageUi from "../../UI/RegisterPageUi";
 import { useTheme } from "next-themes";
 import { ShineBorder } from "@/components/magicui/shine-border";
@@ -21,6 +21,7 @@ const Register = () => {
   const [buttonDisabled, setButtonDisabled] = useState(true);
   const [processing, setProcessing] = useState(false);
   const [error, setError] = useState(false);
+  const [checkInput, setCheckInput] = useState(false);
 
   const [coverImagePreview, setCoverImagePreview] = useState(null);
   const [avatarPreview, setAvatarPreview] = useState(null);
@@ -41,7 +42,8 @@ const Register = () => {
           headers: {
             "Content-Type": "multipart/form-data",
           },
-        }
+        },
+        { timeout: 5000 }
       )
       .then((res) => {
         const token = res.data.data.accessToken; // Get the token from the response
@@ -63,8 +65,16 @@ const Register = () => {
   };
 
   useEffect(() => {
-    setButtonDisabled(!fullName || !username || !email || !password);
-  }, [fullName, username, email, password]);
+    setButtonDisabled(
+      !fullName ||
+        !username ||
+        !email ||
+        !password ||
+        !avatar ||
+        !coverImage ||
+        !checkInput
+    );
+  }, [fullName, username, email, password, avatar, coverImage, checkInput]);
 
   const handleAvatarChange = (event) => {
     const file = event.target.files[0];
@@ -96,7 +106,10 @@ const Register = () => {
           <MdArrowBackIos />
           <span>Home</span>
         </NavLink>
-        <span id="register-title" className="pointer-events-none whitespace-pre-wrap bg-gradient-to-b from-black to-gray-300/80 bg-clip-text text-center text-5xl font-semibold  mb-5 leading-none text-transparent dark:from-white dark:to-slate-900/10 py-2">
+        <span
+          id="register-title"
+          className="pointer-events-none whitespace-pre-wrap bg-gradient-to-b from-black to-gray-300/80 bg-clip-text text-center text-5xl font-semibold  mb-5 leading-none text-transparent dark:from-white dark:to-slate-900/10 py-2"
+        >
           Register Account
         </span>
 
@@ -110,12 +123,12 @@ const Register = () => {
           >
             {/* Avatar and Full Name */}
             <div className="flex flex-row items-center gap-3">
-              <label className="w-24 h-24 border border-[#4c66c5] rounded-full bg-[#292929] flex items-center justify-center cursor-pointer shadow-md flex-shrink-0">
+              <label className="w-24 h-24  rounded-full bg-[#292929] flex items-center justify-center cursor-pointer shadow-md flex-shrink-0">
                 <input
                   type="file"
                   accept="image/*"
                   onChange={handleAvatarChange}
-                  className="hidden"
+                  className="hidden "
                 />
                 {avatarPreview ? (
                   <img
@@ -133,14 +146,14 @@ const Register = () => {
                   type="text"
                   value={fullName}
                   onChange={(event) => setFullname(event.target.value)}
-                  className="w- p-2 border text-gray-700 rounded-xl bg-[#292929] focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-300 shadow-md"
+                  className="w- p-2 border text-gray-200 rounded-xl bg-[#292929] focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-300 shadow-md"
                   placeholder="Full Name"
                 />
                 <input
                   type="text"
                   value={username}
                   onChange={(event) => setUsername(event.target.value)}
-                  className="w-full p-2 border text-gray-700 rounded-xl bg-[#292929] focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-300 shadow-md"
+                  className="w-full p-2 border text-gray-200 rounded-xl bg-[#292929] focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-300 shadow-md"
                   placeholder="Username"
                 />
               </section>
@@ -151,7 +164,7 @@ const Register = () => {
               type="email"
               value={email}
               onChange={(event) => setEmail(event.target.value)}
-              className="w-full p-2 border text-gray-700 rounded-xl bg-[#292929] focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-300 shadow-md"
+              className="w-full p-2 border text-gray-200 rounded-xl bg-[#292929] focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-300 shadow-md"
               placeholder="Email"
             />
             <input
@@ -159,7 +172,7 @@ const Register = () => {
               value={password}
               placeholder="Password"
               onChange={(event) => setPassword(event.target.value)}
-              className="w-full p-2 border text-gray-700 rounded-xl bg-[#292929] focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-300 shadow-md"
+              className="w-full p-2 border text-gray-200 rounded-xl bg-[#292929] focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-300 shadow-md"
             />
             <label className="w-full h-20 border  rounded-xl bg-[#292929] flex items-center justify-center cursor-pointer shadow-md">
               <input
@@ -180,7 +193,12 @@ const Register = () => {
             </label>
 
             <div className="flex gap-2 items-center">
-              <input type="checkbox" name="terms" id="terms" />
+              <input
+                onChange={(event) => setCheckInput(event.target.checked)}
+                type="checkbox"
+                name="terms"
+                id="terms"
+              />
               <label htmlFor="terms">
                 I accept the <b>Terms and Condition</b>
               </label>
@@ -223,7 +241,7 @@ const Register = () => {
           >
             {/* Avatar and Full Name */}
             <div className="flex flex-row items-center gap-3">
-              <label className="w-24 h-24 border border-[#4c66c5] rounded-full bg-[#292929] flex items-center justify-center cursor-pointer shadow-md flex-shrink-0">
+              <label className="w-24 h-24  rounded-full bg-[#292929] flex items-center justify-center cursor-pointer shadow-md flex-shrink-0">
                 <input
                   type="file"
                   accept="image/*"
@@ -292,9 +310,9 @@ const Register = () => {
               )}
             </label>
 
-            <div className="flex gap-2 items-center">
+            <div className="flex gap-2 items-center cursor-pointer">
               <input type="checkbox" name="term" id="term" />
-              <label htmlFor="term">
+              <label htmlFor="term" className="cursor-pointer">
                 I accept the <b>Terms and Condition</b>
               </label>
             </div>

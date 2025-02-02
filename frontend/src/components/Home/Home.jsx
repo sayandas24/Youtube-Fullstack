@@ -64,6 +64,7 @@ function Home() {
       >
         {loading ? (
           <VideoHomeSkeleton number={12} />
+          
         ) : (
           <HomeVideo videos={videos} />
         )}

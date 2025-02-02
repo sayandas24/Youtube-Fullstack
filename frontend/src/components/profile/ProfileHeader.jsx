@@ -26,7 +26,7 @@ function ProfileHeader() {
       <ul className="flex gap-5 mt-5 pb-0 px-8">
         <section
           onClick={handleVideoShow}
-          className={`hover:border-b text-[.9rem] text-zinc-400 font-[500] hover:border-zinc-500 p-2 px-1 flex items-center gap-2 ${
+          className={`hover:border-b text-[.9rem] text-zinc-400 font-[500] hover:border-zinc-500 cursor-pointer p-2 px-1 flex items-center gap-2 ${
             videoSectionShow
               ? "!font-[800] border-b !border-white !text-white"
               : ""
@@ -36,7 +36,7 @@ function ProfileHeader() {
         </section>
         <section
           onClick={handleTweetsShow}
-          className={`hover:border-b text-[.9rem] text-zinc-400 font-[500] hover:border-zinc-500 p-2 px-1 flex items-center gap-2 ${
+          className={`hover:border-b text-[.9rem] text-zinc-400 font-[500] hover:border-zinc-500 cursor-pointer p-2 px-1 flex items-center gap-2 ${
             tweetsSectionShow
               ? "!font-[800] border-b !border-white !text-white"
               : ""

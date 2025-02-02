@@ -10,16 +10,18 @@ import NProgress from "nprogress";
 import Playlists from "./Playlists";
 import Tweets from "../profile/Tweets";
 import { ProfileContext } from "../../contexts/profileContext/profileContext";
+import { ConfettiButton } from "@/components/magicui/confetti";
 
 function UserChannel() {
   const { channel } = useParams();
   const [userDetail, setUserDetail] = useState({});
   const [currUser, setCurrUser] = useState({});
   const [error, setError] = useState(false);
-  const [loading, setLoading] = useState(true); 
+  const [loading, setLoading] = useState(true);
 
   const { collapse2, setCollapse2 } = useContext(CollapseContext);
-  const { showUserTweet, setShowUserTweet, showUserVideo, setShowUserVideo } = useContext(ProfileContext);
+  const { showUserTweet, setShowUserTweet, showUserVideo, setShowUserVideo } =
+    useContext(ProfileContext);
 
   const location = useLocation();
   const isRouteActive = location.pathname.startsWith(`/channel/`);
@@ -88,16 +90,16 @@ function UserChannel() {
     setShowUserVideo(true);
     setShowUserTweet(false);
 
-    setShowUserTweet(false)
-    setShowUserVideo(true)
+    setShowUserTweet(false);
+    setShowUserVideo(true);
   };
 
   const handleTweetsClick = () => {
     setShowUserVideo(false);
     setShowUserTweet(true);
 
-    setShowUserTweet(true)
-    setShowUserVideo(false)
+    setShowUserTweet(true);
+    setShowUserVideo(false);
   };
 
   return (
@@ -118,7 +120,7 @@ function UserChannel() {
             {loading ? (
               <Skeleton
                 borderRadius={15}
-                className="w-full relative group border border-[#191919] h-[15rem] overflow-hidden"
+                className="relative group border border-[#191919] h-[15rem] overflow-hidden"
               />
             ) : (
               <div className="w-full relative rounded-xl group border-blue-500 h-[13rem] overflow-hidden max-[500px]:h-[10rem]">
@@ -146,14 +148,26 @@ function UserChannel() {
               )}
 
               {loading ? (
-                <Skeleton
-                  count={3}
-                  borderRadius={10}
-                  className="mt-2"
-                  width={"20rem"}
-                  height={"1.5rem"}
-                  containerClassName="mt-8"
-                />
+                <div className="mt-2 flex flex-col gap-1 w-[12rem] max-[500px]:w-[10rem] justify-center">
+                  <Skeleton
+                    count={1}
+                    borderRadius={10}
+                    containerClassName="w-[100%]"
+                    height={"1.2rem"} 
+                  /> 
+                  <Skeleton
+                    count={1}
+                    borderRadius={10}
+                    containerClassName="w-[90%]"
+                    height={"1.2rem"} 
+                  /> 
+                  <Skeleton
+                    count={1}
+                    borderRadius={10}
+                    containerClassName="w-[25%]"
+                    height={"1.2rem"} 
+                  /> 
+                </div>
               ) : (
                 <section className="flex flex-col justify-center gap-2">
                   <h1 className="text-2xl font-semibold">
@@ -189,7 +203,11 @@ function UserChannel() {
                         : "bg-[#ff0000]"
                     } p-[.4rem] w-fit px-6 rounded-full text-sm font-semibold  hover:text-white `}
                   >
-                    {userDetail.isSubscribed ? "Unsubscribe" : "Subscribe"}
+                    {userDetail.isSubscribed ? (
+                      "Unsubscribe"
+                    ) : (
+                      <ConfettiButton>Subscribe</ConfettiButton>
+                    )}
                   </button>
                   <p className={`${error ? "block" : "hidden"} `}>
                     Login to subscribe to this channel
@@ -231,9 +249,15 @@ function UserChannel() {
 
           {/* playlists */}
           {showUserVideo && (
-            <Playlists userDetail={userDetail} loading={loading} />
+            <Playlists
+              userDetail={userDetail}
+              currUser={currUser}
+              loading={loading}
+            />
           )}
-          {showUserTweet && <Tweets userDetail={userDetail} currUser={currUser} />}
+          {showUserTweet && (
+            <Tweets userDetail={userDetail} currUser={currUser} />
+          )}
         </main>
       </div>
     </SkeletonTheme>

@@ -161,20 +161,18 @@ function ProfilePage() {
               </div>
             </SkeletonTheme>
           )}
-          {!haveVideo && <ProfileDashboard user={user} />}
+           <ProfileDashboard user={user} />
         </section>
       )}
 
       {showUserContent && (
         <section className="w-[100%] border-l border-l-transparent border-[#434343] overflow-y-auto">
           <ProfileHeader />
-          {haveVideo && !loading && (
-            <h1 className=" text-zinc-400 p-10">You have no video posted</h1>
-          )}
+          
           {loading && <VideoDetailSkeleton number={2} />}
 
           {/* Video section */}
-          {!haveVideo && <VideoSection videos={user?.videos} />}
+          {videoSectionShow && <VideoSection videos={user?.videos} />}
           {/* tweet section */}
           {tweetsSectionShow && <TweetsSection tweets={tweets} user={user} />}
         </section>

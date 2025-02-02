@@ -14,12 +14,14 @@ import { RetroGridDemo } from "../../UI/RetroGridDemo";
 
 const Login = () => {
   const { theme } = useTheme();
+  // FIXME: if err, then show user not found in frontend ui
 
   const [processing, setProcessing] = useState(false);
   const [error, setError] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [buttonDisabled, setButtonDisabled] = useState(true);
+  const [checkInput, setCheckInput] = useState(false);
 
   const navigate = useNavigate();
 
@@ -28,7 +30,7 @@ const Login = () => {
     setProcessing(true); // spinner
 
     axiosInstance
-      .post("/user/login", { email, password })
+      .post("/user/login", { email, password }, { timeout: 5000 }) // Set timeout to 5 seconds
       .then((res) => {
         const token = res.data.data.accessToken; // Get the token from the response
 
@@ -86,7 +88,7 @@ const Login = () => {
               type="email"
               value={email}
               onChange={(event) => setEmail(event.target.value)}
-              className="w-full p-2 border text-gray-700 rounded-xl bg-[#292929] focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-300"
+              className="w-full p-2 border text-gray-200 rounded-xl bg-[#292929] focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-300"
               placeholder="email"
               required
             />
@@ -96,13 +98,18 @@ const Login = () => {
               value={password}
               placeholder="password"
               onChange={(event) => setPassword(event.target.value)}
-              className="w-full p-2 border text-gray-700 rounded-xl bg-[#292929] focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-300"
+              className="w-full p-2 border text-gray-200 rounded-xl bg-[#292929] focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-300"
               required={true}
             />
 
-            <div className="flex gap-2 items-center">
-              <input type="checkbox" name="terms" id="terms" />
-              <label id="terms" htmlFor="terms">
+            <div className="flex gap-2 items-center cursor-pointer">
+              <input
+                onChange={(e) => setCheckInput(e.target.checked)}
+                type="checkbox"
+                name="terms"
+                id="terms"
+              />
+              <label id="terms" htmlFor="terms" className="cursor-pointer">
                 I accept the <b>Terms and Condition</b>
               </label>
             </div>
@@ -110,9 +117,10 @@ const Login = () => {
             <button
               onClick={handleSubmit}
               type="submit"
-              disabled={buttonDisabled || processing}
+              disabled={buttonDisabled || processing || !checkInput}
+              // disabled={!checkInput && !buttonDisabled && !processing }
               className={`${
-                buttonDisabled || processing
+                !checkInput || buttonDisabled || processing
                   ? "bg-gray-600 hover:bg-gray-600"
                   : "bg-blue-500 hover:bg-blue-700"
               } text-white font-bold py-2 px-4 rounded-xl transition duration-300 max-[500px]:text-[0.9rem]`}
@@ -147,7 +155,7 @@ const Login = () => {
               type="email"
               value={email}
               onChange={(event) => setEmail(event.target.value)}
-              className="w-full p-2 border text-gray-700 rounded-xl bg-[#343434] focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-300"
+              className="w-full p-2 border text-gray-200 rounded-xl bg-[#343434] focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-300"
               placeholder="email"
               required
             />
@@ -157,12 +165,12 @@ const Login = () => {
               value={password}
               placeholder="password"
               onChange={(event) => setPassword(event.target.value)}
-              className="w-full p-2 border text-gray-700 rounded-xl bg-[#343434] focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-300"
+              className="w-full p-2 border text-gray-200 rounded-xl bg-[#343434] focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-300"
               required={true}
             />
 
             <div className="flex gap-2 items-center">
-              <input type="checkbox" name="term" id="term" />
+              <input onChange={(e) => setCheckInput(e.target.checked)} type="checkbox" name="term" id="term" />
               <label id="terms" htmlFor="term">
                 I accept the <b>Terms and Condition</b>
               </label>
@@ -171,9 +179,9 @@ const Login = () => {
             <button
               onClick={handleSubmit}
               type="submit"
-              disabled={buttonDisabled || processing}
+              disabled={buttonDisabled || processing || !checkInput}
               className={`${
-                buttonDisabled || processing
+                !checkInput || buttonDisabled || processing
                   ? "bg-gray-600 hover:bg-gray-600"
                   : "bg-blue-500 hover:bg-blue-700"
               } text-white font-bold py-2 px-4 rounded-xl transition duration-300 max-[500px]:text-[0.9rem]`}

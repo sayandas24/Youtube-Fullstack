@@ -1,8 +1,6 @@
 import React from "react";
-import { useState, useEffect, useRef } from "react";
-import ReactPlayer from "react-player";
-import axiosInstance from "../../utils/axiosInstance";
-import { useParams } from "react-router";
+import { useState, useRef } from "react";
+import ReactPlayer from "react-player"; 
 import { ClipLoader } from "react-spinners"; // Example of a spinner component
 import { FaPlay, FaPause } from "react-icons/fa";
 import screenfull from "screenfull"; // Import screenfull for fullscreen functionality
@@ -78,12 +76,12 @@ function VideoPlayer( {getVideo} ) {
   
 
   return (
-    <section className="w-full max-w-[75rem] text-white flex flex-col gap-3">
+    <section className="w-full  text-white flex flex-col gap-3">
       <section
         onMouseEnter={hoverEnter}
         onMouseLeave={hoverLeave}
         id="video-player"
-        className="border border-zinc-600 min-[700px]:rounded-2xl overflow-hidden h-[40rem] w-full max-w-[75rem] relative"
+        className="border border-zinc-600 min-[700px]:rounded-2xl overflow-hidden h-[40rem] w-full  relative"
       >
         <ReactPlayer
           ref={playerRef}

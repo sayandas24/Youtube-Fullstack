@@ -165,8 +165,7 @@ function Tweets({ userDetail, currUser }) {
       });
     }
   };
-
-  // TODO: like count in tweets
+ 
   return (
     <main className="p-3 max-[500px]:p-2">
       {showTweetForm && (

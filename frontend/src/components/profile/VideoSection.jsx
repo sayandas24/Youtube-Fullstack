@@ -8,6 +8,8 @@ import ThreeDot from "./ThreeDot";
 import DeleteMenu from "../UI/DeleteMenu";
 import { ProfileContext } from "../../contexts/profileContext/profileContext";
 import { useScreenWidth } from "../../utils/screenWidth";
+import { GoPlusCircle } from "react-icons/go";
+
 
 function VideoSection({ videos }) {
   const [optionShow, setOptionShow] = useState({});
@@ -71,7 +73,20 @@ function VideoSection({ videos }) {
 
   return (
     <div>
-      {videoSectionShow && (
+      
+      {videos && videos.length == 0 && (
+        <div className="flex justify-center items-center py-5 flex-col">
+          <h1 className="text-2xl font-semibold">No video posted</h1>
+          <NavLink
+            to={`/upload/`}
+            className="flex gap-2 items-center mt-10 cursor-pointer animate-pulse"
+          >
+            <GoPlusCircle className="text-xl  " />
+            <h1 className="">Post a video</h1>
+          </NavLink>
+        </div>
+      )}
+      {videoSectionShow && videos && videos.length != 0 && (
         <div>
           <table className="w-full ">
             <thead className="">

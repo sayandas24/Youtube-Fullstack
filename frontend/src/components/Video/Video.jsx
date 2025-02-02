@@ -17,6 +17,7 @@ import LoginErrorWarn from "../../utils/LoginErrorWarn";
 import { BsFacebook } from "react-icons/bs";
 import { FaInstagram } from "react-icons/fa";
 import { FaSquareXTwitter } from "react-icons/fa6";
+import { ConfettiButton } from "@/components/magicui/confetti";
 
 function Video() {
   const [getVideo, setGetVideo] = useState({});
@@ -205,7 +206,7 @@ function Video() {
                       : "!bg-white hover:!bg-[#d6d6d6] !text-black"
                   }  p-[.4rem] px-5 basicButton1  rounded-full text-sm font-[500] max-[500px]:text-[.8rem]`}
                 >
-                  {getVideo.isSubscribed ? "Unsubscribe" : "Subscribe"}
+                  {getVideo.isSubscribed ? "Unsubscribe" : <ConfettiButton>Subscribe</ConfettiButton>}
                 </button>
               </div>
 

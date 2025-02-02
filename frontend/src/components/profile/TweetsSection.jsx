@@ -1,33 +1,33 @@
-import React, { useContext, useState } from "react";
+import React, { useContext } from "react";
 import { ProfileContext } from "../../contexts/profileContext/profileContext";
 import { NavLink } from "react-router";
 import { MdOutlineEdit } from "react-icons/md";
-import { PiYoutubeLogo } from "react-icons/pi";
-import { IoMdMore } from "react-icons/io";
-import ThreeDot from "./ThreeDot";
-import { useEffect } from "react";
 import { GoPlusCircle } from "react-icons/go";
 
-
 function TweetsSection({ tweets, user }) {
-  const { tweetsSectionShow } = useContext(ProfileContext); 
-
-  
+  const { tweetsSectionShow, setShowUserVideo, setShowUserTweet } =
+    useContext(ProfileContext);
 
   return (
     <div className="">
-      {
-        tweetsSectionShow  && tweets.length == 0 &&  (
-          <div className="flex justify-center items-center py-5 flex-col">
-            <h1 className="text-2xl font-semibold">No tweets yet</h1>
-            <NavLink  to={`/channel/${user?.username}`} className="flex gap-2 items-center mt-10 cursor-pointer animate-pulse">
-              <GoPlusCircle className="text-xl  " />
-              <h1 className="">Create a tweet</h1>
-            </NavLink>
-          </div>
-        )
-      }
-      {tweetsSectionShow  && tweets.length != 0 && (
+      {tweetsSectionShow && tweets.length == 0 && (
+        <div className="flex justify-center items-center py-5 flex-col">
+          <h1 className="text-2xl font-semibold">No tweets yet</h1>
+
+          <NavLink
+            onClick={() => {
+              setShowUserTweet(true);
+              setShowUserVideo(false);
+            }}
+            to={`/channel/${user?.username}`}
+            className="flex gap-2 items-center mt-10 cursor-pointer animate-pulse"
+          >
+            <GoPlusCircle className="text-xl  " />
+            <h1 className="">Create a tweet</h1>
+          </NavLink>
+        </div>
+      )}
+      {tweetsSectionShow && tweets.length != 0 && (
         <div>
           <table className="w-full ">
             <thead className="">
@@ -54,7 +54,11 @@ function TweetsSection({ tweets, user }) {
                         {/* thumbnail */}
                         <img
                           className="w-full h-full object-cover"
-                          src={tweet?.contentImage ? tweet?.contentImage : "https://designshack.net/wp-content/uploads/Silhouette-Aesthetic-Calligraphy-Font.jpg"}
+                          src={
+                            tweet?.contentImage
+                              ? tweet?.contentImage
+                              : "https://designshack.net/wp-content/uploads/Silhouette-Aesthetic-Calligraphy-Font.jpg"
+                          }
                           alt=""
                         />
                       </div>
@@ -70,6 +74,10 @@ function TweetsSection({ tweets, user }) {
                         >
                           <NavLink
                             to={`/channel/${user?.username}`}
+                            onClick={() => {
+                              setShowUserTweet(true);
+                              setShowUserVideo(false);
+                            }}
                             className=" p-2 cursor-pointer rounded-full text-xl hover:bg-[#353535]"
                           >
                             <MdOutlineEdit />
