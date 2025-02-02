@@ -22,6 +22,7 @@ import { ConfettiButton } from "@/components/magicui/confetti";
 function Video() {
   const [getVideo, setGetVideo] = useState({});
   const [viewsCount, setViewsCount] = useState(0); // Add state for views count
+  const [currUser, setCurrUser] = useState({});
 
   const { videoId } = useParams();
   const location = useLocation();
@@ -31,9 +32,19 @@ function Video() {
   const { collapse2, setCollapse2 } = useContext(CollapseContext);
   const { setIsLoginUser } = useContext(FeatureSoonContext);
 
+  console.log(currUser);
   // is the class is true then add some class in sidebar,,,
   useEffect(() => {
     setCollapse2(true);
+
+    axiosInstance
+      .get("/user/current-user")
+      .then((res) => {
+        setCurrUser(res.data.data);
+      })
+      .catch((err) => {
+        console.log("not logged in in video", err);
+      });
   }, []);
 
   // fetch the video
@@ -206,7 +217,17 @@ function Video() {
                       : "!bg-white hover:!bg-[#d6d6d6] !text-black"
                   }  p-[.4rem] px-5 basicButton1  rounded-full text-sm font-[500] max-[500px]:text-[.8rem]`}
                 >
-                  {getVideo.isSubscribed ? "Unsubscribe" : <ConfettiButton>Subscribe</ConfettiButton>}
+                  {getVideo.isSubscribed ? (
+                    "Unsubscribe"
+                  ) : (
+                    <div>
+                      {currUser._id ? (
+                        <ConfettiButton>Subscribe</ConfettiButton>
+                      ) : (
+                        "Subscribe"
+                      )}
+                    </div>
+                  )}
                 </button>
               </div>
 
@@ -297,7 +318,8 @@ function Video() {
                 <span className="max-[500px]:text-[.7rem]">Instagram</span>
               </Link>
               <button className="max-[500px]:py-1 max-[500px]:px-3 p-[.4rem] px-5 border border-zinc-600 rounded-full text-sm  flex  items-center gap-2 flex-nowrap ">
-                <FaSquareXTwitter className="text-xl max-[500px]:text-[.9rem]" /> <span className="max-[500px]:text-[.7rem]">Twitter</span>
+                <FaSquareXTwitter className="text-xl max-[500px]:text-[.9rem]" />{" "}
+                <span className="max-[500px]:text-[.7rem]">Twitter</span>
               </button>
             </section>
           </div>
@@ -310,7 +332,9 @@ function Video() {
 
         {/* right other videos */}
         <section className=" w-[25rem] max-[1000px]:w-full">
-          <h1 className="my-2 text-lg ml-2 text-white min-[1000px]:hidden">Related videos</h1>
+          <h1 className="my-2 text-lg ml-2 text-white min-[1000px]:hidden">
+            Related videos
+          </h1>
           <RelatedVideos />
         </section>
       </main>

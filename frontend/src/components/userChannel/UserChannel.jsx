@@ -153,20 +153,20 @@ function UserChannel() {
                     count={1}
                     borderRadius={10}
                     containerClassName="w-[100%]"
-                    height={"1.2rem"} 
-                  /> 
+                    height={"1.2rem"}
+                  />
                   <Skeleton
                     count={1}
                     borderRadius={10}
                     containerClassName="w-[90%]"
-                    height={"1.2rem"} 
-                  /> 
+                    height={"1.2rem"}
+                  />
                   <Skeleton
                     count={1}
                     borderRadius={10}
                     containerClassName="w-[25%]"
-                    height={"1.2rem"} 
-                  /> 
+                    height={"1.2rem"}
+                  />
                 </div>
               ) : (
                 <section className="flex flex-col justify-center gap-2">
@@ -206,7 +206,13 @@ function UserChannel() {
                     {userDetail.isSubscribed ? (
                       "Unsubscribe"
                     ) : (
-                      <ConfettiButton>Subscribe</ConfettiButton>
+                      <div>
+                        {currUser._id ? (
+                          <ConfettiButton>Subscribe</ConfettiButton>
+                        ) : (
+                          "Subscribe"
+                        )}
+                      </div>
                     )}
                   </button>
                   <p className={`${error ? "block" : "hidden"} `}>
