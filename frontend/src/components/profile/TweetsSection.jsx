@@ -101,7 +101,11 @@ function TweetsSection({ tweets, user }) {
                   </td>
                   <td className="p-2 px-8 text-right align-text-top pt-3 ">
                     <NavLink
-                      // to={`/video-update/${video?._id}`}
+                      to={`/channel/${user?.username}`}
+                      onClick={() => {
+                        setShowUserTweet(true);
+                        setShowUserVideo(false);
+                      }}
                       className="ml-auto p-[.5rem] px-3 hover:bg-[#535353] bg-[#343434] rounded-full font-[500] text-[.8rem] text-nowrap"
                     >
                       Edit Tweet
