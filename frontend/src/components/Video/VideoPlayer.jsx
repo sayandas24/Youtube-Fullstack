@@ -148,6 +148,7 @@ function VideoPlayer({ getVideo }) {
       onMouseMove={handleMouseMove}
       onMouseLeave={() => setShowControls(false)}
       onClick={togglePlayPause}
+      id="video-player"
     >
       {/* Main Video Player */}
       <ReactPlayer

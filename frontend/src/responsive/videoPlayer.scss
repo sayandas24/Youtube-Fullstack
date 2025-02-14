@@ -19,6 +19,9 @@
     }
 }
 #video-player{
+    // @media screen and (max-width: 1400px) {
+        height: 40rem;
+    // }
     @media screen and (max-width: 1400px) {
         height: 34rem;
     }
