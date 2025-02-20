@@ -138,7 +138,7 @@ export default function MagicNavbar() {
   }, []);
 
   return (
-    <div className="w-full h-fit  text-white  px-2 gap-1 flex flex-row fixed min-[500px]:hiddend bottom-0 ">
+    <div className="h-fit self-center text-white  px-2 gap-1 flex flex-row fixed min-[500px]:hiddend bottom-0 ">
       <Dock direction="middle">
         <DockIcon>
           <NavLink

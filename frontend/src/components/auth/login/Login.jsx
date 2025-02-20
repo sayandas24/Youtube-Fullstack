@@ -63,7 +63,7 @@ const Login = () => {
       >
         <NavLink
           id="home-btn"
-          className="gap-1 items-center font-semibold justify-center hidden"
+          className="gap-1 min-[1000px]:bg-zinc-800 rounded-full py-2  text-white min-[1000px]:text-zinc-400 items-center font-semibold justify-center mr-auto flex px-[20px] min-[1000px]:ml-10 min-[1000px]:hover:bg-zinc-700 transition duration-300 min-[1000px]:hover:text-zinc-200 "
           to="/"
         >
           <MdArrowBackIos />
