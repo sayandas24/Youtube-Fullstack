@@ -6,9 +6,13 @@ import { CiCircleInfo } from "react-icons/ci";
 import { NavLink } from "react-router";
 import { FeatureSoonContext } from "../../contexts/featureSoonContext/UseFeatureSoon";
 import Skeleton from "react-loading-skeleton";
+import { UseDarkModeContext } from "../../contexts/darkModeContext/UseDarkMode";
 
 function Profile({ user }) {
   const { handleFeatureSoonShow } = useContext(FeatureSoonContext);
+  const {darkMode} = useContext(UseDarkModeContext);
+    const baseColor = darkMode ? "#c7cbd1" : "#202020";
+    const highlightColor = darkMode ? "#d3d6db" : "#2b2b2b75";
 
   return (
     <section className=" flex flex-col justify-normal px-4 h-full">
@@ -25,8 +29,8 @@ function Profile({ user }) {
               circle
               width={"100%"}
               height={"100%"}
-              baseColor="#202020"
-              highlightColor="#333"
+              baseColor={baseColor}
+              highlightColor={highlightColor}
             />
           )}
         </section>
@@ -37,8 +41,8 @@ function Profile({ user }) {
             <Skeleton
               count={1}
               width={150}
-              baseColor="#202020"
-              highlightColor="#333"
+              baseColor={baseColor}
+              highlightColor={highlightColor}
             />
           )}
         </section>
@@ -49,8 +53,8 @@ function Profile({ user }) {
             <Skeleton
               count={1}
               width={150}
-              baseColor="#202020"
-              highlightColor="#333"
+              baseColor={baseColor}
+              highlightColor={highlightColor}
             />
           )}
         </section>

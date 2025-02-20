@@ -3,7 +3,7 @@ import tailwindMotion from 'tailwindcss-motion';
 
 /** @type {import('tailwindcss').Config} */
 export default {
-    darkMode: ["class"],
+    darkMode: ["class"], 
     content: [
     "./index.html",
     "./src/**/*.{js,ts,jsx,tsx}",
@@ -65,7 +65,8 @@ export default {
   			'shiny-text': 'shiny-text 8s infinite',
   			grid: 'grid 15s linear infinite',
   			shine: 'shine var(--duration) infinite linear',
-  			ripple: 'ripple var(--duration,2s) ease calc(var(--i, 0)*.2s) infinite'
+  			ripple: 'ripple var(--duration,2s) ease calc(var(--i, 0)*.2s) infinite',
+  			meteor: 'meteor 5s linear infinite'
   		},
   		keyframes: {
   			'shiny-text': {
@@ -101,6 +102,19 @@ export default {
   				},
   				'50%': {
   					transform: 'translate(-50%, -50%) scale(0.9)'
+  				}
+  			},
+  			meteor: {
+  				'0%': {
+  					transform: 'rotate(var(--angle)) translateX(0)',
+  					opacity: '1'
+  				},
+  				'70%': {
+  					opacity: '1'
+  				},
+  				'100%': {
+  					transform: 'rotate(var(--angle)) translateX(-500px)',
+  					opacity: '0'
   				}
   			}
   		}

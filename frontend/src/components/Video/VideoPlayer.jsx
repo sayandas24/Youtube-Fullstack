@@ -140,11 +140,13 @@ function VideoPlayer({ getVideo }) {
       previewPlayerRef.current.seekTo(newPreviewTime, "seconds");
     }
   };
+ 
+
 
   return (
     <section
       ref={containerRef}
-      className="relative w-full  bg-black min-[700px]:rounded-2xl overflow-hidden group"
+      className={`dark:bg-[#e9f0fe] relative w-full bg-black min-[700px]:rounded-2xl overflow-hidden group`}
       onMouseMove={handleMouseMove}
       onMouseLeave={() => setShowControls(false)}
       onClick={togglePlayPause}

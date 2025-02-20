@@ -42,7 +42,7 @@ function Home() {
   
 
   return (
-    <div className="flex ">
+    <div className="flex dark:bg-[#f8fafd]">
       <section className="hide-item-in-small">
         <Sidebar />
       </section>
@@ -50,7 +50,7 @@ function Home() {
         <div
           className={`${
             isHomeRoute && collapse2 ? "-translate-x-[18rem]  " : ""
-          } transition-all duration-150 top-[0] left-0 z-[999] fixed sidebar hide-item-in-small`}
+          } transition-all duration-150 top-[0] left-0 z-[999] fixed sidebar hide-item-in-small dark:bg-[#f8fafd] dark:text-black`}
         >
           <Sidebar2 />
         </div>
@@ -60,7 +60,7 @@ function Home() {
         id="videoContainer"
         className={`${
           loading ? "overflow-y-hidden" : ""
-        } px-5 w-full gap-5 flex-wrap overflow-y-auto max-[500px]:mb-[3rem]`}
+        } px-5 w-full gap-5 flex-wrap overflow-y-auto max-[500px]:mb-[3rem] ml-4 max-[500px]:ml-0 rounded-2xl dark:bg-[#e5e7eb] dark:text-black`}
       >
         {loading ? (
           <VideoHomeSkeleton number={12} />

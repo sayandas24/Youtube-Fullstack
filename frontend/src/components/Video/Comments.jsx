@@ -281,16 +281,16 @@ function Comments({ getVideo }) {
                         }
                       >
                         {user.isCurrentUserLiked ? (
-                          <ThumbUpIcon className="cursor-pointer text-zinc-300 !text-[2rem] hover:bg-zinc-700 p-1 rounded-full" />
+                          <ThumbUpIcon className="cursor-pointer text-zinc-300 dark:text-zinc-800 !text-[2rem] hover:bg-zinc-700 p-1 rounded-full dark:hover:bg-zinc-300" />
                         ) : (
-                          <ThumbUpOutlinedIcon className="cursor-pointer text-zinc-300 !text-[2rem] hover:bg-zinc-700 p-1 rounded-full" />
+                          <ThumbUpOutlinedIcon className="cursor-pointer text-zinc-300 dark:text-zinc-800 !text-[2rem] hover:bg-zinc-700 p-1 rounded-full dark:hover:bg-zinc-300" />
                         )}
                       </div>
 
                       <span className="w-4">{user.commentLikesCount || 0}</span>
                     </span>
 
-                    <span className="font-semibold hover:bg-zinc-700 p-1 rounded-full px-2 cursor-pointer my-auto">
+                    <span className="font-semibold dark:hover:bg-zinc-300 hover:bg-zinc-700 p-1 rounded-full px-2 cursor-pointer my-auto">
                       Reply
                     </span>
                   </div>
@@ -308,7 +308,7 @@ function Comments({ getVideo }) {
 
                 <div className="relative ">
                   {hoveredTweetId === user._id && showDeleteIcon && (
-                    <div className="dontClose border bg-[#4101017b] rounded-xl absolute top-5 right-14 border-red-800 overflow-hidden py-2 z-50">
+                    <div className="dontClose border bg-[#4101017b] dark:bg-[#eac9c9] rounded-xl absolute top-5 right-14 border-red-800 overflow-hidden py-2 z-50">
                       <div
                         onClick={() => {
                           handleCommentDelete(user.owner, user._id);

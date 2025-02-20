@@ -38,7 +38,7 @@ function Playlists({ userDetail, loading, currUser }) {
             <Link
               to={`/p/${playlist._id}`}
               key={playlist._id}
-              className=" p-3 rounded-xl  max-[485px]:flex max-[485px]:hover:shadow-none hover:shadow-[0px_3px_5px_3px_#2e2e2e] w-full max-[485px]:gap-2"
+              className=" p-3 rounded-xl  max-[485px]:flex max-[485px]:hover:shadow-none hover:shadow-[0px_3px_5px_3px_#2e2e2e] w-full max-[485px]:gap-2 dark:hover:shadow-[0px_3px_5px_3px_#a8a9aa] duration-200"
             >
               <div
                 id="each-video-in-dashboard"

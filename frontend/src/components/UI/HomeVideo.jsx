@@ -25,7 +25,7 @@ export function HomeVideo({ videos }) {
               e.currentTarget.closest("form").requestSubmit();
             }}
             id="eachVideo"
-            className="flex overflow-hidden cursor-pointer flex-col gap-1 mb-5"
+            className="flex overflow-hidden cursor-pointer flex-col gap-1 mb-5 "
           >
             <NavLink
               to={`/p/${file._id}`}
@@ -58,12 +58,12 @@ export function HomeVideo({ videos }) {
                 </div>
               </div>
               {/* Avatar name, description */}
-              <div className="flex flex-col text-white w-[95%]">
+              <div className="flex flex-col text-white w-[95%] dark:!text-black">
                 <h1 className="text-[1rem] leading-5">{file.title}</h1>
-                <p className="text-[.8rem] text-zinc-400">
+                <p className="text-[.8rem] text-zinc-400 dark:text-zinc-800">
                   {file.owner.fullName}
                 </p>
-                <p className="text-[.8rem] text-zinc-400">
+                <p className="text-[.8rem] text-zinc-400 dark:text-zinc-800">
                   {file.viewsCount} views | posted {timeSince(file.createdAt)}
                 </p>
               </div>

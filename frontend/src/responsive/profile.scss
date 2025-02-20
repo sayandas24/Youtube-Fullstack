@@ -14,6 +14,11 @@
     z-index: 999999;
     // display: none;
   }
+  .dark #small-screen-left {
+    background-color: rgba(45, 23, 97, 0.273);
+    backdrop-filter: blur(50px);
+
+  }
 } 
 
 // 

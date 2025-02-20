@@ -8,6 +8,7 @@ import { NavLink } from "react-router";
 import { FeatureSoonContext } from "../../contexts/featureSoonContext/UseFeatureSoon";
 import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
 import { GoSignOut } from "react-icons/go";
+import { UseDarkModeContext } from "../../contexts/darkModeContext/UseDarkMode";
 
 
 function SignPopupMenu() {
@@ -15,6 +16,9 @@ function SignPopupMenu() {
   const [loading, setLoading] = useState(true);
 
   const {handleFeatureSoonShow}  = useContext(FeatureSoonContext)
+    const {darkMode, setDarkMode} = useContext(UseDarkModeContext);
+  
+  
 
   useEffect(() => {
     const fetchUserData = async () => {
@@ -48,8 +52,8 @@ function SignPopupMenu() {
   }; 
 
   return (
-    <SkeletonTheme baseColor="#202020" highlightColor="#333">
-      <div className=" rounded-xl bg-[#282828] text-white w-[20rem] h-fit mx-auto py-3">
+    <SkeletonTheme baseColor="#202020 dark:bg-[#393a3b]" highlightColor="#333 dark:bg-[#d0dbf1]">
+      <div className=" rounded-xl bg-[#282828] dark:bg-[#d0dbf1] dark:text-black text-white w-[20rem] h-fit mx-auto py-3">
         <section className=" flex gap-3 p-3">
           <div className="rounded-full h-[3rem] w-[3rem] overflow-hidden">
             {loading? <Skeleton circle count={1} height={50} width={50}/> : (
@@ -64,44 +68,44 @@ function SignPopupMenu() {
               {loading? <Skeleton count={1} width={200}/> : (
                 <h1 className="text-[1rem] ">@{user.username}</h1>
               )}
-              <NavLink to="/profile" className="text-[1rem] text-blue-400 cursor-pointer mt-2">
+              <NavLink to="/profile" className="text-[1rem] dark:text-blue-500 text-blue-400 cursor-pointer mt-2">
                 View Your Profile
               </NavLink>
             </div>
           </div>
         </section>
-        <hr className="border-zinc-600 my-1" />
-        <section onClick={() => handleFeatureSoonShow()} className="p-3 hover:bg-[#383838] cursor-pointer">
+        <hr className="border-zinc-600 my-1 dark:border-zinc-400" />
+        <section onClick={() => handleFeatureSoonShow()} className="p-3 dark:hover:bg-[#b4bdd9] hover:bg-[#383838] cursor-pointer">
           <div className="flex gap-3 items-center">
-            <IoSettingsOutline className="text-2xl text-[#cacaca]" />
+            <IoSettingsOutline className="text-2xl text-[#cacaca] dark:text-[#383838]" />
             <h1 className="text-[1rem] font-[320]">Settings</h1>
           </div>
         </section> 
-        <section onClick={() => handleFeatureSoonShow()} className="p-3 hover:bg-[#383838] cursor-pointer">
+        <section onClick={() => handleFeatureSoonShow()} className="p-3 dark:hover:bg-[#b4bdd9] hover:bg-[#383838] cursor-pointer">
           <div className="flex gap-3 items-center">
-            <AiOutlineExclamationCircle  className="text-2xl text-[#cacaca]" />
+            <AiOutlineExclamationCircle  className="text-2xl text-[#cacaca] dark:text-[#383838]" />
             <h1 className="text-[1rem] font-[320]">About</h1>
           </div>
         </section>
         <hr className="border-zinc-600 my-1" />
-        <section onClick={() => handleFeatureSoonShow()} className="p-3 hover:bg-[#383838] cursor-pointer">
-          <div className="flex gap-3 items-center ">
-            <GoMoon  className="text-2xl text-[#cacaca]" />
-            <h1 className="text-[1rem] font-[320]">Appearance: Dark</h1>
+        <section onClick={() => setDarkMode(!darkMode)} className="p-3 dark:hover:bg-[#b4bdd9] hover:bg-[#383838] cursor-pointer">
+          <div  className="flex gap-3 items-center ">
+            <GoMoon  className="text-2xl text-[#cacaca] dark:text-[#383838]" />
+            <h1 className="text-[1rem] font-[320]">{darkMode? "Appearance: Light" : "Appearance: Dark"}</h1>
           </div>
         </section>
         <hr className="border-zinc-600 my-1" />
-        <section onClick={() => handleFeatureSoonShow()} className="p-3 hover:bg-[#383838] cursor-pointer">
+        <section onClick={() => handleFeatureSoonShow()} className="p-3 dark:hover:bg-[#b4bdd9] hover:bg-[#383838] cursor-pointer">
           <div className="flex gap-3 items-center">
-            <CiLocationOn  className="text-2xl text-[#cacaca]" />
+            <CiLocationOn  className="text-2xl text-[#cacaca] dark:text-[#000000]" />
             <h1 className="text-[1rem] font-[320]">Location: India</h1>
           </div>
         </section>
 
 
-        <section className="p-3 hover:bg-[#383838] cursor-pointer" onClick={logout}>
+        <section className="p-3 dark:hover:bg-[#b4bdd9] hover:bg-[#383838] cursor-pointer" onClick={logout}>
           <div className="flex gap-3 items-center">
-            <GoSignOut className="text-2xl text-[#cacaca]" />
+            <GoSignOut className="text-2xl text-[#cacaca] dark:text-[#383838]" />
             <h1 className="text-[1rem] font-[320]">Sign out</h1>
           </div>
         </section> 

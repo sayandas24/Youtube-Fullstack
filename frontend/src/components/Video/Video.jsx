@@ -151,7 +151,7 @@ function Video() {
   }
 
   return (
-    <div className=" py-10 flex relative">
+    <div className=" py-10 flex relative dark:bg-[#f1f3fa]">
       <div
         className={`${
           isRouteActive && collapse2 ? "-translate-x-[18rem]  " : ""
@@ -162,10 +162,10 @@ function Video() {
       <main
         className={`${
           collapse2 ? "" : "opacity-50 blur-[2px]"
-        } flex gap-5 transition-all duration-150 w-full max-[1000px]:flex-col overflow-x-hidden`}
+        } flex gap-5 transition-all duration-150 w-full max-[1000px]:flex-col overflow-x-hidden `}
       >
         {/* left video */}
-        <section className="w-[70%] max-[1000px]:w-full text-white flex flex-col gap-3  pl-5 max-[1000px]:p-5 max-[700px]:p-0">
+        <section className="w-[70%] max-[1000px]:w-full dark:text-black text-white flex flex-col gap-3  pl-5 max-[1000px]:p-5 max-[700px]:p-0">
           {/* video player, channel details */}
           <div className="flex flex-col gap-3">
             {/* video player */}
@@ -198,7 +198,7 @@ function Video() {
                 <div className="flex flex-col text-white text-nowrap">
                   <Link
                     to={`/channel/${getVideo?.ownerDetails?.username}`}
-                    className="text-[1.2rem] max-[500px]:text-[.9rem]"
+                    className="text-[1.2rem] max-[500px]:text-[.9rem] dark:text-black"
                   >
                     {getVideo.ownerDetails
                       ? getVideo.ownerDetails.fullName
@@ -213,9 +213,9 @@ function Video() {
                   onClick={handleSubscribe}
                   className={`${
                     getVideo.isSubscribed
-                      ? ""
-                      : "!bg-white hover:!bg-[#d6d6d6] !text-black"
-                  }  p-[.4rem] px-5 basicButton1  rounded-full text-sm font-[500] max-[500px]:text-[.8rem]`}
+                      ? "dark:!bg-[#d7dee8] dark:text-black"
+                      : "!bg-white dark:!bg-[#eb0b0b] dark:!text-white hover:!bg-[#d6d6d6] !text-black"
+                  }  p-[.4rem] px-5 basicButton1 border-none rounded-full text-sm font-[500] max-[500px]:text-[.8rem]`}
                 >
                   {getVideo.isSubscribed ? (
                     "Unsubscribe"
@@ -235,10 +235,10 @@ function Video() {
               <div className="flex gap-2 min-[700px]:ml-auto max-[700px]:mt-3 overflow-auto scrollbar-hide">
                 <button
                   onClick={() => handleLikeVideo(getVideo._id)}
-                  className="p-[.3rem]  basicButton1 px-5 flex gap-1 items-center  rounded-full text-sm "
+                  className="p-[.3rem] dark:!bg-[#d7dee8] dark:text-black border-none basicButton1 px-5 flex gap-1 items-center  rounded-full text-sm "
                 >
                   {getVideo.isLiked ? (
-                    <ThumbUpIcon className="text-xl max-[500px]:!text-lg" />
+                    <ThumbUpIcon className="text-xl max-[500px]:!text-lg " />
                   ) : (
                     <ThumbUpOutlinedIcon className="text-xl max-[500px]:!text-lg" />
                   )}
@@ -247,22 +247,22 @@ function Video() {
                   </span>
                   <span className="max-[500px]:text-[13px]">likes</span>
                 </button>
-                <button className="p-[.4rem] basicButton1  px-5 rounded-full text-sm  flex items-center gap-2 flex-nowrap">
+                <button className="p-[.4rem] basicButton1 dark:!bg-[#d7dee8] dark:text-black border-none px-5 rounded-full text-sm  flex items-center gap-2 flex-nowrap">
                   <RiShareForwardLine className="text-xl max-[500px]:text-lg" />{" "}
                   <span className="max-[500px]:text-[13px]">share</span>
                 </button>
-                <button className="p-[.4rem] basicButton1 px-5  rounded-full text-sm   flex items-center gap-2 flex-nowrap">
+                <button className="p-[.4rem] dark:!bg-[#d7dee8] dark:text-black border-none basicButton1 px-5  rounded-full text-sm   flex items-center gap-2 flex-nowrap">
                   <LiaDownloadSolid className="text-xl max-[500px]:text-lg" />{" "}
                   <span className="max-[500px]:text-[13px]">download</span>
                 </button>
-                <button className="p-[.4rem] basicButton1 px-5  rounded-full text-sm  flex items-center gap-2 flex-nowrap">
+                <button className="p-[.4rem] dark:!bg-[#d7dee8] dark:text-black border-none basicButton1 px-5  rounded-full text-sm  flex items-center gap-2 flex-nowrap">
                   <BsThreeDots className="text-xl max-[500px]:text-lg" />
                 </button>
               </div>
             </section>
           </div>
           {/* video description */}
-          <div className="max-[500px]:text-[.9rem] flex gap-2 min-[700px]:w-full  bg-[#262626]  px-3 py-5 rounded-2xl flex-col max-[700px]:m-2 ">
+          <div className="max-[500px]:text-[.9rem] flex gap-2 min-[700px]:w-full dark:bg-[#d7dee8]  bg-[#262626]  px-3 py-5 rounded-2xl flex-col max-[700px]:m-2 ">
             {/* video description */}
             <div>
               <h1>
@@ -276,7 +276,7 @@ function Video() {
               {/* Avatar */}
               <Link
                 to={`/channel/${getVideo?.ownerDetails?.username}`}
-                className="w-[2.4rem]"
+                className="w-[2.4rem] "
               >
                 <div className="w-[2.4rem] h-[2.4rem] overflow-hidden rounded-full">
                   <img
@@ -292,7 +292,7 @@ function Video() {
               <div className="flex flex-col text-white text-nowrap">
                 <Link
                   to={`/channel/${getVideo?.ownerDetails?.username}`}
-                  className="text-[1.2rem] max-[500px]:text-[.9rem]"
+                  className="text-[1.2rem] max-[500px]:text-[.9rem] dark:text-black"
                 >
                   {getVideo.ownerDetails
                     ? getVideo.ownerDetails.fullName
@@ -306,18 +306,18 @@ function Video() {
 
             {/* social media handles */}
             <section className="flex gap-2 flex-wrap">
-              <button className="max-[500px]:py-1 max-[500px]:px-3 p-[.4rem] px-5 border border-zinc-600 rounded-full text-sm  flex  items-center gap-2 flex-nowrap ">
+              <button className="max-[500px]:py-1 max-[500px]:px-3 p-[.4rem] px-5 border border-zinc-600 dark:border-zinc-400 rounded-full text-sm  flex  items-center gap-2 flex-nowrap ">
                 <BsFacebook className="text-blue-500 text-xl max-[500px]:text-[.9rem]" />
                 <span className="max-[500px]:text-[.7rem]">Facebook</span>
               </button>
               <Link
                 to={"https://www.instagram.com/im_sayan22"}
-                className="max-[500px]:py-1 max-[500px]:px-3 p-[.4rem] px-5 border border-zinc-600 rounded-full text-sm  flex  items-center gap-2 flex-nowrap "
+                className="max-[500px]:py-1 max-[500px]:px-3 p-[.4rem] px-5 border border-zinc-600 dark:border-zinc-400 rounded-full text-sm  flex  items-center gap-2 flex-nowrap "
               >
                 <FaInstagram className="text-red-500 text-xl max-[500px]:text-[.9rem]" />{" "}
                 <span className="max-[500px]:text-[.7rem]">Instagram</span>
               </Link>
-              <button className="max-[500px]:py-1 max-[500px]:px-3 p-[.4rem] px-5 border border-zinc-600 rounded-full text-sm  flex  items-center gap-2 flex-nowrap ">
+              <button className="max-[500px]:py-1 max-[500px]:px-3 p-[.4rem] px-5 border border-zinc-600 dark:border-zinc-400 rounded-full text-sm  flex  items-center gap-2 flex-nowrap ">
                 <FaSquareXTwitter className="text-xl max-[500px]:text-[.9rem]" />{" "}
                 <span className="max-[500px]:text-[.7rem]">Twitter</span>
               </button>

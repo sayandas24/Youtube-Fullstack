@@ -79,14 +79,14 @@ function RelatedVideos() {
 
           {/* thumbnail details */}
           <div className="flex flex-col py-2 gap-1 w-full">
-            <h1 id="related-video-title" className="text-[1.1rem]  text-wrap line-clamp-1">
+            <h1 id="related-video-title" className="text-[1.1rem]  text-wrap line-clamp-1 dark:text-black">
               {video.title}
             </h1>
 
-            <div id="related-video-info" className="flex flex-col text-zinc-400 text-[1rem]">
+            <div id="related-video-info" className="flex flex-col text-zinc-400 text-[1rem] dark:text-zinc-700">
               <Link
                 to={`/channel/${video.owner.username}`}
-                className="text-zinc-300 hover:text-zinc-100"
+                className="text-zinc-300 hover:text-zinc-100 dark:text-zinc-800 font-[500]"
                 onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })} // Smooth scroll to top
               >
                 {video.owner.fullName}

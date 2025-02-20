@@ -10,11 +10,10 @@ import { ShineBorder } from "@/components/magicui/shine-border";
 import { useTheme } from "next-themes";
 
 import { MagicCard } from "@/components/magicui/magic-card";
-import { RetroGridDemo } from "../../UI/RetroGridDemo";
+import { Meteors } from "@/components/magicui/meteors";
 
 const Login = () => {
-  const { theme } = useTheme();
-  // FIXME: if err, then show user not found in frontend ui
+  const { theme } = useTheme(); 
 
   const [processing, setProcessing] = useState(false);
   const [error, setError] = useState(false);
@@ -55,12 +54,12 @@ const Login = () => {
   }, [email, password]);
 
   return (
-    <div id="loginPage" className="flex">
-      <RetroGridDemo />
+    <div id="loginPage" className="flex dark">
+      {/* <RetroGridDemo /> */}
 
       <div
         id="right-section"
-        className="w-1/2 fixed right-0 top-0 z-[99999] bg-zinc-900 h-screen flex flex-col justify-center items-center text-white"
+        className="w-full fixed right-0 top-0 z-[99999] bg-transparent h-screen flex flex-col justify-center items-center text-white"
       >
         <NavLink
           id="home-btn"
@@ -73,7 +72,7 @@ const Login = () => {
 
         <span
           id="login-title"
-          className="pointer-events-none whitespace-pre-wrap bg-gradient-to-b from-black to-gray-300/80 bg-clip-text text-center text-5xl font-semibold  mb-5 leading-none text-transparent dark:from-white dark:to-slate-900/10"
+          className="pointer-events-none whitespace-pre-wrap bg-gradient-to-b  bg-clip-text text-center text-5xl font-semibold  mb-5 leading-none text-transparent   from-white to-slate-900/10"
         >
           Login to your account
         </span>
@@ -170,7 +169,12 @@ const Login = () => {
             />
 
             <div className="flex gap-2 items-center">
-              <input onChange={(e) => setCheckInput(e.target.checked)} type="checkbox" name="term" id="term" />
+              <input
+                onChange={(e) => setCheckInput(e.target.checked)}
+                type="checkbox"
+                name="term"
+                id="term"
+              />
               <label id="terms" htmlFor="term">
                 I accept the <b>Terms and Condition</b>
               </label>
@@ -215,6 +219,10 @@ const Login = () => {
             </span>
           </NavLink>
         </div>
+      </div>
+
+      <div className="w-[100vw] min-h-screen fixed top-0 left-0 z-[99] text-4xl bg-[#141313]">
+        <Meteors number={30} />
       </div>
     </div>
   );

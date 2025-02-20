@@ -1,44 +1,47 @@
 import React, { useContext, useEffect, useState } from "react";
 import { GrHomeRounded } from "react-icons/gr";
-import { MdOutlineWatchLater } from "react-icons/md";
 import { MdHistory } from "react-icons/md";
 import { SiYoutubeshorts } from "react-icons/si";
 import { MdOutlineSubscriptions } from "react-icons/md";
-import { BiLike } from "react-icons/bi";
 import { CollapseContext } from "../../contexts/collapseMenu/CollapseContext";
-import { NavLink, useNavigate } from "react-router";
+import { NavLink } from "react-router";
 import { FeatureSoonContext } from "../../contexts/featureSoonContext/UseFeatureSoon";
 import { IoSettingsOutline } from "react-icons/io5";
 import { CgProfile } from "react-icons/cg";
-import '../../responsive/sidebar.scss'
+import "../../responsive/sidebar.scss";
+// TODO:Light mode fix
 
 function Sidebar() {
-  const { collapse, setCollapse } = useContext(CollapseContext);
+  const { collapse } = useContext(CollapseContext);
   const { handleFeatureSoonShow } = useContext(FeatureSoonContext);
 
   return (
     <div
       id="sidebar"
       className={`${
-        collapse ? "w-[6rem]" : ""
-      } w-[18rem] h-full bg-[#0f0f0f] text-white  px-2 gap-1 flex flex-col `}
+        collapse ? "w-[6rem] " : ""
+      }  w-[18rem] h-full bg-[#0f0f0f] text-white  gap-1 flex flex-col dark:bg-[#f8fafd] dark:text-black`}
     >
       <section
         id="sidebar"
         className={`${
-          collapse ? "w-[6rem]" : ""
-        } w-[18rem] h-full bg-[#0f0f0f] text-white  px-2 gap-1 flex flex-col fixed`}
+          collapse ? "w-[6rem] " : ""
+        } w-[18rem] h-full dark:bg-[#f8fafd] dark:text-black bg-[#0f0f0f] text-white  gap-1 flex flex-col fixed`}
       >
         <NavLink
           to="/"
           className={({ isActive }) => `${
-            isActive ? "fill-white bg-[#2c2c2c]" : ""
+            isActive
+              ? "fill-white  bg-[#2c2c2c] dark:bg-[#d3e3fd] dark:fill-black"
+              : "dark:hover:bg-[#c0c8d39f]"
           } 
         ${
-          collapse ? "   flex-col items-center gap-[1px] bg-transparent" : ""
-        } flex gap-5 p-3 px-5 hover:bg-[#2c2c2c] duration-75   cursor-pointer rounded-xl`}
+          collapse
+            ? "flex-col items-center gap-[1px] bg-transparent rounded-full"
+            : "rounded-r-full"
+        } flex gap-5 p-3 px-5 hover:bg-[#2c2c2c]  duration-75   cursor-pointer `}
         >
-          <GrHomeRounded className="text-2xl fill-inherit " />
+          <GrHomeRounded className="text-2xl fill-inherit dark:fill-transparent" />
 
           <div
             className={`${
@@ -51,20 +54,24 @@ function Sidebar() {
 
         <NavLink
           to="/"
-          onClick={() => handleFeatureSoonShow("Shorts w'll be added soon")}
+          onClick={() => handleFeatureSoonShow("Shorts we'll be adding soon")}
           className={({ isActive }) =>
             `${
               !isActive
                 ? "fill-whiteX bg-[#2c2c2c]X  "
                 : "fill-transparent stroke-transparent "
             } 
-          ${collapse ? "  flex-col items-center gap-[1px] bg-transparent" : ""} 
+          ${
+            collapse
+              ? "  flex-col items-center gap-[1px] bg-transparent rounded-full"
+              : "rounded-r-full"
+          } 
 
-          flex gap-5 p-3 px-5 hover:bg-[#2c2c2c] duration-75 cursor-pointer rounded-xl`
+          flex gap-5 p-3 px-5 hover:bg-[#2c2c2c] duration-75 cursor-pointer  dark:hover:bg-[#c0c8d39f]`
           }
         >
           <div className="">
-            <SiYoutubeshorts className="  text-2xl stroke-white stroke-[2] !fill-inherit " />
+            <SiYoutubeshorts className="  text-2xl dark:stroke-black dark:!fill-transparent  stroke-white stroke-[2] !fill-inherit " />
           </div>
           <div
             className={`${
@@ -79,9 +86,15 @@ function Sidebar() {
           to="/user/history"
           // onClick={() => handleFeatureSoonShow("History working on it")}
           className={({ isActive }) =>
-            `${isActive ? "fill-white bg-[#2c2c2c]" : ""} ${
-              collapse ? "  flex-col items-center gap-[1px] bg-transparent" : ""
-            } flex gap-5 p-3 px-5 hover:bg-[#2c2c2c] duration-75 cursor-pointer rounded-xl`
+            `${
+              isActive
+                ? "fill-white bg-[#2c2c2c] dark:bg-[#d3e3fd] dark:fill-black"
+                : "dark:hover:bg-[#c0c8d39f]"
+            } ${
+              collapse
+                ? "  flex-col items-center gap-[1px] bg-transparent rounded-full"
+                : "rounded-r-full"
+            } flex gap-5 p-3 px-5 hover:bg-[#2c2c2c] duration-75 cursor-pointer `
           }
         >
           <div className="">
@@ -102,9 +115,11 @@ function Sidebar() {
             handleFeatureSoonShow("Playlist feature not added yet")
           }
           className={({ isActive }) =>
-            `${!isActive ? "fill-whiteX bg-[#2c2c2c]X" : ""} ${
-              collapse ? "flex-col items-center gap-[1px] bg-transparent" : ""
-            }   flex gap-5 p-3 px-5 hover:bg-[#2c2c2c] duration-75 cursor-pointer rounded-xl`
+            `${!isActive ? "fill-whiteX bg-[#2c2c2c]X " : ""} ${
+              collapse
+                ? "flex-col items-center gap-[1px] bg-transparent rounded-full"
+                : "rounded-r-full"
+            }   flex gap-5 p-3 px-5 hover:bg-[#2c2c2c] duration-75 cursor-pointer  dark:hover:bg-[#c0c8d39f]`
           }
         >
           <div className="">
@@ -124,8 +139,10 @@ function Sidebar() {
           onClick={() => handleFeatureSoonShow("Feature coming soon")}
           className={({ isActive }) =>
             `${!isActive ? "fill-whiteX bg-[#2c2c2c]X" : ""} ${
-              collapse ? "flex-col items-center gap-[1px] bg-transparent" : ""
-            }   flex gap-5 p-3 px-5 hover:bg-[#2c2c2c] duration-75 cursor-pointer rounded-xl`
+              collapse
+                ? "flex-col items-center gap-[1px] bg-transparent rounded-full"
+                : "rounded-r-full"
+            }   flex gap-5 p-3 px-5 hover:bg-[#2c2c2c] duration-75 cursor-pointer  dark:hover:bg-[#c0c8d39f]`
           }
         >
           <div className="">
@@ -143,9 +160,15 @@ function Sidebar() {
         <NavLink
           to="/profile"
           className={({ isActive }) =>
-            `${isActive ? "fill-white bg-[#2c2c2c]" : ""} ${
-              collapse ? "flex-col items-center gap-[1px] bg-transparent" : ""
-            }   flex gap-5 p-3 px-5 hover:bg-[#2c2c2c] duration-75 cursor-pointer rounded-xl`
+            `${
+              isActive
+                ? "fill-white bg-[#2c2c2c] dark:bg-[#d3e3fd] dark:fill-black"
+                : ""
+            } ${
+              collapse
+                ? "flex-col items-center gap-[1px] bg-transparent rounded-full"
+                : "rounded-r-full"
+            }   flex gap-5 p-3 px-5 hover:bg-[#2c2c2c] duration-75 cursor-pointer  dark:hover:bg-[#c0c8d39f]`
           }
         >
           <div className="">

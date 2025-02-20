@@ -24,6 +24,8 @@ import ProfileDashboard from "./components/profile/ProfileDashboard.jsx";
 import "nprogress/nprogress.css"; // Default styles 
 import UserChannel from "./components/userChannel/UserChannel.jsx";
 import WatchHistory from "./components/profile/WatchHistory.jsx";
+import { useContext } from "react";
+import { UseDarkModeContext } from "./contexts/darkModeContext/UseDarkMode.jsx";
 
 function App() {
   const router = createBrowserRouter([
@@ -83,14 +85,16 @@ function App() {
     },
   ]);
 
+  const {darkMode} = useContext(UseDarkModeContext);
+
   return (
-    <>
+    <main className={`${darkMode ? "dark" : ""}`}>
       <SkeletonTheme color="#202020" highlightColor="#444">
         <RouterProvider router={router}>
           <Login />
         </RouterProvider>
       </SkeletonTheme>
-    </>
+    </main>
   );
 
  

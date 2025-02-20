@@ -20,15 +20,18 @@ function ProfileHeader() {
     setTweetsSectionShow(true);
   };
 
+  const darkClass = "dark:text-zinc-700";
+  const darkClassActive = "dark:!text-zinc-900 dark:border-black";
+
   return (
     <nav className="w-full ">
       <h1 className="text-[1.3rem] px-8 mt-8">Channel Content</h1>
       <ul className="flex gap-5 mt-5 pb-0 px-8">
         <section
           onClick={handleVideoShow}
-          className={`hover:border-b text-[.9rem] text-zinc-400 font-[500] hover:border-zinc-500 cursor-pointer p-2 px-1 flex items-center gap-2 ${
+          className={`hover:border-b text-[.9rem] text-zinc-400 font-[500] hover:border-zinc-500 cursor-pointer p-2 px-1 flex items-center gap-2 ${darkClass} ${
             videoSectionShow
-              ? "!font-[800] border-b !border-white !text-white"
+              ? `!font-[800] border-b-2 border-white text-white ${darkClassActive}`
               : ""
           }`}
         >
@@ -36,9 +39,9 @@ function ProfileHeader() {
         </section>
         <section
           onClick={handleTweetsShow}
-          className={`hover:border-b text-[.9rem] text-zinc-400 font-[500] hover:border-zinc-500 cursor-pointer p-2 px-1 flex items-center gap-2 ${
+          className={`hover:border-b text-[.9rem] text-zinc-400 font-[500] hover:border-zinc-500 cursor-pointer p-2 px-1 flex items-center gap-2 ${darkClass} ${
             tweetsSectionShow
-              ? "!font-[800] border-b !border-white !text-white"
+              ? `!font-[800] border-b-2 border-white text-white ${darkClassActive}`
               : ""
           }`}
         >
@@ -48,8 +51,8 @@ function ProfileHeader() {
           to="#"
           onClick={() => handleFeatureSoonShow()}
           className={({ isActive }) =>
-            `hover:border-b text-[.9rem] text-zinc-400 font-[500] hover:border-zinc-500 p-2 px-1 flex items-center gap-2 ${
-              !isActive ? "!font-[800] border-b !border-white !text-white" : ""
+            `hover:border-b text-[.9rem] text-zinc-400 font-[500] hover:border-zinc-500 p-2 px-1 flex items-center gap-2 ${darkClass} ${
+              !isActive ? `!font-[800] border-b-2 border-white text-white ${darkClassActive}` : ""
             }`
           }
         >
@@ -59,8 +62,8 @@ function ProfileHeader() {
           to="#"
           onClick={() => handleFeatureSoonShow()}
           className={({ isActive }) =>
-            `hover:border-b text-[.9rem] text-zinc-400 font-[500] hover:border-zinc-500 p-2 px-1 flex items-center gap-2 ${
-              !isActive ? "!font-[800] border-b !border-white !text-white" : ""
+            `hover:border-b text-[.9rem] text-zinc-400 font-[500] hover:border-zinc-500 p-2 px-1 flex items-center gap-2 ${darkClass} ${
+              !isActive ? `!font-[800] border-b-2 border-white text-white ${darkClassActive}` : ""
             }`
           }
         >

@@ -6,10 +6,10 @@ import GoogleLogin from "../googleLogin/GoogleLogin";
 import axiosInstance from "../../../utils/axiosInstance";
 import { ClipLoader } from "react-spinners"; // Example of a spinner component
 import { MdArrowBackIos } from "react-icons/md";
-import RegisterPageUi from "../../UI/RegisterPageUi";
 import { useTheme } from "next-themes";
 import { ShineBorder } from "@/components/magicui/shine-border";
 import { MagicCard } from "@/components/magicui/magic-card";
+import { Meteors } from "@/components/magicui/meteors";
 
 const Register = () => {
   const [fullName, setFullname] = useState("");
@@ -93,10 +93,10 @@ const Register = () => {
   };
 
   return (
-    <div id="registerPage" className="flex">
+    <div id="registerPage" className="flex dark">
       <div
         id="right-section"
-        className="w-1/2 fixed left-0 top-0 z-[99999] bg-zinc-900 h-screen flex flex-col justify-center items-center"
+        className="w-full fixed left-0 top-0 z-[999] bg-transparent h-screen flex flex-col justify-center items-center"
       >
         <NavLink
           id="home-btn"
@@ -114,7 +114,7 @@ const Register = () => {
         </span>
 
         <MagicCard
-          className="cursor-pointer flex-col items-center justify-center whitespace-nowrap shadow-2xl text-white w-[30rem] py-16 !h-fit max-[500px]:w-[90%] max-[1000px]:hidden"
+          className=" cursor-pointer flex-col items-center justify-center whitespace-nowrap shadow-2xl text-white w-[30rem] py-16 !h-fit max-[500px]:w-[90%] max-[1000px]:hidden"
           gradientColor={theme === "dark" ? "#262626" : "#D9D9D955"}
         >
           <form
@@ -355,7 +355,9 @@ const Register = () => {
         </div>
       </div>
 
-      <RegisterPageUi />
+      <div className="w-[100vw] min-h-screen fixed top-0 left-0 z-[99] text-4xl bg-[#141313]">
+        <Meteors number={30} />
+      </div>
     </div>
   );
 };

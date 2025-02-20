@@ -15,10 +15,10 @@ function ThreeDot({ video }) {
 
   return (
     <div>
-      <section className="more-options-content absolute bottom-0 left-8 bg-[#1f1f1f] text-[.75rem] overflow-hidden rounded-2xl py-2">
+      <section className="dark:bg-[#d0dbf1] more-options-content absolute bottom-0 left-8 bg-[#1f1f1f] text-[.75rem] overflow-hidden rounded-2xl py-2">
         <NavLink
           to={`/video-update/${video?._id}`}
-          className="flex items-center gap-2 hover:bg-[#363636] p-2 px-4"
+          className="flex items-center gap-2 dark:hover:bg-[#b4bdd0] hover:bg-[#363636] p-2 px-4"
         >
           <MdOutlineEdit className="text-xl" />
           <div className="text-[.8rem] text-nowrap">Edit title, description...</div>
@@ -26,7 +26,7 @@ function ThreeDot({ video }) {
         <NavLink
           to={`/p/${video?._id}`}
            
-          className="flex items-center gap-2 hover:bg-[#363636] p-2 px-4 cursor-pointer"
+          className="flex items-center gap-2 dark:hover:bg-[#b4bdd0] hover:bg-[#363636] p-2 px-4 cursor-pointer"
         >
           <PiYoutubeLogo className="text-xl" />
           <h1 className="text-[.8rem] text-nowrap">Watch Video</h1>
@@ -34,7 +34,7 @@ function ThreeDot({ video }) {
 
         <div
           onClick={() => handleDelete(video)}
-          className="flex items-center gap-2 hover:bg-[#363636] p-2 px-4 cursor-pointer"
+          className="flex items-center gap-2 dark:hover:bg-[#b4bdd0] hover:bg-[#363636] p-2 px-4 cursor-pointer"
         >
           <MdDelete className="text-xl" />
           <h1 className="text-[.8rem] text-nowrap">Delete Forever</h1>

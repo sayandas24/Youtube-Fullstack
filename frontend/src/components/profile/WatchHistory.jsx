@@ -55,7 +55,7 @@ function WatchHistory() {
   };
 
   return (
-    <div className="flex">
+    <div className="flex dark:bg-[#e8e9ec]">
       <section className="max-[500px]:hidden">
         <Sidebar />
       </section>
@@ -89,16 +89,16 @@ function WatchHistory() {
 
               <section className="w-full  flex-1">
                 <div className=" flex justify-between flex-row w-full p-2 pl-5 max-[450px]:pl-2 max-[450px]:pr-0">
-                  <h1 className="text-xl line-clamp-2 max-[600px]:text-[1rem]">
+                  <h1 className="text-xl line-clamp-2 max-[600px]:text-[1rem] dark:!text-zinc-800">
                     {video.title}
                   </h1>
                   <div className="ml-auto flex  gap-5 max-[600px]:gap-1">
-                    <RxCross1 onClick={() => handleDelete(video._id)} className="cursor-pointer max-[600px]:p-2 max-[600px]:text-[2rem] text-[3rem] p-3 rounded-full hover:bg-[#2c2c2c]" />
-                    <BsThreeDotsVertical className="cursor-pointer max-[600px]:p-2 max-[600px]:text-[2rem] text-[3rem] p-3 rounded-full active:bg-[#2c2c2c]" />
+                    <RxCross1 onClick={() => handleDelete(video._id)} className="dark:!text-zinc-800 cursor-pointer max-[600px]:p-2 max-[600px]:text-[2rem] text-[3rem] p-3 rounded-full hover:bg-[#2c2c2c] dark:hover:bg-[#c2c6c8]" />
+                    <BsThreeDotsVertical className="dark:!text-zinc-800 cursor-pointer max-[600px]:p-2 max-[600px]:text-[2rem] text-[3rem] p-3 rounded-full active:bg-[#2c2c2c] dark:active:bg-[#c2c6c8]" />
                   </div>
                 </div>
 
-                <div className="flex gap-1 my-1 text-[#aaaaaa] px-5 font-[450] max-[600px]:text-[.8rem] max-[450px]:pl-2">
+                <div className="flex dark:!text-zinc-600 gap-1 my-1 text-[#aaaaaa] px-5 font-[450] max-[600px]:text-[.8rem] max-[450px]:pl-2">
                   <span>{video.owner.fullName}</span>
                   <span>|&nbsp;{video.viewsCount} Views</span>
                 </div>

@@ -71,6 +71,9 @@ function VideoSection({ videos }) {
     };
   }, []);
 
+  const darkHoverOnBtn = "dark:bg-[#c2d8f1] dark:hover:bg-[#9eafc3]";
+  const darkText = "dark:text-zinc-800";
+
   return (
     <div>
       
@@ -123,7 +126,7 @@ function VideoSection({ videos }) {
                         />
                       </div>
 
-                      <div className="text-[.75rem] text-zinc-300 mt-3 relative flex-grow">
+                      <div className={`${darkText} text-[.75rem] text-zinc-300 mt-3 relative flex-grow`}>
                         <h1 className="text-[.75rem] line-clamp-1 max-w-[6rem]">
                           {video?.title}
                         </h1>
@@ -137,20 +140,20 @@ function VideoSection({ videos }) {
                         >
                           <NavLink
                             to={`/video-update/${video?._id}`}
-                            className=" p-2 cursor-pointer rounded-full text-xl hover:bg-[#353535]"
+                            className={` p-2 cursor-pointer rounded-full text-xl hover:bg-[#353535] dark:hover:bg-[#9da8af]`}
                           >
                             <MdOutlineEdit />
                           </NavLink>
                           <NavLink
                             to={`/p/${video?._id}`}
-                            className=" p-2 cursor-pointer rounded-full text-xl hover:bg-[#353535]"
+                            className={` p-2 cursor-pointer rounded-full text-xl hover:bg-[#353535] dark:hover:bg-[#9da8af]`}
                           >
                             <PiYoutubeLogo />
                           </NavLink>
 
                           <div
                             onClick={() => handleMoreClick(index)}
-                            className="more-options p-2 cursor-pointer rounded-full text-xl hover:bg-[#353535]"
+                            className={`more-options p-2 cursor-pointer rounded-full text-xl hover:bg-[#353535] dark:hover:bg-[#9da8af]`}
                           >
                             <IoMdMore />
                           </div>
@@ -176,7 +179,7 @@ function VideoSection({ videos }) {
                   <td className="p-2 px-8 text-right align-text-top pt-3 ">
                     <NavLink
                       to={`/video-update/${video?._id}`}
-                      className="ml-auto p-[.5rem] px-3 hover:bg-[#535353] bg-[#343434] rounded-full font-[500] text-[.8rem] text-nowrap"
+                      className={`${darkHoverOnBtn} ml-auto p-[.5rem] px-3 hover:bg-[#535353] bg-[#343434] rounded-full font-[500] text-[.8rem] text-nowrap `}
                     >
                       Edit Video
                     </NavLink>

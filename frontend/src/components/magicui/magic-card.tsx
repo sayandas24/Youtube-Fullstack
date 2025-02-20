@@ -76,7 +76,7 @@ export function MagicCard({
   return (
     <div
       ref={cardRef}
-      className={cn("group relative flex size-full rounded-xl", className)}
+      className={cn("group relative flex size-full rounded-xl bg-transparent", className)}
     >
       <div className="absolute inset-px z-10 rounded-xl bg-[#151515] " />
       <div className="relative z-30 w-full">{children}</div>

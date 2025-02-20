@@ -149,7 +149,7 @@ function ProfileDashboardDP({ user }) {
           {/* Full Name Input */}
           <span
             ref={fullNameSpanRef}
-            className="invisible absolute whitespace-pre font-semibold text-xl"
+            className="invisible absolute whitespace-pre font-semibold text-xl "
           >
             {fullName || " "}
           </span>
@@ -166,7 +166,7 @@ function ProfileDashboardDP({ user }) {
           <p className="text-lg font-semibold">
             <span
               ref={usernameSpanRef}
-              className="invisible absolute whitespace-pre text-zinc-300"
+              className="invisible absolute whitespace-pre text-zinc-300 dark:text-zinc-800"
             >
               {username || " "}
             </span>
@@ -176,7 +176,7 @@ function ProfileDashboardDP({ user }) {
               disabled={editOpen}
               value={username}
               onChange={(e) => setUsername(e.target.value)}
-              className={`${!editOpen ? "border-b-zinc-500" : ""} bg-transparent border-b border-b-transparent outline-none text-zinc-300`}
+              className={`${!editOpen ? "border-b-zinc-500" : ""} bg-transparent border-b border-b-transparent outline-none text-zinc-300 dark:text-zinc-600`}
             />
             <span className="max-[400px]:hidden mx-2 text-zinc-500 font-[400]">
               | &nbsp; {user?.subscribersCount} subscribers

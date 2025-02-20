@@ -11,6 +11,7 @@ import Playlists from "./Playlists";
 import Tweets from "../profile/Tweets";
 import { ProfileContext } from "../../contexts/profileContext/profileContext";
 import { ConfettiButton } from "@/components/magicui/confetti";
+import { UseDarkModeContext } from "../../contexts/darkModeContext/UseDarkMode";
 
 function UserChannel() {
   const { channel } = useParams();
@@ -102,9 +103,13 @@ function UserChannel() {
     setShowUserVideo(false);
   };
 
+  const {darkMode} = useContext(UseDarkModeContext);
+    const baseColor = darkMode ? "#c7cbd1" : "#202020";
+    const highlightColor = darkMode ? "#d3d6db" : "#2b2b2b75";
+
   return (
-    <SkeletonTheme baseColor="#202020" highlightColor="#333">
-      <div className="flex w-full text-white">
+    <SkeletonTheme baseColor={baseColor} highlightColor={highlightColor}>
+      <div className="flex w-full text-white dark:bg-[#e8e9ec] dark:text-black">
         <div
           className={`${
             isRouteActive && collapse2 ? "-translate-x-[18rem]  " : ""
@@ -120,7 +125,7 @@ function UserChannel() {
             {loading ? (
               <Skeleton
                 borderRadius={15}
-                className="relative group border border-[#191919] h-[15rem] overflow-hidden"
+                className="relative group h-[12.8rem] overflow-hidden"
               />
             ) : (
               <div className="w-full relative rounded-xl group border-blue-500 h-[13rem] overflow-hidden max-[500px]:h-[10rem]">
@@ -173,8 +178,8 @@ function UserChannel() {
                   <h1 className="text-2xl font-semibold">
                     {userDetail ? userDetail.fullName : ""}
                   </h1>
-                  <div className="text-[16px] text-zinc-500 pl-1 flex gap-2">
-                    <p className="text-zinc-100">
+                  <div className="text-[16px] text-zinc-500 pl-1 flex gap-2 dark:text-zinc-700">
+                    <p className="text-zinc-100 dark:text-zinc-800">
                       @{userDetail ? userDetail.username : ""}
                     </p>
                     <p className="max-[500px]:hidden">
@@ -199,9 +204,9 @@ function UserChannel() {
                     onClick={handleSubscribe}
                     className={`${
                       userDetail.isSubscribed
-                        ? "bg-[#272727] shadow-inner shadow-[#313131]/100"
+                        ? "bg-[#272727] shadow-inner shadow-[#313131]/100 dark:bg-[#a8adbc] dark:shadow-none"
                         : "bg-[#ff0000]"
-                    } p-[.4rem] w-fit px-6 rounded-full text-sm font-semibold  hover:text-white `}
+                    } p-[.4rem] w-fit px-6 rounded-full text-sm font-semibold dark:text-black hover:text-white `}
                   >
                     {userDetail.isSubscribed ? (
                       "Unsubscribe"
@@ -235,7 +240,7 @@ function UserChannel() {
               <h1
                 onClick={handlePlaylistClick}
                 className={`${
-                  showUserVideo ? "border-b-2" : "text-zinc-400"
+                  showUserVideo ? "border-b-2" : "text-zinc-400 dark:text-zinc-600"
                 } pb-2 cursor-pointer`}
               >
                 Playlists
@@ -243,7 +248,7 @@ function UserChannel() {
               <h1
                 onClick={handleTweetsClick}
                 className={`${
-                  showUserTweet ? "border-b-2" : "text-zinc-400"
+                  showUserTweet ? "border-b-2" : "text-zinc-400 dark:text-zinc-600"
                 } pb-2 cursor-pointer`}
               >
                 Tweets

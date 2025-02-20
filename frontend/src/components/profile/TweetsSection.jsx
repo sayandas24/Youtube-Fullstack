@@ -63,7 +63,7 @@ function TweetsSection({ tweets, user }) {
                         />
                       </div>
 
-                      <div className="text-[.75rem] text-zinc-300 mt-3 relative flex-grow">
+                      <div className="text-[.75rem] dark:text-zinc-900 text-zinc-300 mt-3 relative flex-grow">
                         <h1 className="text-[.75rem] line-clamp-1 max-w-[6rem]">
                           {tweet?.content}
                         </h1>
@@ -78,7 +78,7 @@ function TweetsSection({ tweets, user }) {
                               setShowUserTweet(true);
                               setShowUserVideo(false);
                             }}
-                            className=" p-2 cursor-pointer rounded-full text-xl hover:bg-[#353535]"
+                            className=" p-2 cursor-pointer rounded-full text-xl hover:bg-[#353535] dark:hover:bg-[#c2cdd9]"
                           >
                             <MdOutlineEdit />
                           </NavLink>
@@ -106,7 +106,7 @@ function TweetsSection({ tweets, user }) {
                         setShowUserTweet(true);
                         setShowUserVideo(false);
                       }}
-                      className="ml-auto p-[.5rem] px-3 hover:bg-[#535353] bg-[#343434] rounded-full font-[500] text-[.8rem] text-nowrap"
+                      className="ml-auto p-[.5rem] px-3 hover:bg-[#535353] bg-[#343434] rounded-full font-[500] text-[.8rem] text-nowrap dark:bg-[#74b5ff] dark:hover:bg-[#61abff] cursor-pointer"
                     >
                       Edit Tweet
                     </NavLink>

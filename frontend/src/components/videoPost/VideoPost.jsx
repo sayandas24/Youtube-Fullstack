@@ -10,8 +10,7 @@ function VideoPost() {
   const file = location.state?.file;
   const videoUrl = location.state?.videoUrl;
   let fileSizeReadable = null;
-
-  // FIXME: bottom right upload button is not allign
+ 
 
   if (file) {
     const formatFileSize = (sizeInBytes) => {

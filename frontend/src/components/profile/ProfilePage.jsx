@@ -12,6 +12,7 @@ import ProfileDashboard from "./ProfileDashboard";
 import { ProfileContext } from "../../contexts/profileContext/profileContext";
 import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
 import TweetsSection from "./TweetsSection";
+import { UseDarkModeContext } from "../../contexts/darkModeContext/UseDarkMode";
 
 function ProfilePage() {
   const isRouteActive = location.pathname.startsWith(`/profile`);
@@ -102,8 +103,12 @@ function ProfilePage() {
     };
   }, []);
 
+  const { darkMode } = useContext(UseDarkModeContext);
+  const baseColor = darkMode ? "#c7cbd1" : "#202020";
+  const highlightColor = darkMode ? "#d3d6db" : "#2b2b2b75";
+
   return (
-    <main className="flex gap-2 overflow-hidden w-full flex-grow text-white bg-gradient-to-b from-[#0f0f0f] to-[#1b1b1b] border-t border-[#434343]">
+    <main className="flex gap-2 overflow-hidden w-full flex-grow text-white  border-t border-[#434343] dark:text-black dark:bg-[#e7e7ea] dark:border-none">
       <div
         className={`${
           isRouteActive && collapse2 ? "-translate-x-[18rem]  " : ""
@@ -131,7 +136,7 @@ function ProfilePage() {
         id="small-screen-left"
         className={`${
           sidebarMobile
-            ? "max-[1000px]:scale-0 max-[1000px]:translate-x-[-7rem] max-[1000px]:translate-y-[15rem] max-[500px]:translate-y-[15rem]"
+            ? "max-[1000px]:scale-0 max-[1000px]:translate-x-[-7rem] max-[1000px]:translate-y-[15rem] max-[500px]:translate-y-[15rem] "
             : "max-[1000px]:motion-scale-in-100 "
         } dashboard-options w-[18rem] !p-0 left-5 max-[350px]:w-[15rem]`}
       >
@@ -146,29 +151,55 @@ function ProfilePage() {
         <section className="w-[100%] border-[#434343] overflow-y-auto">
           {/* <ProfileDashboard user={user} /> */}
           {loading && (
-            <SkeletonTheme baseColor="#202020" highlightColor="#333">
-              <div className="card-skeleton rounded-xl w-full mb-2 px-[2rem] pt-[1.5rem]">
-                <Skeleton borderRadius={5} count={3} height={"3rem"} />
-              </div>
-              <div className="card-skeleton rounded-xl w-full mb-2 px-[2rem] pt-[1.5rem]">
-                <Skeleton borderRadius={5} count={3} height={"3rem"} />
-              </div>
-              <div className="card-skeleton rounded-xl w-full mb-2 px-[2rem] pt-[1.5rem]">
-                <Skeleton borderRadius={5} count={3} height={"3rem"} />
-              </div>
-              <div className="card-skeleton rounded-xl w-full mb-2 px-[2rem] pt-[1.5rem]">
-                <Skeleton borderRadius={5} count={3} height={"3rem"} />
-              </div>
+            <SkeletonTheme
+              baseColor={baseColor}
+              highlightColor={highlightColor}
+            >
+              <main className="w-[89rem] mx-auto max-[1000px]:w-full flex flex-col gap-5">
+                <div className="card-skeleton rounded-xl w-[100%] mb-2 px-[2rem] pt-[1.5rem] ">
+                  <Skeleton
+                    borderRadius={15}
+                    count={1}
+                    height={"12.9rem"}
+                    width={"100%"}
+                  />
+                </div>
+
+                <div className="card-skeleton flex gap-3 rounded-xl w-[100%] mb-2 px-[2rem] pt-[1.5rem] ">
+                  <Skeleton circle width={"10rem"} height={"10rem"} />
+                  <div className="my-auto">
+                    <Skeleton
+                      borderRadius={8}
+                      count={1}
+                      height={"1rem"}
+                      width={"8rem"}
+                    />
+                    <Skeleton
+                      borderRadius={8}
+                      count={1}
+                      height={"1rem"}
+                      width={"8rem"}
+                    />
+                    <Skeleton
+                      borderRadius={8}
+                      count={1}
+                      height={"1rem"}
+                      width={"4rem"}
+                    />
+                  </div> 
+                </div> 
+              </main>
             </SkeletonTheme>
           )}
-           <ProfileDashboard user={user} />
+
+          <ProfileDashboard user={user} />
         </section>
       )}
 
       {showUserContent && (
         <section className="w-[100%] border-l border-l-transparent border-[#434343] overflow-y-auto">
           <ProfileHeader />
-          
+
           {loading && <VideoDetailSkeleton number={2} />}
 
           {/* Video section */}

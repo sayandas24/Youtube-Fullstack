@@ -1,12 +1,9 @@
 import React, { useContext, useEffect, useState } from "react";
-import { GrHomeRounded } from "react-icons/gr";
-import { MdOutlineWatchLater } from "react-icons/md";
+import { GrHomeRounded } from "react-icons/gr"; 
 import { MdHistory } from "react-icons/md";
 import { SiYoutubeshorts } from "react-icons/si";
-import { MdOutlineSubscriptions } from "react-icons/md";
-import { BiLike } from "react-icons/bi";
-import { CollapseContext } from "../../contexts/collapseMenu/CollapseContext";
-import { NavLink, useNavigate } from "react-router";
+import { MdOutlineSubscriptions } from "react-icons/md"; 
+import { NavLink } from "react-router";
 import { FeatureSoonContext } from "../../contexts/featureSoonContext/UseFeatureSoon";
 import { IoSettingsOutline } from "react-icons/io5";
 import { CgProfile } from "react-icons/cg";

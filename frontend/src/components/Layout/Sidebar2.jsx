@@ -43,16 +43,16 @@ function Sidebar2() {
 
   return (
     <div
-      className={`w-[18rem] h-screen bg-[#0f0f0f] text-white py-5 px-2 gap-1 flex flex-col`}
+      className={`w-[18rem] h-screen dark:bg-[#f8fafd] dark:text-black bg-[#0f0f0f] text-white py-5 gap-1 flex flex-col`}
     >
       <NavLink className="ml-3 cursor-pointer">
         <div className="flex gap-3 items-center">
           <IoMdMenu
             onClick={handleMenu}
-            className="text-[2.6rem] hover:bg-[#252525] duration-75 cursor-pointer active:bg-[#343434] rounded-full p-2"
+            className="text-[2.6rem] dark:hover:bg-[#c0c8d39f] hover:bg-[#252525] duration-75 cursor-pointer active:bg-[#343434] rounded-full p-2"
           />
           <div className="flex items-center border-[#555555] p-5 rounded-full py-2">
-            <img className="w-[2rem] invert" src={metube} alt="" />
+            <img className="w-[2rem] invert dark:invert-0" src={metube} alt="" />
             <h1 className="font-sacramento font-bold text-[1.5rem]">Metube</h1>
           </div>
         </div>
@@ -60,7 +60,7 @@ function Sidebar2() {
 
       <NavLink to="/">
         <section
-          className={`flex gap-5 p-3 px-5 hover:bg-[#2c2c2c] duration-75 cursor-pointer rounded-xl`}
+          className={`flex gap-5 p-3 px-5 dark:hover:bg-[#c0c8d39f]  hover:bg-[#2c2c2c] duration-75 cursor-pointer rounded-r-full`}
         >
           <div className="">
             <GrHomeRounded className="text-2xl" />
@@ -71,10 +71,10 @@ function Sidebar2() {
 
       <section
         onClick={() => handleFeatureSoonShow("Shorts w'll be added soon")}
-        className={`flex gap-5 p-3 px-5 hover:bg-[#2c2c2c] duration-75 cursor-pointer rounded-xl`}
+        className={`flex gap-5 p-3 px-5 dark:hover:bg-[#c0c8d39f]  hover:bg-[#2c2c2c] duration-75 cursor-pointer rounded-r-full`}
       >
         <div className="">
-          <SiYoutubeshorts className="text-2xl stroke-white stroke-[2] !fill-transparent h-[30px] " />
+          <SiYoutubeshorts className="text-2xl dark:stroke-black stroke-white stroke-[2] !fill-transparent h-[30px] " />
         </div>
         <div className={`text-[1.1rem] `}>Shorts</div>
       </section>
@@ -84,7 +84,7 @@ function Sidebar2() {
       <NavLink
         to="/user/history"
         // onClick={() => handleFeatureSoonShow("History working on it")}
-        className={`flex gap-5 p-3 px-5 hover:bg-[#2c2c2c] duration-75 cursor-pointer rounded-xl`}
+        className={`flex gap-5 p-3 px-5 dark:hover:bg-[#c0c8d39f]  hover:bg-[#2c2c2c] duration-75 cursor-pointer rounded-r-full`}
       >
         <div className="">
           <MdHistory className="text-2xl" />
@@ -94,7 +94,7 @@ function Sidebar2() {
 
       <section
         onClick={() => handleFeatureSoonShow("Feature coming soon")}
-        className={`flex gap-5 p-3 px-5 hover:bg-[#2c2c2c] duration-75 cursor-pointer rounded-xl`}
+        className={`flex gap-5 p-3 px-5 dark:hover:bg-[#c0c8d39f]  hover:bg-[#2c2c2c] duration-75 cursor-pointer rounded-r-full`}
       >
         <div className="">
           <MdOutlineSubscriptions className="text-2xl" />
@@ -105,7 +105,7 @@ function Sidebar2() {
 
       <section
         onClick={() => handleFeatureSoonShow("Feature coming soon")}
-        className={`flex gap-5 p-3 px-5 hover:bg-[#2c2c2c] duration-75 cursor-pointer rounded-xl`}
+        className={`flex gap-5 p-3 px-5 dark:hover:bg-[#c0c8d39f]  hover:bg-[#2c2c2c] duration-75 cursor-pointer rounded-r-full`}
       >
         <div className="">
           <IoSettingsOutline className="text-2xl" />
@@ -115,7 +115,7 @@ function Sidebar2() {
 
       <NavLink
         to="/profile"
-        className={`flex gap-5 p-3 px-5 hover:bg-[#2c2c2c] duration-75 cursor-pointer rounded-xl`}
+        className={`flex gap-5 p-3 px-5 dark:hover:bg-[#c0c8d39f]  hover:bg-[#2c2c2c] duration-75 cursor-pointer rounded-r-full`}
       >
         <div className="">
           <CgProfile className="text-2xl" />

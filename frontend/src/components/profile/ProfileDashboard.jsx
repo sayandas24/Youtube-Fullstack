@@ -24,7 +24,7 @@ function ProfileDashboard({ user }) {
   
 
   return (
-    <div className="flex w-full text-white min-[1000px]:pl-2">
+    <div className="flex w-full text-white min-[1000px]:pl-2 dark:text-black">
       {/* <Sidebar /> */}
 
       <main className="flex flex-col w-[85rem] mx-auto max-[1000px]:px-2">
@@ -80,7 +80,7 @@ function ProfileDashboard({ user }) {
                   <Link
                     to={`/p/${video._id}`}
                     key={video._id}
-                    className=" p-3 rounded-xl hover:shadow-[0px_3px_5px_3px_#2e2e2e] w-full "
+                    className=" p-3 rounded-xl hover:shadow-[0px_3px_5px_3px_#2e2e2e] duration-150 dark:hover:shadow-[0px_3px_5px_3px_#a8a9aa] w-full "
                   >
                     <div
                       id="each-video-in-dashboard"
