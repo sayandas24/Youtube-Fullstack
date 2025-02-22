@@ -1,5 +1,6 @@
 import { Router } from "express";
 import {
+    getAllUsers,
     registerUser,
     loginUser,
     logoutUser,
@@ -21,6 +22,7 @@ import { optionalVerifyJWT } from "../middlewares/optionalJWT.middleware.js";
 
 const router = Router()
 
+router.route("/users").get(getAllUsers)
 router.route("/authentication").post(authentication)
 
 router.route("/register").post(

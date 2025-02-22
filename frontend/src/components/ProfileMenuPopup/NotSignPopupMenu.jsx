@@ -115,7 +115,7 @@ function NotSignPopupMenu() {
         </div>
       )}
 
-      <NavLink to="/login">
+      <NavLink to="/login" className="hide-item-in-small">
         <AnimatedButton text="✨ Login" />
       </NavLink>
     </div>

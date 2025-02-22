@@ -7,6 +7,16 @@ import jwt from "jsonwebtoken";
 import { v2 as cloudinary } from "cloudinary";
 import mongoose from "mongoose";
 
+// getting all the users
+const getAllUsers = asyncHandler(async (req, res) => {
+  const users = await User.find().select("-password -refreshToken");
+  const userCount = await User.countDocuments();
+
+  return res
+    .status(200)
+    .json(new ApiResponse(200, { users, userCount }, "All users fetched successfully"));
+});
+
 const generateAccessAndRefreshToken = async (userId) => {
   try {
     // while created the user the  generateAccessToken and generateRefreshToken method will be inserted automatically from user.model
@@ -806,6 +816,7 @@ const removeVideoFromWatchHistory = asyncHandler(async (req, res) => {
 });
 
 export {
+  getAllUsers,
   registerUser,
   loginUser,
   logoutUser,

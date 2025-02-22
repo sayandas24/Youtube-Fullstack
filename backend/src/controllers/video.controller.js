@@ -5,7 +5,7 @@ import { uploadOnCloudinary } from "../utils/cloudinary.js";
 import { ApiResponse } from "../utils/ApiResponse.js";
 import { v2 as cloudinary } from "cloudinary";
 import mongoose from "mongoose";
-import { User } from "../models/user.model.js";
+
 
 // upload video
 const uploadVideo = asyncHandler(async (req, res) => {
@@ -377,31 +377,5 @@ const allVideos = asyncHandler(async (req, res) => {
     .json(new ApiResponse(200, "Getting all videos", videos))
 });
 
-// optional code by copilot
-// const viewVideo = asyncHandler(async (req, res) => {
-//   const { videoId } = req.params;
-//   console.log("videoId", videoId);
-
-//   if (!videoId) {
-//     throw new ApiError(400, "Video ID is required");
-//   }
-
-//   const video = await Video.findById(videoId);
-
-//   if (!video) {
-//     throw new ApiError(404, "Video not found");
-//   }
-
-//   // Add video to user's watch history
-//   if (req.user) {
-//     await User.findByIdAndUpdate(
-//       req.user._id,
-//       { $addToSet: { watchHistory: videoId } }, // $addToSet ensures no duplicates
-//       { new: true }
-//     );
-//   }
-
-//   return res.status(200).json(new ApiResponse(200, "Video viewed", video));
-// });
 
 export { uploadVideo, updateVideo, getVideo, deleteVideo, allVideos };

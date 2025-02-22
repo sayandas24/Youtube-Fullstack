@@ -29,7 +29,7 @@ import tweetRouter from "./routes/tweet.routes.js"
 
 // routes declaration
 app.use("/api/v1/user", userRouter) // passing the control to user.router.js
-// localhost:8000/api/v1/users/register
+// localhost:8000/api/v`1/users/register
 app.use("/api/v1/video", videoRouter)
 // localhost:8000/api/v1/videos/upload
 app.use("/api/v1/subscription", subscriptionRouter)

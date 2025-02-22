@@ -17,6 +17,7 @@ import { useScreenWidth } from "../../utils/screenWidth";
 import "../../responsive/navbar.scss";
 import { ProfileContext } from "../../contexts/profileContext/profileContext";
 import { SparklesText } from "@/components/magicui/sparkles-text";
+import { AvatarCircles } from "@/components/magicui/avatar-circles";
 
 function Navbar() {
   const { collapse, setCollapse } = useContext(CollapseContext);
@@ -27,6 +28,8 @@ function Navbar() {
   
 
   const [user, setUser] = useState({});
+  const [allUsers, setAllUsers] = useState([]);
+  const [countAllUsers, setCountAllUsers] = useState(0);
   const [profileClick, setProfileClick] = useState(false);
   const [profilepic, setProfilepic] = useState("");
   const [createClick, setCreateClick] = useState(false);
@@ -45,6 +48,20 @@ function Navbar() {
       .then((res) => {
         setUser(res.data);
         setProfilepic(res.data.data.avatar);
+      })
+      .catch((err) => {
+        console.log("error in getting current user", err);
+      });
+  }, []);
+
+  // getting all users
+  useEffect(() => {
+    axiosInstance
+      .get("/user/users")
+      .then((res) => {
+        setCountAllUsers(res.data.data.userCount);
+        setAllUsers(res.data.data.users);
+         
       })
       .catch((err) => {
         console.log("error in getting current user", err);
@@ -124,9 +141,10 @@ function Navbar() {
             </div>
           </div>
         </section>
+        
 
         <section>
-          <div className="flex gap-3 items-center">
+          <div className="flex gap-3 items-center ">
             <div className="flex items-center ">
               <input
                 id="search"
@@ -137,9 +155,9 @@ function Navbar() {
               <div
                 onClick={() => handleFeatureSoonShow()}
                 id="search-icon"
-                className="flex  justify-center items-center rounded-l-none  h-[2.9rem] px-5 rounded-full dark:bg-[#c1c9d5] bg-[#222222]"
+                className="flex  justify-center items-center rounded-l-none  h-[2.9rem] px-5 rounded-full dark:bg-[#c1c9d5] bg-[#222222] hide-item-in-small"
               >
-                <IoIosSearch className="text-[1.4rem] smallIcon" />
+                <IoIosSearch className="text-[1.4rem] smallIcon " />
               </div>
             </div>
             <div
@@ -151,6 +169,12 @@ function Navbar() {
             </div>
           </div>
         </section>
+
+      {/* TODO: make all users icons here */}
+      <div className="ml-auto mx-2">
+        <AvatarCircles numPeople={countAllUsers} avatarUrls={allUsers} />
+      </div>
+        
         <section> 
           {/* <SignPopupMenu/> */}
           {user.data ? (
