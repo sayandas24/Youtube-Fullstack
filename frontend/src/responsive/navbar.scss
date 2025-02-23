@@ -54,3 +54,28 @@
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
 }
+
+@media screen and (max-width: 650px) {
+  
+.navBlur {
+  /* Always apply the medium blur */
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid #3c3c3c;
+}
+
+/* Only apply the background colors if backdrop-filter is supported */
+@supports ((-webkit-backdrop-filter: blur(0)) or (backdrop-filter: blur(0))) {
+  .navBlur {
+    /* Light mode background: white at 10% opacity */
+    background-color: rgba(255, 255, 255, 0.1);
+  }
+
+  /* In dark mode, override with a dark background: black at 10% opacity */
+  @media (prefers-color-scheme: dark) {
+    .navBlur {
+      background-color: rgba(0, 0, 0, 0.1);
+    }
+  }
+}
+}

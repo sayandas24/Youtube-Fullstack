@@ -112,6 +112,7 @@ function Navbar() {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, []);
+ 
 
   return (
     <nav
@@ -119,7 +120,7 @@ function Navbar() {
       className="relative top-0 left-0 w-full z-50 dark:bg-[#f8fafd] dark:text-black  min-h-[6rem] max-[500px]:min-h-[3rem]"
     >
       {/* <NewFeatureMSG/>   */}
-      <ul className="flex fixed bg-[#0f0f0f]s navBlur dark:bg-[#f8fafd] dark:text-black w-full top-0 text-md text-white  gap-0  p-5 pb-1 px-[1.6rem] justify-between items-center rounded-b-2xl max-[650px]:rounded-full max-[650px]:w-[98%] max-[650px]:m-1  max-[650px]:!py-[5px]">
+      <ul className={`navBlur  flex fixed bg-[#0f0f0f]s  dark:bg-[#f8fafd] dark:text-black w-full top-0 text-md text-white  gap-0  p-5 pb-1 px-[1.6rem] justify-between items-center rounded-b-2xl max-[650px]:rounded-full max-[650px]:w-[98%] max-[650px]:m-1  max-[650px]:!py-[5px]           `}>
         <section>
           <div className="flex gap-3 items-center max-[650px]:gap-1">
             <IoMdMenu
