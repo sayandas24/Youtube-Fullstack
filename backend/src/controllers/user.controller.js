@@ -501,6 +501,7 @@ const updateAccountDetails = asyncHandler(async (req, res) => {
 // change avatar
 const updateUserAvatar = asyncHandler(async (req, res) => {
   const avatarLocalPath = req.file?.path;
+  console.log(avatarLocalPath, "avatar");
 
   if (!avatarLocalPath) {
     throw new ApiError(400, "Avatar is missing");
@@ -510,6 +511,7 @@ const updateUserAvatar = asyncHandler(async (req, res) => {
 
   // getting previous image id from user by splitting and taking last element
   const prevImgId = req.user.avatar.split("/").slice(-1)[0].split(".")[0];
+  
 
   await cloudinary.uploader.destroy(prevImgId); // deleting the previous image
 

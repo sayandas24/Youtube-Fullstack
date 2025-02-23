@@ -26,7 +26,7 @@ const uploadVideo = asyncHandler(async (req, res) => {
   const thumbnailFilePath = req.files?.thumbnail[0]?.path; 
 
   const videoFile = await uploadOnCloudinary(videoFilePath);
-  const thumbnail = await uploadOnCloudinary(thumbnailFilePath);
+  const thumbnail = await uploadOnCloudinary(thumbnailFilePath); 
   
   if (!videoFile || !thumbnail) {
     throw new ApiError(400, "Video and thumbnail file uploaded failed");
@@ -103,7 +103,13 @@ const deleteVideo = asyncHandler(async (req, res) => {
   const { id } = req.params;
 
   const video = await Video.findById(id);
+ // deleting video from cloudinary
+  const prevVideo = video.videoFile.split("/").slice(-1)[0].split(".")[0]
+  const prevThumbnail = video.thumbnail.split("/").slice(-1)[0].split(".")[0] 
 
+  await cloudinary.uploader.destroy(prevVideo, { resource_type: "video" }); // deleting the previous video, cloudinary
+  await cloudinary.uploader.destroy(prevThumbnail);
+ 
   // only owner can delete the video
   if (video && video.owner.toString() !== req.user._id.toString()) {
     throw new ApiError(401, "Unauthorized to delete this video");
@@ -305,23 +311,7 @@ const getVideo = asyncHandler(async (req, res) => {
     .status(200)
     .json(new ApiResponse(200, "Video found successfully", video[0]));
 });
-
-
-
-// getting all the videos in home page
-// const allVideos = asyncHandler(async (req, res) => {
-//   const videos = await Video.find({}).populate(
-//     "owner",
-//     "username fullName email avatar"
-//   ); 
-//   if (!videos) {
-//     throw new ApiError(500, "can't find videos")
-//   }
-//   return res
-//     .status(200)
-//     .json(new ApiResponse(200, "Getting all videos", videos))
-
-// });
+ 
 const allVideos = asyncHandler(async (req, res) => {
   const videos = await Video.aggregate([
     {

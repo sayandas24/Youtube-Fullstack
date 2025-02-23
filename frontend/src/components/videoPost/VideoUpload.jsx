@@ -12,8 +12,7 @@ function VideoUpload() {
         const videoUrl = URL.createObjectURL(file);
         navigate("/video-upload", { state: { videoUrl, file } }); 
     }
-  };
-  // FIXME: skeleton effect and mobile navigation button, login page
+  }; 
 
   return (
     <div className="relative h-[80vh] ">

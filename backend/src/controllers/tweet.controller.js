@@ -57,7 +57,7 @@ const deleteTweet = asyncHandler(async (req, res) => {
     });
 
     if (findTweet.contentImage) {
-        await cloudinary.uploader.destroy(findTweet.contentImage.split("/").slice(-1)[0].split(".")[0]);
+        await cloudinary.uploader.destroy(findTweet.contentImage.split("/").slice(-1)[0].split(".")[0]); 
     }
 
     const deletedTweet = await Tweet.findOneAndDelete({

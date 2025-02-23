@@ -9,9 +9,10 @@ import LoginErrorWarn from "../../utils/LoginErrorWarn";
 import { BsThreeDots } from "react-icons/bs";
 import { MdDeleteOutline } from "react-icons/md";
 import UseClickOutside from "../../utils/UseClickOutside";
+import { ClipLoader } from "react-spinners";
 
 function Tweets({ userDetail, currUser }) {
-  const [tweetImage, setTweetImage] = useState(null);
+  const [tweetImage, setTweetImage] = useState(null); 
   const [tweetPreview, setTweetPreview] = useState(null);
   const [tweetContent, setTweetContent] = useState("");
   const [showTweetForm, setShowTweetForm] = useState(false);
@@ -19,6 +20,8 @@ function Tweets({ userDetail, currUser }) {
   const [error, setError] = useState(false);
   const [showDeleteBtn, setShowDeleteBtn] = useState(false);
   const [showDeleteIcon, setShowDeleteIcon] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [loadingDeleteTweet, setLoadingDeleteTweet] = useState(false);
 
   const [hoveredTweetId, setHoveredTweetId] = useState(null);
 
@@ -35,6 +38,8 @@ function Tweets({ userDetail, currUser }) {
   };
 
   const handleForm = (e) => {
+    setLoading(true);
+
     e.preventDefault();
 
     const formData = new FormData();
@@ -59,6 +64,7 @@ function Tweets({ userDetail, currUser }) {
           setTweetImage(null);
           setTweetPreview(null);
           nProgress.done();
+          setLoading(false);
           setAllTweets((prev) => [...prev, newTweet]);
         })
         .catch((err) => {
@@ -66,6 +72,7 @@ function Tweets({ userDetail, currUser }) {
           setTweetContent("");
           setTweetImage(null);
           nProgress.done();
+          setLoading(false);
         });
     }
   };
@@ -94,13 +101,14 @@ function Tweets({ userDetail, currUser }) {
   }, [userDetail]);
 
   const handleDeleteTweet = (id) => {
+    setLoadingDeleteTweet(true);
     axiosInstance
       .get("/user/current-user")
       .then((res) => {
-        setIsLoginUser(true);
+        setIsLoginUser(true); 
       })
       .catch((err) => {
-        setIsLoginUser(false);
+        setIsLoginUser(false); 
       });
 
     nProgress.start();
@@ -108,9 +116,11 @@ function Tweets({ userDetail, currUser }) {
       .delete(`/tweet/delete-tweet/${id}`)
       .then((res) => {
         nProgress.done();
+        setLoadingDeleteTweet(false);
         setAllTweets((prev) => prev.filter((tweet) => tweet._id !== id));
       })
       .catch((err) => {
+        setLoadingDeleteTweet(false);
         console.log("cannot delete tweet", err);
         nProgress.done();
       });
@@ -165,7 +175,7 @@ function Tweets({ userDetail, currUser }) {
       });
     }
   };
- 
+
   return (
     <main className="p-3 max-[500px]:p-2">
       {showTweetForm && (
@@ -210,6 +220,7 @@ function Tweets({ userDetail, currUser }) {
                 type="file"
                 className="hidden"
                 id="tweetImage"
+                accept="image/*"
                 onChange={handleTweetImageChange}
               />
             </label>
@@ -225,8 +236,13 @@ function Tweets({ userDetail, currUser }) {
               >
                 Cancel
               </div>
+
               <button className="p-2 px-6 bg-blue-500 hover:bg-blue-700 active:bg-blue-800 rounded-full cursor-pointer">
-                Tweet
+                {loading ? (
+                  <ClipLoader className="mt-2" color="#fff" loading={true} size={17} />
+                ) : (
+                  "Tweet"
+                )}
               </button>
             </div>
           </section>
@@ -300,7 +316,13 @@ function Tweets({ userDetail, currUser }) {
                         className="text-xl cursor-pointer hover:bg-red-700/20 px-10 py-1 flex gap-2 items-center"
                       >
                         <MdDeleteOutline className="text-2xl text-red-500" />
-                        <span className="text-lg font-semibold">Delete</span>
+                        <span className="text-lg font-semibold">
+                          {loadingDeleteTweet ? (
+                            <ClipLoader color="#fff" loading={true} size={17} />
+                          ) : (
+                            "Delete"
+                          )}
+                        </span>
                       </div>
                     </div>
                   )}
