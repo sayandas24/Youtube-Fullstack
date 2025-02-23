@@ -237,9 +237,9 @@ function Tweets({ userDetail, currUser }) {
                 Cancel
               </div>
 
-              <button className="p-2 px-6 bg-blue-500 hover:bg-blue-700 active:bg-blue-800 rounded-full cursor-pointer">
+              <button disabled={loading} className="p-2 px-6 bg-blue-500 hover:bg-blue-700 active:bg-blue-800 rounded-full cursor-pointer">
                 {loading ? (
-                  <ClipLoader className="mt-2" color="#fff" loading={true} size={17} />
+                  <ClipLoader className="" color="#fff" loading={true} size={17} />
                 ) : (
                   "Tweet"
                 )}
@@ -318,7 +318,7 @@ function Tweets({ userDetail, currUser }) {
                         <MdDeleteOutline className="text-2xl text-red-500" />
                         <span className="text-lg font-semibold">
                           {loadingDeleteTweet ? (
-                            <ClipLoader color="#fff" loading={true} size={17} />
+                            <ClipLoader className="mt-2" color="#fff" loading={true} size={17} />
                           ) : (
                             "Delete"
                           )}
