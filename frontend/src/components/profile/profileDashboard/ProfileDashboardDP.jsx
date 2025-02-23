@@ -10,8 +10,8 @@ function ProfileDashboardDP({ user }) {
   const [avatar, setAvatar] = useState(null);
   const [loadingIcon, setLoadingIcon] = useState(false);
   const [avatarPreview, setAvatarPreview] = useState(null);
-  const [fullName, setFullName] = useState(user?.fullName);
-  const [username, setUsername] = useState(user?.username);
+  const [fullName, setFullName] = useState("");
+  const [username, setUsername] = useState("");
   const [editOpen, setEditOpen] = useState(true);
   const [usernameError, setUsernameError] = useState(false);
 
@@ -19,6 +19,16 @@ function ProfileDashboardDP({ user }) {
   const usernameRef = useRef(null);
   const fullNameSpanRef = useRef(null);
   const usernameSpanRef = useRef(null);
+
+  useEffect(() => {
+    setFullName(user?.fullName);
+    setUsername(user?.username);
+  }, [user])
+  
+
+  // setTimeout(() => {
+  //   setFullName(user?.fullName);
+  // }, 1000);
 
   // Adjust input width based on text
   useEffect(() => {

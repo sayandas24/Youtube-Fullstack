@@ -1,6 +1,6 @@
 #nav {
   #search {
-    width: 30vw;
+    width: 25vw;
   }
   @media screen and (max-width: 780px) {
     ul {
@@ -26,7 +26,7 @@
   @media screen and (max-width: 500px) {
     ul {
       display: grid;
-      grid-template-columns: 1fr auto auto auto ;
+      grid-template-columns: 1fr auto auto auto;
     }
 
     #search-icon {
@@ -47,4 +47,10 @@
       padding: 10px;
     }
   }
+}
+.navBlur {
+  background: #131313a4;
+  box-shadow: 0 8px 32px 0 rgba(64, 64, 64, 0.226);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
 }

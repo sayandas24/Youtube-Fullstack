@@ -28,7 +28,7 @@ function VideoPost() {
   }
 
   return (
-    <div className="border bg-[#282828] border-zinc-800 text-white h-[48rem] w-[95vw] max-w-[55rem] mx-auto mt-5 rounded-xl overflow-x-auto max-[500px]:mb-[4rem] max-[500px]:h-[100vh]">
+    <div className="border bg-[#282828] border-zinc-600 text-white h-[48rem] w-[95vw] max-w-[55rem] mx-auto mt-5 rounded-xl overflow-x-auto max-[500px]:mb-[5rem] max-[500px]:h-[100vh]">
       <VideoPostHeader file={file} />
 
       <VideoPostAbout

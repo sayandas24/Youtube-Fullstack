@@ -196,7 +196,7 @@ function VideoPostAbout({
           </div>
         </section>
 
-        <section>
+        <section className="max-[720px]:w-full">
           <VideoPostRight
             file={file}
             videoUrl={videoUrl}

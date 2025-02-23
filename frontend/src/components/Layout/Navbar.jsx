@@ -23,9 +23,7 @@ function Navbar() {
   const { collapse, setCollapse } = useContext(CollapseContext);
   const { collapse2, setCollapse2 } = useContext(CollapseContext);
   const { handleFeatureSoonShow } = useContext(FeatureSoonContext);
-  const { setShowUserTweet, setShowUserVideo } = useContext(ProfileContext); 
-
-  
+  const { setShowUserTweet, setShowUserVideo } = useContext(ProfileContext);
 
   const [user, setUser] = useState({});
   const [allUsers, setAllUsers] = useState([]);
@@ -61,7 +59,6 @@ function Navbar() {
       .then((res) => {
         setCountAllUsers(res.data.data.userCount);
         setAllUsers(res.data.data.users);
-         
       })
       .catch((err) => {
         console.log("error in getting current user", err);
@@ -82,17 +79,14 @@ function Navbar() {
   // Handle profile menu
   const onCreateClick = () => {
     setCreateClick(!createClick);
-    window.scrollTo({ top: 0, behavior: "smooth" })
- 
+    window.scrollTo({ top: 0, behavior: "smooth" });
   };
-  const onCreateBtnClick = () => { 
-    window.scrollTo({ top: 0, behavior: "smooth" })
+  const onCreateBtnClick = () => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
     setShowUserTweet(true);
-    setShowUserVideo(false); 
+    setShowUserVideo(false);
   };
 
-
-  
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (
@@ -122,10 +116,10 @@ function Navbar() {
   return (
     <nav
       id="nav"
-      className="relative top-0 left-0 w-full z-50 dark:bg-[#f8fafd] dark:text-black bg-[#0f0f0f] min-h-[6rem] max-[500px]:min-h-[3rem]"
+      className="relative top-0 left-0 w-full z-50 dark:bg-[#f8fafd] dark:text-black  min-h-[6rem] max-[500px]:min-h-[3rem]"
     >
       {/* <NewFeatureMSG/>   */}
-      <ul className="flex fixed bg-[#0f0f0f] dark:bg-[#f8fafd] dark:text-black w-full top-0 text-md text-white  gap-0  p-5 pb-1 px-[1.6rem] justify-between items-center">
+      <ul className="flex fixed bg-[#0f0f0f]s navBlur dark:bg-[#f8fafd] dark:text-black w-full top-0 text-md text-white  gap-0  p-5 pb-1 px-[1.6rem] justify-between items-center rounded-b-2xl max-[650px]:rounded-full max-[650px]:w-[98%] max-[650px]:m-1  max-[650px]:!py-[5px]">
         <section>
           <div className="flex gap-3 items-center max-[650px]:gap-1">
             <IoMdMenu
@@ -136,46 +130,50 @@ function Navbar() {
               id="logo"
               className="flex items-center border-[#555555] p-5 rounded-full py-2"
             >
-              <img className="w-[2rem] invert dark:invert-0" src={metube} alt="" />
-              <SparklesText className="font-sacramento font-bold text-[1.5rem]" text="Metube" /> 
+              <img
+                className="w-[2rem] invert dark:invert-0"
+                src={metube}
+                alt=""
+              />
+              <SparklesText
+                className="font-sacramento font-bold text-[1.5rem]"
+                text="Metube"
+              />
             </div>
           </div>
         </section>
-        
+
+        <section className="flex gap-3 items-center mx-auto">
+          <div className="flex items-center ">
+            <input
+              id="search"
+              type="text"
+              className=" pl-5 h-[2.90rem] w-[30rem]a outline-none focus:border-[#0062ff] rounded-full border-[#393939] border bg-[#121212] rounded-r-none dark:bg-[#e9eef6] dark:border-[#b4bbc6]"
+              placeholder="Search"
+            />
+            <div
+              onClick={() => handleFeatureSoonShow()}
+              id="search-icon"
+              className="flex  justify-center items-center rounded-l-none  h-[2.9rem] px-5 rounded-full dark:bg-[#c1c9d5] bg-[#222222] hide-item-in-small"
+            >
+              <IoIosSearch className="text-[1.4rem] smallIcon " />
+            </div>
+          </div>
+          <div
+            id="mic-icon"
+            onClick={() => handleFeatureSoonShow()}
+            className="h-[3rem] w-[3rem] flex items-center hide-item-in-small justify-center rounded-full bg-[#222222] hover:bg-[#2f2f2f] dark:bg-[#e9eef6]"
+          >
+            <IoMdMic className="text-2xl smallIcon " />
+          </div>
+        </section>
+
+        {/* TODO: make all users icons here */}
+        <div className="ml-auto mx-2">
+          <AvatarCircles numPeople={countAllUsers} avatarUrls={allUsers} />
+        </div>
 
         <section>
-          <div className="flex gap-3 items-center ">
-            <div className="flex items-center ">
-              <input
-                id="search"
-                type="text"
-                className=" pl-5 h-[2.90rem] w-[30rem]a outline-none focus:border-[#0062ff] rounded-full border-[#393939] border bg-[#121212] rounded-r-none dark:bg-[#e9eef6] dark:border-[#b4bbc6] border-r-0"
-                placeholder="Search"
-              />
-              <div
-                onClick={() => handleFeatureSoonShow()}
-                id="search-icon"
-                className="flex  justify-center items-center rounded-l-none  h-[2.9rem] px-5 rounded-full dark:bg-[#c1c9d5] bg-[#222222] hide-item-in-small"
-              >
-                <IoIosSearch className="text-[1.4rem] smallIcon " />
-              </div>
-            </div>
-            <div
-              id="mic-icon"
-              onClick={() => handleFeatureSoonShow()}
-              className="h-[3rem] w-[3rem] flex items-center hide-item-in-small justify-center rounded-full bg-[#222222] hover:bg-[#2f2f2f] dark:bg-[#e9eef6]"
-            >
-              <IoMdMic className="text-2xl smallIcon " />
-            </div>
-          </div>
-        </section>
-
-      {/* TODO: make all users icons here */}
-      <div className="ml-auto mx-2">
-        <AvatarCircles numPeople={countAllUsers} avatarUrls={allUsers} />
-      </div>
-        
-        <section> 
           {/* <SignPopupMenu/> */}
           {user.data ? (
             <div className="flex items-center gap-4">
@@ -185,7 +183,7 @@ function Navbar() {
                 className="cursor-pointer dark:bg-[#cedbf0] duration-200 dark:hover:bg-[#cfd3db] bg-[#272727] hover:bg-[#2f2f2f] active:bg-[#454545] rounded-full h-[2.8rem] gap-1 px-3 flex items-center justify-center max-[500px]:h-[2.3rem]"
               >
                 <GoPlus className="text-[1.7rem]" />
-                <h1 className="text-[1rem] font-semibold max-[500px]:text-[0.8rem]">
+                <h1 className="text-[1rem] font-semibold max-[500px]:text-[0.8rem] max-[400px]:hidden">
                   Create
                 </h1>
               </section>
@@ -204,9 +202,7 @@ function Navbar() {
                     </NavLink>
                     <Link
                       to={`/channel/${user.data.username}`}
-                      onClick={() =>
-                        onCreateBtnClick()
-                      }
+                      onClick={() => onCreateBtnClick()}
                       className="flex items-center gap-4 p-3 px-4 dark:hover:bg-[#d1d5dc] hover:bg-[#3b3b3b] cursor-pointer"
                     >
                       <LuMessageSquareDiff className="text-[1.3rem]" />
@@ -240,11 +236,8 @@ function Navbar() {
             </div>
           ) : (
             <NotSignPopupMenu />
-            
           )}
         </section>
-
-        
       </ul>
     </nav>
   );

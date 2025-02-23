@@ -16,6 +16,8 @@ import { UseDarkModeContext } from "../../contexts/darkModeContext/UseDarkMode";
 
 function ProfilePage() {
   const isRouteActive = location.pathname.startsWith(`/profile`);
+  // const isHomeRoute = location.pathname(`/`);
+
 
   const { collapse2, setCollapse2 } = useContext(CollapseContext);
   const { handleFeatureSoonShow } = useContext(FeatureSoonContext);
@@ -25,9 +27,11 @@ function ProfilePage() {
   const [loading, setLoading] = useState(true);
   const [haveVideo, setHaveVideo] = useState(false);
   const [user, setUser] = useState({});
+
   const [showDashboard, setShowDashboard] = useState(false);
   const [showUserContent, setShowUserContent] = useState(true);
-  const [smallProfile, setSmallProfile] = useState(true);
+  
+  const [smallProfile] = useState(true);
   const [sidebarMobile, setSidebarMobile] = useState(false);
   const [tweets, setTweets] = useState([]);
 
@@ -36,7 +40,7 @@ function ProfilePage() {
   useEffect(() => {
     setCollapse2(true);
     setSidebarMobile(true);
-
+  
     if (window.location.pathname === "/profile") {
       axiosInstance
         .get("/user/current-user")
@@ -71,7 +75,7 @@ function ProfilePage() {
       })
       .catch((err) => {
         setTweets([]);
-        console.log("Unable to fetch tweets", err);
+        console.log("Unable to fetch tweets");
         setLoading(false);
       });
   }, [user]);
@@ -149,7 +153,7 @@ function ProfilePage() {
       {/* right */}
       {showDashboard && (
         <section className="w-[100%] border-[#434343] overflow-y-auto">
-          {/* <ProfileDashboard user={user} /> */}
+           
           {loading && (
             <SkeletonTheme
               baseColor={baseColor}
