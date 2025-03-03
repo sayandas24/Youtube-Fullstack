@@ -11,6 +11,7 @@ import { useTheme } from "next-themes";
 
 import { MagicCard } from "@/components/magicui/magic-card";
 import { Meteors } from "@/components/magicui/meteors";
+import { toast } from "react-toastify";
 
 const Login = () => {
   const { theme } = useTheme(); 
@@ -32,6 +33,7 @@ const Login = () => {
       .post("/user/login", { email, password }, { timeout: 5000 }) // Set timeout to 5 seconds
       .then((res) => {
         const token = res.data.data.accessToken; // Get the token from the response
+        toast.success("Login successful!");
 
         localStorage.setItem("accessToken", token);
         navigate("/");
@@ -40,6 +42,7 @@ const Login = () => {
       .catch((err) => {
         // if err, then show user not found in frontend ui
         console.log("Error in login", err);
+        toast.error("Login failed!");
         setError(true);
       })
       .finally(() => {

@@ -49,16 +49,15 @@ const authentication = asyncHandler(async (req, res, next) => {
   const existingUser = await User.findOne({ email: data.email });
 
   if (existingUser) {
-    const oldUser = {
-      //   _id: data._id,
+    const oldUser = {         
       email: data.email,
       username: data.username,
       password: "1234",
     };
     return loginUser({ body: oldUser }, res);
   } else {
-    const newUser = {
-      //   _id: data._id,
+    // if user is not present then create a new user
+    const newUser = { 
       fullName: data.fullName,
       email: data.email,
       username: data.username,

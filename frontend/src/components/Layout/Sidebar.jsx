@@ -9,6 +9,7 @@ import { FeatureSoonContext } from "../../contexts/featureSoonContext/UseFeature
 import { IoSettingsOutline } from "react-icons/io5";
 import { CgProfile } from "react-icons/cg";
 import "../../responsive/sidebar.scss";
+import { toast } from "react-toastify";
 // TODO:Light mode fix
 
 function Sidebar() {
@@ -54,7 +55,7 @@ function Sidebar() {
 
         <NavLink
           to="/"
-          onClick={() => handleFeatureSoonShow("Shorts we'll be adding soon")}
+          onClick={() => toast.info("Shorts coming soon!")}
           className={({ isActive }) =>
             `${
               !isActive
@@ -83,8 +84,7 @@ function Sidebar() {
         </NavLink>
         {!collapse && <hr className="border-zinc-600 my-1" />}
         <NavLink
-          to="/user/history"
-          // onClick={() => handleFeatureSoonShow("History working on it")}
+          to="/user/history" 
           className={({ isActive }) =>
             `${
               isActive
@@ -112,7 +112,7 @@ function Sidebar() {
         <NavLink
           to="/"
           onClick={() =>
-            handleFeatureSoonShow("Playlist feature not added yet")
+            toast.info("Playlist coming soon!")
           }
           className={({ isActive }) =>
             `${!isActive ? "fill-whiteX bg-[#2c2c2c]X " : ""} ${
@@ -136,7 +136,7 @@ function Sidebar() {
         {!collapse && <hr className="border-zinc-600 my-1" />}
         <NavLink
           to="/"
-          onClick={() => handleFeatureSoonShow("Feature coming soon")}
+          onClick={() => toast.info("Feature coming soon!")}
           className={({ isActive }) =>
             `${!isActive ? "fill-whiteX bg-[#2c2c2c]X" : ""} ${
               collapse

@@ -10,6 +10,7 @@ import { useTheme } from "next-themes";
 import { ShineBorder } from "@/components/magicui/shine-border";
 import { MagicCard } from "@/components/magicui/magic-card";
 import { Meteors } from "@/components/magicui/meteors";
+import { toast } from "react-toastify";
 
 const Register = () => {
   const [fullName, setFullname] = useState("");
@@ -47,6 +48,7 @@ const Register = () => {
       )
       .then((res) => {
         const token = res.data.data.accessToken; // Get the token from the response
+        toast.success("Registration successful!");
 
         localStorage.setItem("accessToken", token);
         navigate("/");
@@ -56,6 +58,7 @@ const Register = () => {
         // if err, then show user not found in frontend ui
         console.log(err);
         setError(true);
+        toast.error("Registration failed!");
       })
       .finally(() => {
         setProcessing(false);

@@ -4,18 +4,17 @@ import { AiOutlineExclamationCircle } from "react-icons/ai";
 import { GoMoon } from "react-icons/go"; 
 import { CiLocationOn } from "react-icons/ci";
 import axiosInstance from "../../utils/axiosInstance";
-import { NavLink } from "react-router";
-import { FeatureSoonContext } from "../../contexts/featureSoonContext/UseFeatureSoon";
+import { NavLink } from "react-router"; 
 import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
 import { GoSignOut } from "react-icons/go";
 import { UseDarkModeContext } from "../../contexts/darkModeContext/UseDarkMode";
+import { toast } from "react-toastify";
 
 
 function SignPopupMenu() {
   const [user, setUser] = useState({});
   const [loading, setLoading] = useState(true);
-
-  const {handleFeatureSoonShow}  = useContext(FeatureSoonContext)
+ 
     const {darkMode, setDarkMode} = useContext(UseDarkModeContext);
   
   
@@ -75,13 +74,13 @@ function SignPopupMenu() {
           </div>
         </section>
         <hr className="border-zinc-600 my-1 dark:border-zinc-400" />
-        <section onClick={() => handleFeatureSoonShow()} className="p-3 dark:hover:bg-[#b4bdd9] hover:bg-[#383838] cursor-pointer">
+        <section onClick={() => toast.info("Feature coming soon!")} className="p-3 dark:hover:bg-[#b4bdd9] hover:bg-[#383838] cursor-pointer">
           <div className="flex gap-3 items-center">
             <IoSettingsOutline className="text-2xl text-[#cacaca] dark:text-[#383838]" />
             <h1 className="text-[1rem] font-[320]">Settings</h1>
           </div>
         </section> 
-        <section onClick={() => handleFeatureSoonShow()} className="p-3 dark:hover:bg-[#b4bdd9] hover:bg-[#383838] cursor-pointer">
+        <section onClick={() => toast.info("Feature coming soon!")} className="p-3 dark:hover:bg-[#b4bdd9] hover:bg-[#383838] cursor-pointer">
           <div className="flex gap-3 items-center">
             <AiOutlineExclamationCircle  className="text-2xl text-[#cacaca] dark:text-[#383838]" />
             <h1 className="text-[1rem] font-[320]">About</h1>
@@ -95,7 +94,7 @@ function SignPopupMenu() {
           </div>
         </section>
         <hr className="border-zinc-600 my-1" />
-        <section onClick={() => handleFeatureSoonShow()} className="p-3 dark:hover:bg-[#b4bdd9] hover:bg-[#383838] cursor-pointer">
+        <section onClick={() => toast.info("Feature coming soon!")} className="p-3 dark:hover:bg-[#b4bdd9] hover:bg-[#383838] cursor-pointer">
           <div className="flex gap-3 items-center">
             <CiLocationOn  className="text-2xl text-[#cacaca] dark:text-[#000000]" />
             <h1 className="text-[1rem] font-[320]">Location: India</h1>

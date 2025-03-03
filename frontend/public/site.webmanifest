@@ -1,6 +1,6 @@
 {
-  "name": "Install Metube Player",
-  "short_name": "metube-player.vercel.app",
+  "name": "Metube Player",
+  "short_name": "Metube",
   "icons": [
     {
       "src": "/android-chrome-192x192.png",

@@ -1,9 +1,8 @@
 import React, { useContext, useState } from "react";
-import { NavLink } from "react-router-dom";
-import { FeatureSoonContext } from "../../contexts/featureSoonContext/UseFeatureSoon";
+import { NavLink } from "react-router-dom"; 
 import { ProfileContext } from "../../contexts/profileContext/profileContext";
-function ProfileHeader() {
-  const { handleFeatureSoonShow } = useContext(FeatureSoonContext);
+import { toast } from "react-toastify";
+function ProfileHeader() { 
   const {
     setVideoSectionShow,
     setTweetsSectionShow,
@@ -49,7 +48,7 @@ function ProfileHeader() {
         </section>
         <NavLink
           to="#"
-          onClick={() => handleFeatureSoonShow()}
+          onClick={() => toast.info("Feature coming soon!")}
           className={({ isActive }) =>
             `hover:border-b text-[.9rem] text-zinc-400 font-[500] hover:border-zinc-500 p-2 px-1 flex items-center gap-2 ${darkClass} ${
               !isActive ? `!font-[800] border-b-2 border-white text-white ${darkClassActive}` : ""
@@ -60,7 +59,7 @@ function ProfileHeader() {
         </NavLink>
         <NavLink
           to="#"
-          onClick={() => handleFeatureSoonShow()}
+          onClick={() => toast.info("Feature coming soon!")}
           className={({ isActive }) =>
             `hover:border-b text-[.9rem] text-zinc-400 font-[500] hover:border-zinc-500 p-2 px-1 flex items-center gap-2 ${darkClass} ${
               !isActive ? `!font-[800] border-b-2 border-white text-white ${darkClassActive}` : ""

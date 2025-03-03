@@ -13,6 +13,7 @@ import { ProfileContext } from "../../contexts/profileContext/profileContext";
 import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
 import TweetsSection from "./TweetsSection";
 import { UseDarkModeContext } from "../../contexts/darkModeContext/UseDarkMode";
+import { toast } from "react-toastify";
 
 function ProfilePage() {
   const isRouteActive = location.pathname.startsWith(`/profile`);
@@ -49,7 +50,7 @@ function ProfilePage() {
           setLoading(false);
         })
         .catch((err) => {
-          handleFeatureSoonShow("Login to show your profile");
+          toast.error("Login to show your profile!") 
           console.log(err);
           setLoading(false);
           navigate("/login");

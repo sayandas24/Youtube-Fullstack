@@ -11,18 +11,17 @@ import SignPopupMenu from "../ProfileMenuPopup/SignPopupMenu";
 import { GoPlus } from "react-icons/go";
 import { LuMessageSquareDiff } from "react-icons/lu";
 
-import { SlCloudUpload } from "react-icons/sl";
-import { FeatureSoonContext } from "../../contexts/featureSoonContext/UseFeatureSoon";
+import { SlCloudUpload } from "react-icons/sl"; 
 import { useScreenWidth } from "../../utils/screenWidth";
 import "../../responsive/navbar.scss";
 import { ProfileContext } from "../../contexts/profileContext/profileContext";
 import { SparklesText } from "@/components/magicui/sparkles-text";
 import { AvatarCircles } from "@/components/magicui/avatar-circles";
+import { toast } from "react-toastify";
 
 function Navbar() {
   const { collapse, setCollapse } = useContext(CollapseContext);
-  const { collapse2, setCollapse2 } = useContext(CollapseContext);
-  const { handleFeatureSoonShow } = useContext(FeatureSoonContext);
+  const { collapse2, setCollapse2 } = useContext(CollapseContext); 
   const { setShowUserTweet, setShowUserVideo } = useContext(ProfileContext);
 
   const [user, setUser] = useState({});
@@ -127,9 +126,9 @@ function Navbar() {
               onClick={handleMenu}
               className="hide-item-in-small more-options text-[2.6rem] dark:hover:bg-[#c0c8d39f] hover:bg-[#252525] duration-75 cursor-pointer active:bg-[#343434] rounded-full p-2"
             />
-            <div
+            <Link to="/"
               id="logo"
-              className="flex items-center border-[#555555] p-5 rounded-full py-2"
+              className="flex items-center border-[#555555] p-5 rounded-full py-2 cursor-pointer"
             >
               <img
                 className="w-[2rem] invert dark:invert-0"
@@ -140,7 +139,7 @@ function Navbar() {
                 className="font-sacramento font-bold text-[1.5rem]"
                 text="Metube"
               />
-            </div>
+            </Link>
           </div>
         </section>
 
@@ -153,7 +152,7 @@ function Navbar() {
               placeholder="Search"
             />
             <div
-              onClick={() => handleFeatureSoonShow()}
+              onClick={() => toast.info("Feature coming soon!")}
               id="search-icon"
               className="flex  justify-center items-center rounded-l-none  h-[2.9rem] px-5 rounded-full dark:bg-[#c1c9d5] bg-[#222222] hide-item-in-small"
             >
@@ -162,7 +161,7 @@ function Navbar() {
           </div>
           <div
             id="mic-icon"
-            onClick={() => handleFeatureSoonShow()}
+            onClick={() => toast.info("Feature coming soon!")}
             className="h-[3rem] w-[3rem] flex items-center hide-item-in-small justify-center rounded-full bg-[#222222] hover:bg-[#2f2f2f] dark:bg-[#e9eef6]"
           >
             <IoMdMic className="text-2xl smallIcon " />

@@ -6,6 +6,7 @@ import "../../script.js";
 import axiosInstance from "../../utils/axiosInstance.js";
 import { useNavigate } from "react-router-dom";
 import VideoPostRight from "./VideoPostPlayer.jsx";
+import { toast } from "react-toastify";
 
 // FIXME: bottom right upload button is not allign
 
@@ -66,8 +67,13 @@ function VideoPostAbout({
         })
         .then((res) => {
           navigate("/");
+          toast.success("Video uploaded successfully!");
+
         })
-        .catch((err) => console.log(err))
+        .catch((err) => {
+          console.log(err)
+          toast.error("Video upload failed!");
+        })
         .finally(() => setLoading(false));
     } else {
       axiosInstance
@@ -78,8 +84,12 @@ function VideoPostAbout({
         })
         .then((res) => {
           navigate("/profile");
+          toast.success("Video updated successfully!");
         })
-        .catch((err) => console.log(err))
+        .catch((err) => {
+          console.log(err)
+          toast.error("Video update failed!");
+        })
         .finally(() => setLoading(false));
     }
   };

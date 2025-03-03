@@ -5,6 +5,7 @@ import { useNavigate } from "react-router";
 import NProgress from "nprogress";
 import "nprogress/nprogress.css"; // Import NProgress styles
 import { ClipLoader } from "react-spinners"; // Example of a spinner component
+import { toast } from "react-toastify";
 
 function GoogleLogin() {
   const [isSigningIn, setIsSigningIn] = useState(false);
@@ -39,18 +40,22 @@ function GoogleLogin() {
               localStorage.setItem(
                 "accessToken",
                 response.data.data.accessToken
+                
               );
               navigate("/");
               window.location.reload();
+              toast.success("Login successful!")
             })
             .catch((error) => {
               console.log("email is same, try login", error);
+              toast.error("Login failed!, email or username is same");
             });
         } catch (axiosError) {
           console.error("Error during axios request:", axiosError);
         }
       } catch (googleSignInError) { 
         console.error("Error during Google sign-in:", googleSignInError);
+        toast.error("Login failed!");
       } finally {
         setIsSigningIn(false); // Reset signing in state
         NProgress.done(); // Complete NProgress

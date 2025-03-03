@@ -3,14 +3,13 @@ import { GrHomeRounded } from "react-icons/gr";
 import { MdHistory } from "react-icons/md";
 import { SiYoutubeshorts } from "react-icons/si";
 import { MdOutlineSubscriptions } from "react-icons/md"; 
-import { NavLink } from "react-router";
-import { FeatureSoonContext } from "../../contexts/featureSoonContext/UseFeatureSoon";
+import { NavLink } from "react-router"; 
 import { IoSettingsOutline } from "react-icons/io5";
 import { CgProfile } from "react-icons/cg";
 import axiosInstance from "../../utils/axiosInstance";
+import { toast } from "react-toastify";
 
-function SidebarMobile() {
-  const { handleFeatureSoonShow } = useContext(FeatureSoonContext);
+function SidebarMobile() { 
   const [user, setUser] = useState({});
 
   useEffect(() => {
@@ -45,7 +44,7 @@ function SidebarMobile() {
 
       <NavLink
         to="/"
-        onClick={() => handleFeatureSoonShow("Shorts w'll be added soon")}
+        onClick={() => toast.info("Feature coming soon!")}
         className={({ isActive }) =>
           `${
             !isActive
@@ -65,7 +64,7 @@ function SidebarMobile() {
       </NavLink>
       <NavLink
         to="/user/history"
-        // onClick={() => handleFeatureSoonShow("History working on it")}
+        // onClick={() => toast.info("Feature coming soon!")}
         className={({ isActive }) =>
           `${
             isActive ? "fill-white bg-[#2c2c2c]" : ""
@@ -82,7 +81,7 @@ function SidebarMobile() {
 
       <NavLink
         to="/"
-        onClick={() => handleFeatureSoonShow("Playlist feature not added yet")}
+        onClick={() => toast.info("Feature coming soon!")}
         className={({ isActive }) =>
           `${
             !isActive ? "fill-whiteX bg-[#2c2c2c]X" : ""
@@ -98,7 +97,7 @@ function SidebarMobile() {
       </NavLink>
       <NavLink
         to="/"
-        onClick={() => handleFeatureSoonShow("Feature coming soon")}
+        onClick={() => toast.info("Feature coming soon!")}
         className={({ isActive }) =>
           `${
             !isActive ? "fill-whiteX bg-[#2c2c2c]X" : ""

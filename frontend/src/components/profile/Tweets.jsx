@@ -10,6 +10,7 @@ import { BsThreeDots } from "react-icons/bs";
 import { MdDeleteOutline } from "react-icons/md";
 import UseClickOutside from "../../utils/UseClickOutside";
 import { ClipLoader } from "react-spinners";
+import { toast } from "react-toastify";
 
 function Tweets({ userDetail, currUser }) {
   const [tweetImage, setTweetImage] = useState(null); 
@@ -59,6 +60,7 @@ function Tweets({ userDetail, currUser }) {
             ...res.data.data,
             likesCount: 0,
             isCurrentUserLiked: false,
+            
           };
           setTweetContent("");
           setTweetImage(null);
@@ -66,6 +68,7 @@ function Tweets({ userDetail, currUser }) {
           nProgress.done();
           setLoading(false);
           setAllTweets((prev) => [...prev, newTweet]);
+          toast.success("Tweeted successfully!");
         })
         .catch((err) => {
           console.log("error in tweet", err);
@@ -73,6 +76,7 @@ function Tweets({ userDetail, currUser }) {
           setTweetImage(null);
           nProgress.done();
           setLoading(false);
+          toast.error("Tweet failed!");
         });
     }
   };
@@ -118,11 +122,13 @@ function Tweets({ userDetail, currUser }) {
         nProgress.done();
         setLoadingDeleteTweet(false);
         setAllTweets((prev) => prev.filter((tweet) => tweet._id !== id));
+        toast.success("Tweet deleted successfully!");
       })
       .catch((err) => {
         setLoadingDeleteTweet(false);
         console.log("cannot delete tweet", err);
         nProgress.done();
+        toast.error("Tweet delete failed!");
       });
   };
 

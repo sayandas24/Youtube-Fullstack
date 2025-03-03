@@ -8,7 +8,7 @@ import { IoSettingsOutline } from "react-icons/io5";
 import { CgProfile } from "react-icons/cg";
 import axiosInstance from "../../utils/axiosInstance";
 import DarkModeSwitch from "@/components/UI/DarkModeSwitch";
-
+import { Bounce, Flip, Slide, ToastContainer, Zoom, toast } from "react-toastify";
 
 export default function MagicNavbar() {
   const { handleFeatureSoonShow } = useContext(FeatureSoonContext);
@@ -56,7 +56,9 @@ export default function MagicNavbar() {
         <DockIcon>
           <NavLink
             to="/"
-            onClick={() => handleFeatureSoonShow("Feature coming soon")}
+            onClick={() =>
+              toast.info("Feature coming soon!")
+            }
             className={({ isActive }) =>
               `${
                 !isActive ? "fill-whiteX bg-[#2c2c2c]X" : ""
