@@ -55,8 +55,7 @@ function Video() {
     });
     axiosInstance
       .get(`/view/video/${videoId}`)
-      .then((res) => {
-        console.log(res, "in views");
+      .then((res) => { 
         setGetVideo((prev) => ({
           ...prev,
           viewsCount: prev.viewsCount + 1,

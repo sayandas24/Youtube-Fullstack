@@ -89,7 +89,8 @@ function App() {
   const { darkMode } = useContext(UseDarkModeContext);
 
   return (
-    <main className={`${darkMode ? "dark" : ""}`}>
+    // <main className={`${darkMode ? "dark" : ""}`}>
+      <main>
       <ToastContainer
         position="top-right"
         autoClose={5000}
